@@ -1,8 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.collections.*?>
+<?import com.zzg.mybatis.generator.model.*?>
 
-<AnchorPane prefHeight="544.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zzg.mybatis.generator.controller.MainUIController" />
+
+<AnchorPane prefHeight="544.0" prefWidth="770.0"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.zzg.mybatis.generator.controller.MainUIController">
+	<children>
+		<BorderPane layoutX="53.0" layoutY="72.0" prefHeight="544.0"
+			prefWidth="770.0" AnchorPane.bottomAnchor="0.0"
+			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+			AnchorPane.topAnchor="0.0">
+			<top>
+				<ToolBar prefHeight="40.0" prefWidth="200.0"
+					BorderPane.alignment="CENTER">
+					<items>
+						<Button mnemonicParsing="false" text="connectors" />
+						<Button mnemonicParsing="false" text="generatorConfig" />
+					</items>
+				</ToolBar>
+			</top>
+			<center>
+				<AnchorPane prefHeight="200.0" prefWidth="200.0"
+					BorderPane.alignment="CENTER">
+					<children>
+						<ChoiceBox layoutX="24.0" layoutY="14.0" prefWidth="150.0">
+							<items>
+								<FXCollections fx:factory="observableArrayList">
+									<DatabaseDTO name="MySQL" value="1"></DatabaseDTO>
+									<DatabaseDTO name="Oracle" value="2"></DatabaseDTO>
+								</FXCollections>
+							</items>
+						</ChoiceBox>
+						<GridPane layoutX="14.0" layoutY="46.0"
+							AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="26.0">
+							<columnConstraints>
+								<ColumnConstraints hgrow="SOMETIMES" maxWidth="349.0"
+									minWidth="10.0" prefWidth="134.0" />
+								<ColumnConstraints hgrow="SOMETIMES" maxWidth="582.0"
+									minWidth="10.0" prefWidth="576.0" />
+							</columnConstraints>
+							<rowConstraints>
+								<RowConstraints minHeight="10.0" prefHeight="30.0"
+									vgrow="SOMETIMES" />
+								<RowConstraints minHeight="10.0" prefHeight="30.0"
+									vgrow="SOMETIMES" />
+								<RowConstraints minHeight="10.0" prefHeight="30.0"
+									vgrow="SOMETIMES" />
+								<RowConstraints minHeight="10.0" prefHeight="30.0"
+									vgrow="SOMETIMES" />
+								<RowConstraints minHeight="10.0" prefHeight="30.0"
+									vgrow="SOMETIMES" />
+								<RowConstraints minHeight="10.0" prefHeight="30.0"
+									vgrow="SOMETIMES" />
+								<RowConstraints minHeight="10.0" prefHeight="30.0"
+									vgrow="SOMETIMES" />
+								<RowConstraints minHeight="10.0" prefHeight="30.0"
+									vgrow="SOMETIMES" />
+							</rowConstraints>
+							<children>
+								<Label text="ConnectionURL" />
+								<TextField GridPane.columnIndex="1" />
+								<Label text="UserName" GridPane.rowIndex="1" />
+								<Label text="Password" GridPane.rowIndex="2" />
+								<TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+								<TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+								<Label text="Model Folder" GridPane.rowIndex="4" />
+								<Label text="Mapping File Folder" GridPane.rowIndex="5" />
+								<Label text="DAO File Folder" GridPane.rowIndex="6" />
+								<Button mnemonicParsing="false" text="Generate"
+									GridPane.rowIndex="7" />
+							</children>
+						</GridPane>
+					</children>
+					<padding>
+						<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+					</padding>
+				</AnchorPane>
+			</center>
+		</BorderPane>
+	</children>
+</AnchorPane>
