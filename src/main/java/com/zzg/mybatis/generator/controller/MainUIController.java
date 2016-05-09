@@ -1,151 +1,179 @@
 package com.zzg.mybatis.generator.controller;
 
+import java.io.File;
 import java.net.URL;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import org.springframework.data.redis.connection.DataType;
-import org.springframework.data.redis.connection.RedisNode;
-import org.springframework.data.redis.connection.RedisSentinelConfiguration;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.mybatis.generator.api.MyBatisGenerator;
+import org.mybatis.generator.api.ProgressCallback;
+import org.mybatis.generator.api.ShellCallback;
+import org.mybatis.generator.api.VerboseProgressCallback;
+import org.mybatis.generator.config.Configuration;
+import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.JDBCConnectionConfiguration;
+import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
+import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
+import org.mybatis.generator.config.ModelType;
+import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
+import org.mybatis.generator.config.TableConfiguration;
+import org.mybatis.generator.internal.DefaultShellCallback;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.zzg.mybatis.generator.model.DatabaseDTO;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 
 public class MainUIController implements Initializable {
 
 	@FXML
-	private TextField nodesField;
+	private ChoiceBox<DatabaseDTO> dbTypeChoice;
 
 	@FXML
-	private TextField masterField;
+	private TextField driverClassField;
 
 	@FXML
-	private TextField databaseField;
-
+	private TextField connectorFileField;
 	@FXML
-	private Label connectStatusLabel;
-
+	private TextField connectionUrlField;
 	@FXML
-	private Label typeLabel;
-
+	private TextField userNameField;
 	@FXML
-	private Button connectBtn;
-
+	private TextField passwordField;
 	@FXML
-	private TreeView<String> treeView;
-
+	private TextField modelFolderField;
 	@FXML
-	private ListView<String> valueListView;
+	private TextField mapperFolderField;
+	@FXML
+	private TextField daoFolderField;
+	@FXML
+	private TextField tableNameField;
+	@FXML
+	private TextField domainObjectNameField;
+	@FXML
+	private TextField packageNameField;
+	@FXML
+	private TextField projectFolderField;
 
-	private StringRedisTemplate redis;
+	private Stage primaryStage;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		dbTypeChoice.setOnKeyPressed(event -> {
+			String driverClass = dbTypeChoice.getSelectionModel().getSelectedItem().getDriverClass();
+			driverClassField.setText(driverClass);
+		});
+		driverClassField.setText("com.mysql.jdbc.Driver");
 	}
 
 	@FXML
-	void connectToRedis() {
-		String redisNodes = nodesField.getText();
-		String master = masterField.getText();
-		redis = new StringRedisTemplate();
-		redis.setKeySerializer(new StringRedisSerializer());
-		RedisSentinelConfiguration config = new RedisSentinelConfiguration();
-		config.setMaster(master);
-		String[] nodes = redisNodes.split(",");
-		for (String node : nodes) {
-			String[] hostport = node.split(":");
-			String host = hostport[0];
-			int port = Integer.parseInt(hostport[1]);
-			config.addSentinel(new RedisNode(host, port));
-		}
-		JedisConnectionFactory factory = new JedisConnectionFactory(config);
-		factory.setUsePool(true);
-		factory.afterPropertiesSet();
-		redis.setConnectionFactory(factory);
-		redis.afterPropertiesSet();
-
-		connectStatusLabel.setText("连接成功");
-		testKeys();
-	}
-
-	@FXML
-	void testKeys() {
-		TreeItem<String> rootItem = new TreeItem<>("Root");
-		treeView.setRoot(rootItem);
-		treeView.setShowRoot(false);
-		Set<String> keys = redis.keys("Cobra_*");
-		if (keys != null && keys.size() > 0) {
-			keys.stream().forEach(key -> {
-				TreeItem<String> item = new TreeItem<>();
-				Label label = new Label(key);
-				// label.setBackground(new Background(new BackgroundFill(new Color(1, 0, 0, 1), null, null)));
-				label.setOnMouseClicked(event -> {
-					ObservableList<String> observableList = FXCollections.observableArrayList();
-					DataType type = redis.type(key);
-					String code = type.code();
-					typeLabel.setText(code);
-					System.out.println(code);
-					Collection<?> values = null;
-					if ("zset".equals(code)) {
-						Set<TypedTuple<String>> hashKeys = redis.opsForZSet().rangeWithScores(key, 0, -1);
-						if (hashKeys != null && hashKeys.size() > 0) {
-							values = hashKeys.stream().map(
-									tuple -> "value: " + tuple.getValue() + ", score: " + tuple.getScore().longValue())
-									.collect(Collectors.toList());
-						}
-						System.out.println(values);
-					} else if ("set".equals(code)) {
-						values = redis.opsForSet().members(key);
-						System.out.println(key + ": " + values);
-					} else if ("hash".equals(code)) {
-						Set<Object> hashKeys = redis.opsForHash().keys(key);
-						if (hashKeys != null && hashKeys.size() > 0) {
-							values = hashKeys.stream().map(
-									hashKey -> "Key: " + hashKey + ", Value: " + redis.opsForHash().get(key, hashKey))
-									.collect(Collectors.toList());
-						}
-						System.out.println(key + ": " + values);
-					} else if ("list".equals(code)) {
-						values = redis.opsForList().range(key, 0, -1);
-						System.out.println(values);
-					}
-
-					if (values != null && values.size() > 0) {
-						values.stream().forEach(value -> {
-							observableList.add(value.toString());
-						});
-					}
-					valueListView.setItems(observableList);
-				});
-				item.setGraphic(label);
-				item.setValue("");
-				rootItem.getChildren().add(item);
-			});
+	public void chooseConnectorFile() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Select " + dbTypeChoice.getSelectionModel().getSelectedItem().getName() + " Connector jar file");
+		fileChooser.getExtensionFilters().add(new ExtensionFilter("jar file", "*.jar"));
+		File selectedFile = fileChooser.showOpenDialog(primaryStage);
+		if (selectedFile != null) {
+			connectorFileField.setText(selectedFile.getAbsolutePath());
 		}
 	}
 
 	@FXML
-	void clearAllKeys() {
-		Set<String> keys = redis.keys("Cobra_*");
-		if (keys != null && keys.size() > 0) {
-			keys.stream().forEach(key -> {
-				redis.delete(key);
-			});
+	public void chooseModelFolder() {
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+		File selectedFolder = directoryChooser.showDialog(primaryStage);
+		if (selectedFolder != null) {
+			modelFolderField.setText(selectedFolder.getAbsolutePath());
 		}
 	}
 
+	@FXML
+	public void chooseMapperFolder() {
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+		File selectedFolder = directoryChooser.showDialog(primaryStage);
+		if (selectedFolder != null) {
+			mapperFolderField.setText(selectedFolder.getAbsolutePath());
+		}
+	}
+
+	@FXML
+	public void chooseDaoFolder() {
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+		File selectedFolder = directoryChooser.showDialog(primaryStage);
+		if (selectedFolder != null) {
+			daoFolderField.setText(selectedFolder.getAbsolutePath());
+		}
+	}
+	
+	@FXML
+	public void chooseProjectFolder() {
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+		File selectedFolder = directoryChooser.showDialog(primaryStage);
+		if (selectedFolder != null) {
+			projectFolderField.setText(selectedFolder.getAbsolutePath());
+		}
+	}
+
+	@FXML
+	public void generateCode() throws Exception {
+		Configuration config = new Configuration();
+		config.addClasspathEntry(connectorFileField.getText());
+		Context context = new Context(ModelType.CONDITIONAL);
+		config.addContext(context);
+		// Table config
+		TableConfiguration tableConfig = new TableConfiguration(context);
+		tableConfig.setTableName(tableNameField.getText());
+		tableConfig.setDomainObjectName(domainObjectNameField.getText());
+		// JDBC config
+		JDBCConnectionConfiguration jdbcConfig = new JDBCConnectionConfiguration();
+		jdbcConfig.setDriverClass(driverClassField.getText());
+		jdbcConfig.setConnectionURL(connectionUrlField.getText());
+		jdbcConfig.setUserId(userNameField.getText());
+		jdbcConfig.setPassword(passwordField.getText());
+		// java model
+		JavaModelGeneratorConfiguration modelConfig = new JavaModelGeneratorConfiguration();
+		modelConfig.setTargetPackage(packageNameField.getText());
+		modelConfig.setTargetProject(projectFolderField.getText());
+		// Mapper config
+		SqlMapGeneratorConfiguration mapperConfig = new SqlMapGeneratorConfiguration();
+		mapperConfig.setTargetPackage(packageNameField.getText());
+		mapperConfig.setTargetProject(projectFolderField.getText());
+		// DAO
+		JavaClientGeneratorConfiguration daoConfig = new JavaClientGeneratorConfiguration();
+		daoConfig.setConfigurationType("XMLMAPPER");
+		daoConfig.setTargetPackage(packageNameField.getText());
+		daoConfig.setTargetProject(projectFolderField.getText());
+
+		context.setId("myid");
+		context.addTableConfiguration(tableConfig);
+		context.setJdbcConnectionConfiguration(jdbcConfig);
+		context.setJdbcConnectionConfiguration(jdbcConfig);
+		context.setJavaModelGeneratorConfiguration(modelConfig);
+		context.setSqlMapGeneratorConfiguration(mapperConfig);
+		context.setJavaClientGeneratorConfiguration(daoConfig);
+		
+		context.setTargetRuntime("MyBatis3");
+
+		List<String> warnings = new ArrayList<>();
+		Set<String> fullyqualifiedTables = new HashSet<String>();
+		Set<String> contexts = new HashSet<String>();
+		ProgressCallback progressCallback = new VerboseProgressCallback();
+		
+		ShellCallback shellCallback = new DefaultShellCallback(true); // override=true
+		MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback , warnings);
+		myBatisGenerator.generate(progressCallback, contexts, fullyqualifiedTables);
+	}
+
+	public void setPrimaryStage(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+	}
 }

@@ -4,6 +4,7 @@ public class DatabaseDTO {
 
 	private String name;
 	private int value;
+	private String driverClass;
 
 	public String getName() {
 		return name;
@@ -19,6 +20,14 @@ public class DatabaseDTO {
 
 	public void setValue(int value) {
 		this.value = value;
+	}
+
+	public String getDriverClass() {
+		return driverClass;
+	}
+
+	public void setDriverClass(String driverClass) {
+		this.driverClass = driverClass;
 	}
 
 	@Override

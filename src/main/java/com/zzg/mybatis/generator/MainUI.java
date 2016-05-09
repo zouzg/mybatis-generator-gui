@@ -2,25 +2,30 @@ package com.zzg.mybatis.generator;
 
 import java.net.URL;
 
+import com.zzg.mybatis.generator.controller.MainUIController;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class MainUI extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-
-		URL skeletonResource = classLoader.getResource("MainUI.fxml");
-
-		Parent root = FXMLLoader.load(skeletonResource);
-		
+		URL url = Thread.currentThread().getContextClassLoader().getResource("MainUI.fxml");
+		FXMLLoader fxmlLoader = new FXMLLoader(url);
+		Parent root = fxmlLoader.load();
+		//primaryStage.initStyle(StageStyle.TRANSPARENT);
+		primaryStage.setResizable(false);
 		primaryStage.setScene(new Scene(root));
-
 		primaryStage.show();
+		
+		
+		MainUIController controller = fxmlLoader.getController();
+		controller.setPrimaryStage(primaryStage);
 	}
 	
 	
