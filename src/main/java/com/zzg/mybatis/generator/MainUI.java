@@ -15,7 +15,7 @@ public class MainUI extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		URL url = Thread.currentThread().getContextClassLoader().getResource("MainUI.fxml");
+		URL url = Thread.currentThread().getContextClassLoader().getResource("fxml/MainUI.fxml");
 		FXMLLoader fxmlLoader = new FXMLLoader(url);
 		Parent root = fxmlLoader.load();
 		//primaryStage.initStyle(StageStyle.TRANSPARENT);

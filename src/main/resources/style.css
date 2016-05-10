@@ -1,0 +1,12 @@
+.button {
+	-fx-font-size: 14px;
+}
+
+.tool-bar .button {
+	-fx-border: none;
+}
+
+.btn-primary {
+	-fx-background-color: blue;
+	-fx-text-fill: white;
+}

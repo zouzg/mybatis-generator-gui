@@ -21,20 +21,32 @@ import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.internal.DefaultShellCallback;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.zzg.mybatis.generator.model.DatabaseDTO;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
+import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class MainUIController implements Initializable {
+public class MainUIController extends BaseFXController {
+	
+	private static final Logger _LOG = LoggerFactory.getLogger(MainUIController.class);
+	
+	// tool bar buttons
+	@FXML
+	private Label connectionLabel;
 
 	@FXML
 	private ChoiceBox<DatabaseDTO> dbTypeChoice;
@@ -65,10 +77,31 @@ public class MainUIController implements Initializable {
 	@FXML
 	private TextField projectFolderField;
 
-	private Stage primaryStage;
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		ImageView dbImage = new ImageView("icons/database.png");
+		dbImage.setFitHeight(40);
+		dbImage.setFitWidth(40);
+		connectionLabel.setGraphic(dbImage);
+		connectionLabel.setOnMouseClicked(event -> {
+			URL skeletonResource = Thread.currentThread().getContextClassLoader().getResource("fxml/newConnection.fxml");
+			FXMLLoader loader = new FXMLLoader(skeletonResource);
+			Parent loginNode;
+			try {
+				loginNode = loader.load();
+				NewConnectionController controller = loader.getController();
+				final Stage dialogStage = new Stage();
+				dialogStage.setTitle("New Connection");
+				dialogStage.initModality(Modality.APPLICATION_MODAL);
+				dialogStage.initOwner(getPrimaryStage());
+				dialogStage.setScene(new Scene(loginNode));
+				dialogStage.show();
+				controller.setDialogStage(dialogStage);
+			} catch (Exception e) {
+				_LOG.error(e.getMessage(), e);
+			}
+		});
+		
 		dbTypeChoice.setOnKeyPressed(event -> {
 			String driverClass = dbTypeChoice.getSelectionModel().getSelectedItem().getDriverClass();
 			driverClassField.setText(driverClass);
@@ -81,7 +114,7 @@ public class MainUIController implements Initializable {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Select " + dbTypeChoice.getSelectionModel().getSelectedItem().getName() + " Connector jar file");
 		fileChooser.getExtensionFilters().add(new ExtensionFilter("jar file", "*.jar"));
-		File selectedFile = fileChooser.showOpenDialog(primaryStage);
+		File selectedFile = fileChooser.showOpenDialog(getPrimaryStage());
 		if (selectedFile != null) {
 			connectorFileField.setText(selectedFile.getAbsolutePath());
 		}
@@ -90,7 +123,7 @@ public class MainUIController implements Initializable {
 	@FXML
 	public void chooseModelFolder() {
 		DirectoryChooser directoryChooser = new DirectoryChooser();
-		File selectedFolder = directoryChooser.showDialog(primaryStage);
+		File selectedFolder = directoryChooser.showDialog(getPrimaryStage());
 		if (selectedFolder != null) {
 			modelFolderField.setText(selectedFolder.getAbsolutePath());
 		}
@@ -99,7 +132,7 @@ public class MainUIController implements Initializable {
 	@FXML
 	public void chooseMapperFolder() {
 		DirectoryChooser directoryChooser = new DirectoryChooser();
-		File selectedFolder = directoryChooser.showDialog(primaryStage);
+		File selectedFolder = directoryChooser.showDialog(getPrimaryStage());
 		if (selectedFolder != null) {
 			mapperFolderField.setText(selectedFolder.getAbsolutePath());
 		}
@@ -108,7 +141,7 @@ public class MainUIController implements Initializable {
 	@FXML
 	public void chooseDaoFolder() {
 		DirectoryChooser directoryChooser = new DirectoryChooser();
-		File selectedFolder = directoryChooser.showDialog(primaryStage);
+		File selectedFolder = directoryChooser.showDialog(getPrimaryStage());
 		if (selectedFolder != null) {
 			daoFolderField.setText(selectedFolder.getAbsolutePath());
 		}
@@ -117,7 +150,7 @@ public class MainUIController implements Initializable {
 	@FXML
 	public void chooseProjectFolder() {
 		DirectoryChooser directoryChooser = new DirectoryChooser();
-		File selectedFolder = directoryChooser.showDialog(primaryStage);
+		File selectedFolder = directoryChooser.showDialog(getPrimaryStage());
 		if (selectedFolder != null) {
 			projectFolderField.setText(selectedFolder.getAbsolutePath());
 		}
@@ -173,7 +206,4 @@ public class MainUIController implements Initializable {
 		myBatisGenerator.generate(progressCallback, contexts, fullyqualifiedTables);
 	}
 
-	public void setPrimaryStage(Stage primaryStage) {
-		this.primaryStage = primaryStage;
-	}
 }
