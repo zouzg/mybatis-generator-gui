@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import javafx.scene.text.Text;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.ShellCallback;
@@ -47,13 +48,10 @@ public class MainUIController extends BaseFXController {
 	// tool bar buttons
 	@FXML
 	private Label connectionLabel;
-
 	@FXML
 	private ChoiceBox<DatabaseDTO> dbTypeChoice;
-
 	@FXML
 	private TextField driverClassField;
-
 	@FXML
 	private TextField connectorFileField;
 	@FXML
@@ -63,19 +61,21 @@ public class MainUIController extends BaseFXController {
 	@FXML
 	private TextField passwordField;
 	@FXML
-	private TextField modelFolderField;
+	private TextField modelTargetPackage;
 	@FXML
-	private TextField mapperFolderField;
+	private TextField mapperTargetPackage;
 	@FXML
-	private TextField daoFolderField;
+	private TextField daoTargetPackage;
 	@FXML
 	private TextField tableNameField;
 	@FXML
 	private TextField domainObjectNameField;
 	@FXML
-	private TextField packageNameField;
+	private TextField modelTargetProject;
 	@FXML
-	private TextField projectFolderField;
+	private TextField mappingTargetProject;
+	@FXML
+	private TextField daoTargetProject;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -95,6 +95,8 @@ public class MainUIController extends BaseFXController {
 				dialogStage.initModality(Modality.APPLICATION_MODAL);
 				dialogStage.initOwner(getPrimaryStage());
 				dialogStage.setScene(new Scene(loginNode));
+				dialogStage.setMaximized(false);
+				dialogStage.setResizable(false);
 				dialogStage.show();
 				controller.setDialogStage(dialogStage);
 			} catch (Exception e) {
@@ -121,42 +123,6 @@ public class MainUIController extends BaseFXController {
 	}
 
 	@FXML
-	public void chooseModelFolder() {
-		DirectoryChooser directoryChooser = new DirectoryChooser();
-		File selectedFolder = directoryChooser.showDialog(getPrimaryStage());
-		if (selectedFolder != null) {
-			modelFolderField.setText(selectedFolder.getAbsolutePath());
-		}
-	}
-
-	@FXML
-	public void chooseMapperFolder() {
-		DirectoryChooser directoryChooser = new DirectoryChooser();
-		File selectedFolder = directoryChooser.showDialog(getPrimaryStage());
-		if (selectedFolder != null) {
-			mapperFolderField.setText(selectedFolder.getAbsolutePath());
-		}
-	}
-
-	@FXML
-	public void chooseDaoFolder() {
-		DirectoryChooser directoryChooser = new DirectoryChooser();
-		File selectedFolder = directoryChooser.showDialog(getPrimaryStage());
-		if (selectedFolder != null) {
-			daoFolderField.setText(selectedFolder.getAbsolutePath());
-		}
-	}
-	
-	@FXML
-	public void chooseProjectFolder() {
-		DirectoryChooser directoryChooser = new DirectoryChooser();
-		File selectedFolder = directoryChooser.showDialog(getPrimaryStage());
-		if (selectedFolder != null) {
-			projectFolderField.setText(selectedFolder.getAbsolutePath());
-		}
-	}
-
-	@FXML
 	public void generateCode() throws Exception {
 		Configuration config = new Configuration();
 		config.addClasspathEntry(connectorFileField.getText());
@@ -174,17 +140,17 @@ public class MainUIController extends BaseFXController {
 		jdbcConfig.setPassword(passwordField.getText());
 		// java model
 		JavaModelGeneratorConfiguration modelConfig = new JavaModelGeneratorConfiguration();
-		modelConfig.setTargetPackage(packageNameField.getText());
-		modelConfig.setTargetProject(projectFolderField.getText());
+		modelConfig.setTargetPackage(modelTargetPackage.getText());
+		modelConfig.setTargetProject(modelTargetProject.getText());
 		// Mapper config
 		SqlMapGeneratorConfiguration mapperConfig = new SqlMapGeneratorConfiguration();
-		mapperConfig.setTargetPackage(packageNameField.getText());
-		mapperConfig.setTargetProject(projectFolderField.getText());
+		mapperConfig.setTargetPackage(mapperTargetPackage.getText());
+		mapperConfig.setTargetProject(mappingTargetProject.getText());
 		// DAO
 		JavaClientGeneratorConfiguration daoConfig = new JavaClientGeneratorConfiguration();
 		daoConfig.setConfigurationType("XMLMAPPER");
-		daoConfig.setTargetPackage(packageNameField.getText());
-		daoConfig.setTargetProject(projectFolderField.getText());
+		daoConfig.setTargetPackage(daoTargetPackage.getText());
+		daoConfig.setTargetProject(daoTargetProject.getText());
 
 		context.setId("myid");
 		context.addTableConfiguration(tableConfig);
