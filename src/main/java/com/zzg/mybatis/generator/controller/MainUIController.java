@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.api.ProgressCallback;
@@ -76,6 +77,8 @@ public class MainUIController extends BaseFXController {
 	private TextField mappingTargetProject;
 	@FXML
 	private TextField daoTargetProject;
+	@FXML
+	private TextField projectFolderField;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -123,6 +126,15 @@ public class MainUIController extends BaseFXController {
 	}
 
 	@FXML
+	private void chooseProjectFolder() {
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+		File selectedFolder = directoryChooser.showDialog(getPrimaryStage());
+		if (selectedFolder != null) {
+			projectFolderField.setText(selectedFolder.getAbsolutePath());
+		}
+	}
+
+	@FXML
 	public void generateCode() throws Exception {
 		Configuration config = new Configuration();
 		config.addClasspathEntry(connectorFileField.getText());
@@ -141,16 +153,16 @@ public class MainUIController extends BaseFXController {
 		// java model
 		JavaModelGeneratorConfiguration modelConfig = new JavaModelGeneratorConfiguration();
 		modelConfig.setTargetPackage(modelTargetPackage.getText());
-		modelConfig.setTargetProject(modelTargetProject.getText());
+		modelConfig.setTargetProject(projectFolderField.getText() + "/" + modelTargetProject.getText());
 		// Mapper config
 		SqlMapGeneratorConfiguration mapperConfig = new SqlMapGeneratorConfiguration();
 		mapperConfig.setTargetPackage(mapperTargetPackage.getText());
-		mapperConfig.setTargetProject(mappingTargetProject.getText());
+		mapperConfig.setTargetProject(projectFolderField.getText() + "/" + mappingTargetProject.getText());
 		// DAO
 		JavaClientGeneratorConfiguration daoConfig = new JavaClientGeneratorConfiguration();
 		daoConfig.setConfigurationType("XMLMAPPER");
 		daoConfig.setTargetPackage(daoTargetPackage.getText());
-		daoConfig.setTargetProject(daoTargetProject.getText());
+		daoConfig.setTargetProject(projectFolderField.getText() + "/" + daoTargetProject.getText());
 
 		context.setId("myid");
 		context.addTableConfiguration(tableConfig);

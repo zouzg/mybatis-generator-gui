@@ -10,7 +10,7 @@
 <?import javafx.collections.*?>
 <?import com.zzg.mybatis.generator.model.*?>
 
-<AnchorPane prefHeight="689.0" prefWidth="961.0" stylesheets="../@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zzg.mybatis.generator.controller.MainUIController">
+<AnchorPane prefHeight="689.0" prefWidth="961.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zzg.mybatis.generator.controller.MainUIController">
 	<children>
 		<BorderPane layoutX="53.0" layoutY="72.0" prefHeight="544.0" prefWidth="770.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<top>
@@ -50,7 +50,7 @@
             </VBox>
 			</top>
 			<center>
-            <SplitPane dividerPositions="0.18">
+            <SplitPane dividerPositions="0.15">
                <items>
                   <AnchorPane prefHeight="618.0" prefWidth="175.0" />
       				<AnchorPane prefHeight="572.0" prefWidth="878.0" BorderPane.alignment="CENTER">
@@ -73,6 +73,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       								<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       								<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       								<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -86,21 +87,21 @@
       								<Label text="Password" GridPane.rowIndex="5" />
       								<TextField fx:id="userNameField" text="root" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       								<TextField fx:id="passwordField" text="root" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-      								<Label text="Model targetPackage" GridPane.rowIndex="10" />
-      								<Label text="Mapping targetPackage" GridPane.rowIndex="11" />
-      								<Label text="DAO targetPackage" GridPane.rowIndex="12" />
-      								<Button mnemonicParsing="false" onAction="#generateCode" text="Generate" GridPane.columnIndex="1" GridPane.rowIndex="14" />
-                              <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="261.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
+      								<Label text="Model targetPackage" GridPane.rowIndex="11" />
+      								<Label text="Mapping targetPackage" GridPane.rowIndex="12" />
+      								<Label text="DAO targetPackage" GridPane.rowIndex="13" />
+      								<Button mnemonicParsing="false" onAction="#generateCode" text="Generate" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                              <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="261.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="11">
                                  <children>
                                     <TextField fx:id="modelTargetPackage" prefHeight="27.0" prefWidth="248.0" text="com.zzg.model" />
                                  </children>
                               </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="11">
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="12">
                                  <children>
                                     <TextField fx:id="mapperTargetPackage" prefHeight="27.0" prefWidth="248.0" text="com.zzg.mapping" />
                                  </children>
                               </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="12">
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="13">
                                  <children>
                                     <TextField fx:id="daoTargetPackage" prefHeight="27.0" prefWidth="248.0" text="com.zzg.dao" />
                                  </children>
@@ -127,12 +128,19 @@
                               <Label text="domainObjectName" GridPane.rowIndex="8" />
                               <Label text="Driver Class" GridPane.rowIndex="1" />
                               <TextField fx:id="driverClassField" promptText="com.mysql.jdbc.Driver" text="com.mysql.jdbc.Driver" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Label text="targetProject" GridPane.columnIndex="2" GridPane.rowIndex="10" />
                               <Label text="targetProject" GridPane.columnIndex="2" GridPane.rowIndex="11" />
                               <Label text="targetProject" GridPane.columnIndex="2" GridPane.rowIndex="12" />
-                              <TextField fx:id="modelTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="10" />
-                              <TextField fx:id="mappingTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="11" />
-                              <TextField fx:id="daoTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="12" />
+                              <Label text="targetProject" GridPane.columnIndex="2" GridPane.rowIndex="13" />
+                              <TextField fx:id="modelTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="11" />
+                              <TextField fx:id="mappingTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="12" />
+                              <TextField fx:id="daoTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="13" />
+                              <Label text="Project Folder" GridPane.rowIndex="9" />
+                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="9">
+                                 <children>
+                                    <TextField fx:id="projectFolderField" prefHeight="27.0" prefWidth="348.0" />
+                                    <Button mnemonicParsing="false" onAction="#chooseProjectFolder" text="Choose" />
+                                 </children>
+                              </HBox>
       							</children>
       						</GridPane>
       					</children>
