@@ -26,25 +26,25 @@
             <Label text="Host Name/IP Address:" GridPane.rowIndex="1" />
             <Label text="Port:" GridPane.rowIndex="2" />
             <Label text="User Name:" GridPane.rowIndex="3" />
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="nameField" GridPane.columnIndex="1" />
+            <TextField fx:id="hostField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Password:" GridPane.rowIndex="4" />
             <Label text="Encoding:" GridPane.rowIndex="5" />
-            <TextField minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="userNameField" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
-                  <TextField />
-                  <CheckBox mnemonicParsing="false" text="Save password" />
+                  <TextField fx:id="passwordField" />
+                  <CheckBox fx:id="savePwdCheckBox" mnemonicParsing="false" text="Save password" />
                </children>
             </HBox>
-            <ChoiceBox maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" />
-            <TextField maxWidth="-Infinity" prefHeight="27.0" prefWidth="103.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ChoiceBox fx:id="encodingChoice" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" />
+            <TextField fx:id="portField" maxWidth="-Infinity" prefHeight="27.0" prefWidth="103.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <ToolBar layoutX="14.0" layoutY="322.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="64.0" prefWidth="467.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <items>
-          <Button mnemonicParsing="false" styleClass="btn-primary" text="OK" textFill="WHITE" />
-            <Button mnemonicParsing="false" text="Cancel" />
+          <Button mnemonicParsing="false" onAction="#saveConnection" styleClass="btn-primary" text="OK" textFill="WHITE" />
+            <Button mnemonicParsing="false" onAction="#cancel" text="Cancel" />
         </items>
       </ToolBar>
    </children>

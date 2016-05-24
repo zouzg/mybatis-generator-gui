@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import javafx.scene.control.Button;
+import com.zzg.mybatis.generator.model.DatabaseConfig;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.api.ProgressCallback;
@@ -32,9 +33,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -79,6 +77,8 @@ public class MainUIController extends BaseFXController {
 	private TextField daoTargetProject;
 	@FXML
 	private TextField projectFolderField;
+	@FXML
+	private TreeView<DatabaseConfig> leftDBTree;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -126,7 +126,7 @@ public class MainUIController extends BaseFXController {
 	}
 
 	@FXML
-	private void chooseProjectFolder() {
+	public void chooseProjectFolder() {
 		DirectoryChooser directoryChooser = new DirectoryChooser();
 		File selectedFolder = directoryChooser.showDialog(getPrimaryStage());
 		if (selectedFolder != null) {
