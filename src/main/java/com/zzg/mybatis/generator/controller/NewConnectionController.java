@@ -93,8 +93,10 @@ public class NewConnectionController extends BaseFXController {
         config.setDbType(dbType);
         config.setHost(host);
         config.setPort(port);
+        config.setUsername(userName);
+        config.setPassword(password);
         config.setEncoding(encoding);
-        String url = config.getConnectionUrl();
+        String url = DbUtil.getConnectionUrlWithoutSchema(config);
         System.out.println(url);
         try {
             DbUtil.getConnection(config);

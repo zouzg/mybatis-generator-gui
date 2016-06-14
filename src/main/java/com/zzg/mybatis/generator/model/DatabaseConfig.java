@@ -5,7 +5,7 @@ package com.zzg.mybatis.generator.model;
  */
 public class DatabaseConfig {
 
-    private DBType dbType;
+    private String dbType;
     /**
      * The name of the config
      */
@@ -15,31 +15,13 @@ public class DatabaseConfig {
 
     private String port;
 
+    private String schema;
 
     private String username;
 
     private String password;
 
     private String encoding;
-
-    public enum DBType {
-        MYSQL("mysql", "com.mysql.jdbc.Driver", "jdbc:mysql://%s:%s?useUnicode=true&useSSL=false&characterEncoding=%s"),
-        ORACLE("oracle", "oracle.jdbc.driver.OracleDriver", "jdbc:oracle:thin:@%s:%s");
-
-        private final String name;
-        private final String driverClass;
-        private final String connectionUrlPattern;
-
-        DBType(String name, String driverClass, String connectionUrlPattern) {
-            this.name = name;
-            this.driverClass = driverClass;
-            this.connectionUrlPattern = connectionUrlPattern;
-        }
-
-        public String getDriverClass() {
-            return driverClass;
-        }
-    }
 
     public String getName() {
         return name;
@@ -63,6 +45,14 @@ public class DatabaseConfig {
 
     public void setPort(String port) {
         this.port = port;
+    }
+
+    public String getSchema() {
+        return schema;
+    }
+
+    public void setSchema(String schema) {
+        this.schema = schema;
     }
 
     public String getUsername() {
@@ -89,12 +79,12 @@ public class DatabaseConfig {
         this.encoding = encoding;
     }
 
-    public DBType getDbType() {
+    public String getDbType() {
         return dbType;
     }
 
     public void setDbType(String dbType) {
-        this.dbType = DBType.valueOf(dbType);
+        this.dbType = dbType;
     }
 
     @Override
@@ -102,12 +92,4 @@ public class DatabaseConfig {
         return name;
     }
 
-    public String getConnectionUrl() {
-        if (dbType == DBType.MYSQL) {
-            return String.format(DBType.MYSQL.connectionUrlPattern, host, port, encoding);
-        } else if (dbType == DBType.ORACLE) {
-            return String.format(DBType.ORACLE.connectionUrlPattern, host, port);
-        }
-        return null;
-    }
 }

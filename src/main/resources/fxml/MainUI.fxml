@@ -10,8 +10,7 @@
 <?import javafx.collections.*?>
 <?import com.zzg.mybatis.generator.model.*?>
 
-<BorderPane prefHeight="613.0" prefWidth="879.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.zzg.mybatis.generator.controller.MainUIController">
+<BorderPane prefHeight="613.0" prefWidth="879.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zzg.mybatis.generator.controller.MainUIController">
     <top>
         <VBox>
             <children>
@@ -19,17 +18,17 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="File">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Close"/>
+                                <MenuItem mnemonicParsing="false" text="Close" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Edit">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Delete"/>
+                                <MenuItem mnemonicParsing="false" text="Delete" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Help">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="About"/>
+                                <MenuItem mnemonicParsing="false" text="About" />
                             </items>
                         </Menu>
                     </menus>
@@ -38,7 +37,7 @@
                     <items>
                         <Label fx:id="connectionLabel" contentDisplay="TOP" text="Connections">
                             <cursor>
-                                <Cursor fx:constant="HAND"/>
+                                <Cursor fx:constant="HAND" />
                             </cursor>
                         </Label>
                     </items>
@@ -51,109 +50,97 @@
             <items>
                 <AnchorPane prefHeight="618.0" prefWidth="175.0">
                     <children>
-                        <TreeView fx:id="leftDBTree" layoutX="-14.0" prefHeight="545.0" prefWidth="126.0"
-                                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                                  AnchorPane.topAnchor="0.0"/>
+                        <TreeView fx:id="leftDBTree" layoutX="-14.0" prefHeight="545.0" prefWidth="126.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                 </AnchorPane>
                 <AnchorPane prefHeight="572.0" prefWidth="878.0" BorderPane.alignment="CENTER">
                     <children>
-                        <GridPane layoutX="5.0" layoutY="29.0" prefHeight="387.0" prefWidth="736.0" vgap="5.0"
-                                  AnchorPane.leftAnchor="-5.0" AnchorPane.rightAnchor="10.0">
+                        <GridPane layoutX="5.0" layoutY="29.0" prefHeight="387.0" prefWidth="736.0" vgap="5.0" AnchorPane.leftAnchor="-5.0" AnchorPane.rightAnchor="10.0">
                             <columnConstraints>
-                                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="157.0" minWidth="123.0"
-                                                   prefWidth="156.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0"
-                                                   prefWidth="226.0"/>
-                                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0"
-                                                   prefWidth="105.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0"
-                                                   prefWidth="275.0"/>
+                                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="157.0" minWidth="123.0" prefWidth="156.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="226.0" />
+                                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="688.0" minWidth="90.0" prefWidth="105.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="275.0" />
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Label text="Model Package" GridPane.rowIndex="3"/>
-                                <Label text="Mapping Package" GridPane.rowIndex="4"/>
-                                <Label text="DAO Package" GridPane.rowIndex="5"/>
-                                <Button mnemonicParsing="false" onAction="#generateCode" text="Generate"
-                                        GridPane.columnIndex="1" GridPane.rowIndex="6"/>
-                                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="261.0" spacing="10.0"
-                                      GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <TextField fx:id="connectorPathField" GridPane.columnIndex="1" GridPane.columnSpan="2" />
+                        <Label text="Connector Jar" />
+                                <Label text="Model Package" GridPane.rowIndex="4" />
+                                <Label text="Mapping Package" GridPane.rowIndex="5" />
+                                <Label text="DAO Package" GridPane.rowIndex="6" />
+                                <Button mnemonicParsing="false" onAction="#generateCode" text="Generate" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="261.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                     <children>
-                                        <TextField fx:id="modelTargetPackage" prefHeight="27.0" prefWidth="248.0"
-                                                   text="com.zzg.model">
+                                        <TextField fx:id="modelTargetPackage" prefHeight="27.0" prefWidth="248.0" text="com.zzg.model">
                                             <HBox.margin>
-                                                <Insets right="5.0"/>
+                                                <Insets right="5.0" />
                                             </HBox.margin>
                                         </TextField>
                                     </children>
                                 </HBox>
-                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0"
-                                      GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                     <children>
-                                        <TextField fx:id="mapperTargetPackage" prefHeight="27.0" prefWidth="248.0"
-                                                   text="com.zzg.mapping">
+                                        <TextField fx:id="mapperTargetPackage" prefHeight="27.0" prefWidth="248.0" text="com.zzg.mapping">
                                             <HBox.margin>
-                                                <Insets right="5.0"/>
+                                                <Insets right="5.0" />
                                             </HBox.margin>
                                         </TextField>
                                     </children>
                                 </HBox>
-                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0"
-                                      GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                     <children>
-                                        <TextField fx:id="daoTargetPackage" prefHeight="27.0" prefWidth="248.0"
-                                                   text="com.zzg.dao">
+                                        <TextField fx:id="daoTargetPackage" prefHeight="27.0" prefWidth="248.0" text="com.zzg.dao">
                                             <HBox.margin>
-                                                <Insets right="5.0"/>
+                                                <Insets right="5.0" />
                                             </HBox.margin>
                                         </TextField>
                                     </children>
                                 </HBox>
-                                <Label text="Table Name"/>
-                                <TextField fx:id="tableNameField" text="customer" GridPane.columnIndex="1">
+                                <Label text="Table Name" GridPane.rowIndex="1" />
+                                <TextField fx:id="tableNameField" text="customer" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                     <GridPane.margin>
-                                        <Insets right="5.0"/>
+                                        <Insets right="5.0" />
                                     </GridPane.margin>
                                 </TextField>
-                                <TextField fx:id="domainObjectNameField" text="Customer" GridPane.columnIndex="1"
-                                           GridPane.rowIndex="1">
+                                <TextField fx:id="domainObjectNameField" text="Customer" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                     <GridPane.margin>
-                                        <Insets right="5.0"/>
+                                        <Insets right="5.0" />
                                     </GridPane.margin>
                                 </TextField>
-                                <Label text="Domain Object Name" GridPane.rowIndex="1"/>
-                                <Label text="Project Folder" GridPane.rowIndex="2"/>
-                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0"
-                                      GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
+                                <Label text="Domain Object Name" GridPane.rowIndex="2" />
+                                <Label text="Project Folder" GridPane.rowIndex="3" />
+                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3">
                                     <children>
                                         <TextField fx:id="projectFolderField" prefHeight="27.0" prefWidth="348.0">
                                             <HBox.margin>
-                                                <Insets right="5.0"/>
+                                                <Insets right="5.0" />
                                             </HBox.margin>
                                         </TextField>
-                                        <Button mnemonicParsing="false" onAction="#chooseProjectFolder" text="Choose"/>
+                                        <Button mnemonicParsing="false" onAction="#chooseProjectFolder" text="Choose" />
                                     </children>
                                 </HBox>
-                                <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
-                                <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
-                                <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="5"/>
-                                <TextField fx:id="modelTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="3"/>
-                                <TextField fx:id="mappingTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="4"/>
-                                <TextField fx:id="daoTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="5"/>
+                                <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                                <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                                <TextField fx:id="modelTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                <TextField fx:id="mappingTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                <TextField fx:id="daoTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                        <Button mnemonicParsing="false" onAction="#chooseConnectorFile" text="Choose" GridPane.columnIndex="3" />
                             </children>
                         </GridPane>
                     </children>
                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </padding>
                 </AnchorPane>
             </items>

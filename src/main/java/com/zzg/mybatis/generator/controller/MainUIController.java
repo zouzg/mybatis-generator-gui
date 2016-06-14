@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.*;
 
 import com.zzg.mybatis.generator.model.DatabaseConfig;
+import com.zzg.mybatis.generator.model.DbType;
 import com.zzg.mybatis.generator.util.DbUtil;
 import com.zzg.mybatis.generator.view.LeftDbTreeCell;
 import javafx.collections.FXCollections;
@@ -58,6 +59,8 @@ public class MainUIController extends BaseFXController {
     @FXML
     private Label connectionLabel;
     @FXML
+    private TextField connectorPathField;
+    @FXML
     private TextField modelTargetPackage;
     @FXML
     private TextField mapperTargetPackage;
@@ -77,6 +80,8 @@ public class MainUIController extends BaseFXController {
     private TextField projectFolderField;
     @FXML
     private TreeView<String> leftDBTree;
+
+    private DatabaseConfig selectedDatabaseConfig;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -162,6 +167,12 @@ public class MainUIController extends BaseFXController {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                    } else if (level == 3) {
+                        String tableName = treeCell.getTreeItem().getValue();
+                        selectedDatabaseConfig = (DatabaseConfig)item.getParent().getParent().getGraphic().getUserData();
+                        String schema = (String)item.getParent().getValue();
+                        selectedDatabaseConfig.setSchema(schema);
+                        tableNameField.setText(tableName);
                     }
                 }
             });
@@ -202,6 +213,15 @@ public class MainUIController extends BaseFXController {
     }
 
     @FXML
+    public void chooseConnectorFile() {
+        FileChooser directoryChooser = new FileChooser();
+        File selectedFolder = directoryChooser.showOpenDialog(getPrimaryStage());
+        if (selectedFolder != null) {
+            connectorPathField.setText(selectedFolder.getAbsolutePath());
+        }
+    }
+
+    @FXML
     public void chooseProjectFolder() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File selectedFolder = directoryChooser.showDialog(getPrimaryStage());
@@ -212,10 +232,8 @@ public class MainUIController extends BaseFXController {
 
     @FXML
     public void generateCode() throws Exception {
-        DatabaseConfig dbConfig = null;//TODO
-        String url = getDatabaseUrl(dbConfig);
         Configuration config = new Configuration();
-        config.addClasspathEntry("mysql-connector-javaa-5.1.38.jar");
+        config.addClasspathEntry(connectorPathField.getText());
         Context context = new Context(ModelType.CONDITIONAL);
         config.addContext(context);
         // Table config
@@ -224,10 +242,10 @@ public class MainUIController extends BaseFXController {
         tableConfig.setDomainObjectName(domainObjectNameField.getText());
         // JDBC config
         JDBCConnectionConfiguration jdbcConfig = new JDBCConnectionConfiguration();
-        jdbcConfig.setDriverClass("com.mysql.jdbc.Driver");
-        jdbcConfig.setConnectionURL("jdbc:mysql://localhost:3306/test?user=root&password=&useUnicode=true&characterEncoding=utf8&autoReconnect=true");
-        jdbcConfig.setUserId("root");
-        jdbcConfig.setPassword("root");
+        jdbcConfig.setDriverClass(DbType.valueOf(selectedDatabaseConfig.getDbType()).getDriverClass());
+        jdbcConfig.setConnectionURL(DbUtil.getConnectionUrlWithSchema(selectedDatabaseConfig));
+        jdbcConfig.setUserId(selectedDatabaseConfig.getUsername());
+        jdbcConfig.setPassword(selectedDatabaseConfig.getPassword());
         // java model
         JavaModelGeneratorConfiguration modelConfig = new JavaModelGeneratorConfiguration();
         modelConfig.setTargetPackage(modelTargetPackage.getText());
