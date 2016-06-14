@@ -28,11 +28,12 @@ public class DbUtil {
         return schemas;
     }
 
-    public static List<String> getTableNames(DatabaseConfig config) throws Exception {
+    public static List<String> getTableNames(DatabaseConfig config, String schema) throws Exception {
         Class.forName(config.getDbType().getDriverClass());
         Connection conn = DriverManager.getConnection(config.getConnectionUrl(), config.getUsername(), config.getPassword());
+        conn.setSchema(schema);
         DatabaseMetaData md = conn.getMetaData();
-        ResultSet rs = md.getTables(null, null, "%", null);
+        ResultSet rs = md.getTables(schema, null, null, null);
         List<String> tables = new ArrayList<>();
         while (rs.next()) {
             tables.add(rs.getString(3));

@@ -6,12 +6,17 @@ import java.util.*;
 
 import com.zzg.mybatis.generator.model.DatabaseConfig;
 import com.zzg.mybatis.generator.util.DbUtil;
+import com.zzg.mybatis.generator.view.LeftDbTreeCell;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldTreeCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
@@ -71,7 +76,7 @@ public class MainUIController extends BaseFXController {
     @FXML
     private TextField projectFolderField;
     @FXML
-    private TreeView<DatabaseConfig> leftDBTree;
+    private TreeView<String> leftDBTree;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -103,10 +108,70 @@ public class MainUIController extends BaseFXController {
 
         leftDBTree.setShowRoot(false);
         leftDBTree.setRoot(new TreeItem<>());
+        Callback<TreeView<String>, TreeCell<String>> defaultCellFactory = TextFieldTreeCell.forTreeView();
+        leftDBTree.setCellFactory((TreeView<String> tv) -> {
+            TreeCell<String> cell = defaultCellFactory.call(tv);
+            cell.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                if (event.getClickCount() == 2) {
+                    int level = leftDBTree.getTreeItemLevel(cell.getTreeItem());
+                    TreeCell<String> treeCell = (TreeCell<String>) event.getSource();
+                    TreeItem<String> item = treeCell.getTreeItem();
+                    if (level == 1) {
+                        DatabaseConfig selectedConfig = (DatabaseConfig) item.getGraphic().getUserData();
+                        // Accept clicks only on node cells, and not on empty spaces of the TreeView
+                        leftDBTree.getSelectionModel().getSelectedItem().setExpanded(true);
+                        System.out.println("Node click: " + selectedConfig);
+                        List<String> schemas = null;
+                        try {
+                            schemas = DbUtil.getSchemas(selectedConfig);
+                            System.out.println(schemas);
+                            if (schemas != null && schemas.size() > 0) {
+                                for (String schema : schemas) {
+                                    ObservableList<TreeItem<String>> children = cell.getTreeItem().getChildren();
+                                    TreeItem<String> treeItem = new TreeItem<>();
+                                    ImageView imageView = new ImageView("icons/database.png");
+                                    imageView.setFitHeight(16);
+                                    imageView.setFitWidth(16);
+                                    treeItem.setGraphic(imageView);
+                                    treeItem.setValue(schema);
+                                    children.add(treeItem);
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else if (level == 2) {
+                        System.out.println("index: " + leftDBTree.getSelectionModel().getSelectedIndex());
+                        DatabaseConfig selectedConfig = (DatabaseConfig) item.getParent().getGraphic().getUserData();
+                        String schema = treeCell.getTreeItem().getValue();
+                        item.setExpanded(true);
+                        try {
+                            List<String> tables = DbUtil.getTableNames(selectedConfig, schema);
+                            if (tables != null && tables.size() > 0) {
+                                for (String tableName : tables) {
+                                    ObservableList<TreeItem<String>> children = cell.getTreeItem().getChildren();
+                                    TreeItem<String> treeItem = new TreeItem<>();
+                                    ImageView imageView = new ImageView("icons/table.png");
+                                    imageView.setFitHeight(16);
+                                    imageView.setFitWidth(16);
+                                    treeItem.setGraphic(imageView);
+                                    treeItem.setValue(tableName);
+                                    children.add(treeItem);
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+            return cell;
+        });
         loadLeftDBTree();
     }
 
     void loadLeftDBTree() {
+        TreeItem rootTreeItem = leftDBTree.getRoot();
         Configurations configs = new Configurations();
         try {
             XMLConfiguration config = configs.xml(new File("config.xml"));
@@ -122,48 +187,15 @@ public class MainUIController extends BaseFXController {
                 dbConfig.setPassword(hc.getString("password"));
                 dbConfig.setEncoding(hc.getString("encoding"));
                 dbConfig.setDbType(hc.getString("dbType"));
-                TreeItem<DatabaseConfig> treeItem = new TreeItem<>();
-                treeItem.setValue(dbConfig);
+                TreeItem<String> treeItem = new TreeItem<>();
+                treeItem.setValue(dbConfig.getName());
                 ImageView dbImage = new ImageView("icons/computer.png");
                 dbImage.setFitHeight(16);
                 dbImage.setFitWidth(16);
+                dbImage.setUserData(dbConfig);
                 treeItem.setGraphic(dbImage);
-                treeItem.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    System.out.println("==============source: " + event.getSource());
-                });
-                leftDBTree.getRoot().getChildren().add(treeItem);
+                rootTreeItem.getChildren().add(treeItem);
             }
-            EventHandler<MouseEvent> mouseEventHandle = (MouseEvent event) -> {
-                System.out.println(event.getSource());
-                System.out.println(event.getTarget());
-                Node node = event.getPickResult().getIntersectedNode();
-                System.out.println("node: " + node);
-                // Accept clicks only on node cells, and not on empty spaces of the TreeView
-                if (node instanceof Text || (node instanceof TreeCell && ((TreeCell) node).getText() != null)) {
-                    DatabaseConfig selectedConfig = leftDBTree.getSelectionModel().getSelectedItem().getValue();
-                    System.out.println("Node click: " + selectedConfig);
-                    List<String> schemas = null;
-                    try {
-                        schemas = DbUtil.getSchemas(selectedConfig);
-                        System.out.println(schemas);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            };
-            leftDBTree.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEventHandle);
-//            leftDBTree.getSelectionModel()
-//                    .selectedItemProperty()
-//                    .addListener((observable, oldValue, newValue) -> {
-//                                DatabaseConfig selectedConfig = newValue.getValue();
-//                                try {
-//                                    List<String> schemas = DbUtil.getSchemas(selectedConfig);
-//                                    System.out.println(schemas);
-//                                } catch (Exception e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                    );
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -180,8 +212,7 @@ public class MainUIController extends BaseFXController {
 
     @FXML
     public void generateCode() throws Exception {
-        MultipleSelectionModel<TreeItem<DatabaseConfig>> selectionModel = leftDBTree.getSelectionModel();
-        DatabaseConfig dbConfig = selectionModel.getSelectedItem().getValue();
+        DatabaseConfig dbConfig = null;//TODO
         String url = getDatabaseUrl(dbConfig);
         Configuration config = new Configuration();
         config.addClasspathEntry("mysql-connector-javaa-5.1.38.jar");
