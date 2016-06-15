@@ -14,14 +14,7 @@ import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.ShellCallback;
 import org.mybatis.generator.api.VerboseProgressCallback;
-import org.mybatis.generator.config.Configuration;
-import org.mybatis.generator.config.Context;
-import org.mybatis.generator.config.JDBCConnectionConfiguration;
-import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
-import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
-import org.mybatis.generator.config.ModelType;
-import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
-import org.mybatis.generator.config.TableConfiguration;
+import org.mybatis.generator.config.*;
 import org.mybatis.generator.internal.DefaultShellCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -163,6 +156,10 @@ public class MainUIController extends BaseFXController {
 		daoConfig.setConfigurationType("XMLMAPPER");
 		daoConfig.setTargetPackage(daoTargetPackage.getText());
 		daoConfig.setTargetProject(projectFolderField.getText() + "/" + daoTargetProject.getText());
+		// Comment
+		CommentGeneratorConfiguration commentConfig = new CommentGeneratorConfiguration();
+		commentConfig.addProperty("suppressAllComments", "true");
+		commentConfig.addProperty("suppressDate", "true");
 
 		context.setId("myid");
 		context.addTableConfiguration(tableConfig);
@@ -171,7 +168,13 @@ public class MainUIController extends BaseFXController {
 		context.setJavaModelGeneratorConfiguration(modelConfig);
 		context.setSqlMapGeneratorConfiguration(mapperConfig);
 		context.setJavaClientGeneratorConfiguration(daoConfig);
-		
+		context.setCommentGeneratorConfiguration(commentConfig);
+		// limit/offset插件
+		PluginConfiguration pluginConfiguration = new PluginConfiguration();
+		pluginConfiguration.addProperty("type", "com.zzg.mybatis.generator.plugins.MySQLLimitPlugin");
+		pluginConfiguration.setConfigurationType("com.zzg.mybatis.generator.plugins.MySQLLimitPlugin");
+		context.addPluginConfiguration(pluginConfiguration);
+
 		context.setTargetRuntime("MyBatis3");
 
 		List<String> warnings = new ArrayList<>();
