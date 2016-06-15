@@ -6,6 +6,7 @@ import java.util.*;
 
 import com.zzg.mybatis.generator.model.DatabaseConfig;
 import com.zzg.mybatis.generator.model.DbType;
+import com.zzg.mybatis.generator.model.GeneratorConfig;
 import com.zzg.mybatis.generator.util.DbUtil;
 import com.zzg.mybatis.generator.util.XMLConfigHelper;
 import com.zzg.mybatis.generator.view.LeftDbTreeCell;
@@ -185,16 +186,22 @@ public class MainUIController extends BaseFXController {
     void loadLeftDBTree() {
         TreeItem rootTreeItem = leftDBTree.getRoot();
         rootTreeItem.getChildren().clear();
-        List<DatabaseConfig> dbConfigs = XMLConfigHelper.loadDatabaseConfig();
-        for (DatabaseConfig dbConfig : dbConfigs) {
-            TreeItem<String> treeItem = new TreeItem<>();
-            treeItem.setValue(dbConfig.getName());
-            ImageView dbImage = new ImageView("icons/computer.png");
-            dbImage.setFitHeight(16);
-            dbImage.setFitWidth(16);
-            dbImage.setUserData(dbConfig);
-            treeItem.setGraphic(dbImage);
-            rootTreeItem.getChildren().add(treeItem);
+        List<DatabaseConfig> dbConfigs = null;
+        try {
+            dbConfigs = XMLConfigHelper.loadDatabaseConfig();
+            for (DatabaseConfig dbConfig : dbConfigs) {
+                TreeItem<String> treeItem = new TreeItem<>();
+                treeItem.setValue(dbConfig.getName());
+                ImageView dbImage = new ImageView("icons/computer.png");
+                dbImage.setFitHeight(16);
+                dbImage.setFitWidth(16);
+                dbImage.setUserData(dbConfig);
+                treeItem.setGraphic(dbImage);
+                rootTreeItem.getChildren().add(treeItem);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // show error TODO
         }
     }
 
@@ -268,6 +275,30 @@ public class MainUIController extends BaseFXController {
 
     private String getDatabaseUrl(DatabaseConfig dbConfig) {
         return "jdbc:mysql://localhost:3306/test?user=root&password=&useUnicode=true&characterEncoding=utf8&autoReconnect=true";
+    }
+
+    public GeneratorConfig getGeneratorConfigFromUI() {
+        GeneratorConfig generatorConfig = new GeneratorConfig();
+        generatorConfig.setConnectorJarPath(connectorPathField.getText());
+        generatorConfig.setProjectFolder(projectFolderField.getText());
+        generatorConfig.setModelPackage(modelTargetPackage.getText());
+        generatorConfig.setModelPackageTargetFolder(modelTargetProject.getText());
+        generatorConfig.setDaoPackage(daoTargetPackage.getText());
+        generatorConfig.setDaoTargetFolder(daoTargetProject.getText());
+        generatorConfig.setMappingXMLPackage(mapperTargetPackage.getText());
+        generatorConfig.setMappingXMLTargetFolder(mappingTargetProject.getText());
+        return generatorConfig;
+    }
+
+    public void setGeneratorConfigIntoUI(GeneratorConfig generatorConfig) {
+        connectorPathField.setText(generatorConfig.getConnectorJarPath());
+        projectFolderField.setText(generatorConfig.getProjectFolder());
+        modelTargetPackage.setText(generatorConfig.getModelPackage());
+        modelTargetProject.setText(generatorConfig.getModelPackage());
+        daoTargetPackage.setText(generatorConfig.getDaoPackage());
+        daoTargetProject.setText(generatorConfig.getDaoPackage());
+        mapperTargetPackage.setText(generatorConfig.getMappingXMLPackage());
+        mappingTargetProject.setText(generatorConfig.getMappingXMLTargetFolder());
     }
 
 }

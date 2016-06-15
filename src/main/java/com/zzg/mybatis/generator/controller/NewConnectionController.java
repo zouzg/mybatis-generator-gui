@@ -63,9 +63,14 @@ public class NewConnectionController extends BaseFXController {
         dbConfig.setUsername(userName);
         dbConfig.setPassword(password);
         dbConfig.setEncoding(encoding);
-        XMLConfigHelper.saveDatabaseConfig(name, dbConfig);
-        getDialogStage().close();
-        mainUIController.loadLeftDBTree();
+        try {
+            XMLConfigHelper.saveDatabaseConfig(name, dbConfig);
+            getDialogStage().close();
+            mainUIController.loadLeftDBTree();
+        } catch (Exception e) {
+            e.printStackTrace();
+            // TODO show error
+        }
     }
 
     @FXML

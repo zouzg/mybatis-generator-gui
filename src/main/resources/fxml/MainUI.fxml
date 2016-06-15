@@ -81,7 +81,7 @@
                                 <Button mnemonicParsing="false" onAction="#generateCode" text="Generate" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                 <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="261.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                     <children>
-                                        <TextField fx:id="modelTargetPackage" prefHeight="27.0" prefWidth="248.0" text="com.zzg.model">
+                                        <TextField fx:id="modelTargetPackage" prefHeight="27.0" prefWidth="248.0">
                                             <HBox.margin>
                                                 <Insets right="5.0" />
                                             </HBox.margin>
@@ -90,7 +90,7 @@
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                     <children>
-                                        <TextField fx:id="mapperTargetPackage" prefHeight="27.0" prefWidth="248.0" text="com.zzg.mapping">
+                                        <TextField fx:id="mapperTargetPackage" prefHeight="27.0" prefWidth="248.0">
                                             <HBox.margin>
                                                 <Insets right="5.0" />
                                             </HBox.margin>
@@ -99,7 +99,7 @@
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                     <children>
-                                        <TextField fx:id="daoTargetPackage" prefHeight="27.0" prefWidth="248.0" text="com.zzg.dao">
+                                        <TextField fx:id="daoTargetPackage" prefHeight="27.0" prefWidth="248.0">
                                             <HBox.margin>
                                                 <Insets right="5.0" />
                                             </HBox.margin>
@@ -107,12 +107,12 @@
                                     </children>
                                 </HBox>
                                 <Label text="Table Name" GridPane.rowIndex="1" />
-                                <TextField fx:id="tableNameField" text="customer" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                <TextField fx:id="tableNameField" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                     <GridPane.margin>
                                         <Insets right="5.0" />
                                     </GridPane.margin>
                                 </TextField>
-                                <TextField fx:id="domainObjectNameField" text="Customer" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                <TextField fx:id="domainObjectNameField" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                     <GridPane.margin>
                                         <Insets right="5.0" />
                                     </GridPane.margin>
