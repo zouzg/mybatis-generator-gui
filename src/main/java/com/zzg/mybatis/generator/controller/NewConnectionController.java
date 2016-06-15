@@ -2,6 +2,7 @@ package com.zzg.mybatis.generator.controller;
 
 import com.zzg.mybatis.generator.model.DatabaseConfig;
 import com.zzg.mybatis.generator.util.DbUtil;
+import com.zzg.mybatis.generator.util.XMLConfigHelper;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
@@ -55,29 +56,16 @@ public class NewConnectionController extends BaseFXController {
         String encoding = encodingChoice.getValue();
         String dbType = dbTypeChoice.getValue();
 
-        Configurations configs = new Configurations();
-        try {
-            // obtain the configuration
-            FileBasedConfigurationBuilder<XMLConfiguration> builder = configs.xmlBuilder("config.xml");
-            XMLConfiguration config = builder.getConfiguration();
-
-            // update property
-            config.addProperty(name + ".dbType", dbType);
-            config.addProperty(name + ".host", host);
-            config.addProperty(name + ".port", port);
-            config.addProperty(name + ".userName", userName);
-            config.addProperty(name + ".password", password);
-            config.addProperty(name + ".encoding", encoding);
-
-            // save configuration
-            builder.save();
-
-            getDialogStage().close();
-            mainUIController.loadLeftDBTree();
-        } catch (ConfigurationException cex) {
-            // Something went wrong
-            cex.printStackTrace();
-        }
+        DatabaseConfig dbConfig = new DatabaseConfig();
+        dbConfig.setHost(host);
+        dbConfig.setPort(port);
+        dbConfig.setDbType(dbType);
+        dbConfig.setUsername(userName);
+        dbConfig.setPassword(password);
+        dbConfig.setEncoding(encoding);
+        XMLConfigHelper.saveDatabaseConfig(name, dbConfig);
+        getDialogStage().close();
+        mainUIController.loadLeftDBTree();
     }
 
     @FXML

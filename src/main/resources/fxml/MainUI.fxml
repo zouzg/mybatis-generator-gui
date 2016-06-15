@@ -57,7 +57,7 @@
                     <children>
                         <GridPane layoutX="5.0" layoutY="29.0" prefHeight="387.0" prefWidth="736.0" vgap="5.0" AnchorPane.leftAnchor="-5.0" AnchorPane.rightAnchor="10.0">
                             <columnConstraints>
-                                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="157.0" minWidth="123.0" prefWidth="156.0" />
+                                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="157.0" minWidth="156.0" prefWidth="156.0" />
                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="226.0" />
                                 <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="688.0" minWidth="90.0" prefWidth="105.0" />
                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="275.0" />
@@ -76,8 +76,8 @@
                         <TextField fx:id="connectorPathField" GridPane.columnIndex="1" GridPane.columnSpan="2" />
                         <Label text="Connector Jar" />
                                 <Label text="Model Package" GridPane.rowIndex="4" />
-                                <Label text="Mapping Package" GridPane.rowIndex="5" />
-                                <Label text="DAO Package" GridPane.rowIndex="6" />
+                                <Label text="Mapping XML Package" GridPane.rowIndex="6" />
+                                <Label text="DAO Package" GridPane.rowIndex="5" />
                                 <Button mnemonicParsing="false" onAction="#generateCode" text="Generate" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                 <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="261.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                     <children>
@@ -88,7 +88,7 @@
                                         </TextField>
                                     </children>
                                 </HBox>
-                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                     <children>
                                         <TextField fx:id="mapperTargetPackage" prefHeight="27.0" prefWidth="248.0" text="com.zzg.mapping">
                                             <HBox.margin>
@@ -97,7 +97,7 @@
                                         </TextField>
                                     </children>
                                 </HBox>
-                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                     <children>
                                         <TextField fx:id="daoTargetPackage" prefHeight="27.0" prefWidth="248.0" text="com.zzg.dao">
                                             <HBox.margin>
@@ -130,11 +130,11 @@
                                     </children>
                                 </HBox>
                                 <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                                <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                                 <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                                <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                                 <TextField fx:id="modelTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                                <TextField fx:id="mappingTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                                <TextField fx:id="daoTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                                <TextField fx:id="mappingTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                                <TextField fx:id="daoTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="5" />
                         <Button mnemonicParsing="false" onAction="#chooseConnectorFile" text="Choose" GridPane.columnIndex="3" />
                             </children>
                         </GridPane>

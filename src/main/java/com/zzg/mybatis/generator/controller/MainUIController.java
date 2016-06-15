@@ -7,6 +7,7 @@ import java.util.*;
 import com.zzg.mybatis.generator.model.DatabaseConfig;
 import com.zzg.mybatis.generator.model.DbType;
 import com.zzg.mybatis.generator.util.DbUtil;
+import com.zzg.mybatis.generator.util.XMLConfigHelper;
 import com.zzg.mybatis.generator.view.LeftDbTreeCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -183,32 +184,17 @@ public class MainUIController extends BaseFXController {
 
     void loadLeftDBTree() {
         TreeItem rootTreeItem = leftDBTree.getRoot();
-        Configurations configs = new Configurations();
-        try {
-            XMLConfiguration config = configs.xml(new File("config.xml"));
-            List<HierarchicalConfiguration<ImmutableNode>> list = config.childConfigurationsAt("");
-            System.out.println(list);
-            for (HierarchicalConfiguration<ImmutableNode> hc : list) {
-                String name = hc.getRootElementName();
-                DatabaseConfig dbConfig = new DatabaseConfig();
-                dbConfig.setName(name);
-                dbConfig.setHost(hc.getString("host"));
-                dbConfig.setPort(hc.getString("port"));
-                dbConfig.setUsername(hc.getString("userName"));
-                dbConfig.setPassword(hc.getString("password"));
-                dbConfig.setEncoding(hc.getString("encoding"));
-                dbConfig.setDbType(hc.getString("dbType"));
-                TreeItem<String> treeItem = new TreeItem<>();
-                treeItem.setValue(dbConfig.getName());
-                ImageView dbImage = new ImageView("icons/computer.png");
-                dbImage.setFitHeight(16);
-                dbImage.setFitWidth(16);
-                dbImage.setUserData(dbConfig);
-                treeItem.setGraphic(dbImage);
-                rootTreeItem.getChildren().add(treeItem);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        rootTreeItem.getChildren().clear();
+        List<DatabaseConfig> dbConfigs = XMLConfigHelper.loadDatabaseConfig();
+        for (DatabaseConfig dbConfig : dbConfigs) {
+            TreeItem<String> treeItem = new TreeItem<>();
+            treeItem.setValue(dbConfig.getName());
+            ImageView dbImage = new ImageView("icons/computer.png");
+            dbImage.setFitHeight(16);
+            dbImage.setFitWidth(16);
+            dbImage.setUserData(dbConfig);
+            treeItem.setGraphic(dbImage);
+            rootTreeItem.getChildren().add(treeItem);
         }
     }
 
