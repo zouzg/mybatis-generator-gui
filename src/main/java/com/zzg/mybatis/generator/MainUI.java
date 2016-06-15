@@ -17,12 +17,10 @@ public class MainUI extends Application {
 		URL url = Thread.currentThread().getContextClassLoader().getResource("fxml/MainUI.fxml");
 		FXMLLoader fxmlLoader = new FXMLLoader(url);
 		Parent root = fxmlLoader.load();
-		//primaryStage.initStyle(StageStyle.TRANSPARENT);
-		primaryStage.setResizable(false);
+		primaryStage.setResizable(true);
 		primaryStage.setScene(new Scene(root));
 		primaryStage.show();
-		
-		
+
 		MainUIController controller = fxmlLoader.getController();
 		controller.setPrimaryStage(primaryStage);
 	}
