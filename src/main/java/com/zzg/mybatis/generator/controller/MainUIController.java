@@ -8,6 +8,7 @@ import com.zzg.mybatis.generator.model.DatabaseConfig;
 import com.zzg.mybatis.generator.model.DbType;
 import com.zzg.mybatis.generator.model.GeneratorConfig;
 import com.zzg.mybatis.generator.util.DbUtil;
+import com.zzg.mybatis.generator.util.StringUtils;
 import com.zzg.mybatis.generator.util.XMLConfigHelper;
 import com.zzg.mybatis.generator.view.LeftDbTreeCell;
 import javafx.collections.FXCollections;
@@ -168,6 +169,7 @@ public class MainUIController extends BaseFXController {
                         String schema = (String)item.getParent().getValue();
                         selectedDatabaseConfig.setSchema(schema);
                         tableNameField.setText(tableName);
+                        domainObjectNameField.setText(StringUtils.dbStringToCamelStyle(tableName));
                     }
                 }
             });

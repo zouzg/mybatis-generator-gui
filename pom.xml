@@ -51,6 +51,11 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.7</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -61,6 +66,21 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.zenjava</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>8.5.0</version>
+                <configuration>
+                    <mainClass>com.zzg.mybatis.generator.MainUI</mainClass>
+                    <vendor>Owen Zou</vendor>
+                    <bundleType>ALL</bundleType>
+                    <verbose>false</verbose>
+                    <jfxMainAppJarName>mybatis-generator-jfx.jar</jfxMainAppJarName>
+                    <nativeReleaseVersion>1.0</nativeReleaseVersion>
+                    <needShortcut>true</needShortcut>
+                    <needMenu>true</needMenu>
                 </configuration>
             </plugin>
         </plugins>
