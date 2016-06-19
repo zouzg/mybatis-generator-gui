@@ -33,7 +33,7 @@
                         </Menu>
                     </menus>
                 </MenuBar>
-                <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                <ToolBar minHeight="70.0" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <items>
                         <Label fx:id="connectionLabel" contentDisplay="TOP" text="Connections">
                             <cursor>
@@ -53,8 +53,8 @@
                         <TreeView fx:id="leftDBTree" layoutX="-14.0" prefHeight="545.0" prefWidth="126.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                 </AnchorPane>
-                <AnchorPane prefHeight="572.0" prefWidth="878.0" BorderPane.alignment="CENTER">
-                    <children>
+            <VBox>
+               <children>
                         <GridPane layoutX="5.0" layoutY="29.0" prefHeight="387.0" prefWidth="736.0" vgap="5.0" AnchorPane.leftAnchor="-5.0" AnchorPane.rightAnchor="10.0">
                             <columnConstraints>
                                 <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="157.0" minWidth="156.0" prefWidth="156.0" />
@@ -139,11 +139,11 @@
                             </children>
                         </GridPane>
                   <TextArea fx:id="consoleTextArea" editable="false" layoutX="20.0" layoutY="422.0" prefHeight="106.0" prefWidth="721.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-                    </children>
-                    <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                    </padding>
-                </AnchorPane>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </VBox>
             </items>
         </SplitPane>
     </center>

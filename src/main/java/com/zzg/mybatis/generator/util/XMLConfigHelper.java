@@ -13,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,14 +26,40 @@ import java.util.List;
 public class XMLConfigHelper {
 
     private static final Logger _LOG = LoggerFactory.getLogger(XMLConfigHelper.class);
-    private static final String CONFIG_FILE = "config.xml";
-    private static final String DB_CONFIG_FILE = "dbConfig.xml";
+    private static final String BASE_DIR = "config";
+    private static final String CONFIG_FILE = "/config.xml";
+    private static final String DB_CONFIG_FILE = "/dbConfig.xml";
+
+    public static void createEmptyFiles() throws Exception {
+        File file = new File(BASE_DIR);
+        if (!file.exists()) {
+            file.mkdir();
+        }
+        File uiConfigFile = new File(BASE_DIR + CONFIG_FILE);
+        if (!uiConfigFile.exists()) {
+            createEmptyXMLFile(uiConfigFile);
+        }
+        File dbConfigFile = new File(BASE_DIR + DB_CONFIG_FILE);
+        if (!dbConfigFile.exists()) {
+            createEmptyXMLFile(dbConfigFile);
+        }
+    }
+
+    static void createEmptyXMLFile(File uiConfigFile) throws IOException {
+        String content = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><configuration></configuration>";
+        uiConfigFile.createNewFile();
+        FileOutputStream fos = new FileOutputStream(uiConfigFile);
+        fos.write(content.getBytes());
+        if (fos != null) {
+            fos.close();
+        }
+    }
 
     public static List<DatabaseConfig> loadDatabaseConfig() {
         List<DatabaseConfig> dbs = new ArrayList<>();
         Configurations configs = new Configurations();
         try {
-            XMLConfiguration config = configs.xml(new File(DB_CONFIG_FILE));
+            XMLConfiguration config = configs.xml(new File(BASE_DIR + DB_CONFIG_FILE));
             List<HierarchicalConfiguration<ImmutableNode>> list = config.childConfigurationsAt("");
             System.out.println(list);
             for (HierarchicalConfiguration<ImmutableNode> hc : list) {
@@ -56,7 +84,7 @@ public class XMLConfigHelper {
         Configurations configs = new Configurations();
         try {
             // obtain the configuration
-            FileBasedConfigurationBuilder<XMLConfiguration> builder = configs.xmlBuilder(DB_CONFIG_FILE);
+            FileBasedConfigurationBuilder<XMLConfiguration> builder = configs.xmlBuilder(BASE_DIR + DB_CONFIG_FILE);
             XMLConfiguration config = builder.getConfiguration();
 
             // update property
@@ -78,9 +106,9 @@ public class XMLConfigHelper {
     public static void saveGeneratorConfig(GeneratorConfig generatorConfig) throws Exception {
         Configurations configs = new Configurations();
         // obtain the configuration
-        FileBasedConfigurationBuilder<XMLConfiguration> builder = configs.xmlBuilder(CONFIG_FILE);
+        FileBasedConfigurationBuilder<XMLConfiguration> builder = configs.xmlBuilder(BASE_DIR + CONFIG_FILE);
         XMLConfiguration config = builder.getConfiguration();
-        //config.clear();
+        config.clear();
         // update property
         config.addProperty("GeneratorConfig.Current", JSON.toJSON(generatorConfig));
         builder.save();
@@ -88,7 +116,7 @@ public class XMLConfigHelper {
 
     public static GeneratorConfig loadGeneratorConfig() throws Exception {
         Configurations configs = new Configurations();
-        XMLConfiguration config = configs.xml(new File(CONFIG_FILE));
+        XMLConfiguration config = configs.xml(new File(BASE_DIR + CONFIG_FILE));
         List<HierarchicalConfiguration<ImmutableNode>> list = config.childConfigurationsAt("GeneratorConfig");
         if (list != null && list.size() > 0) {
             HierarchicalConfiguration<ImmutableNode> configuration = list.get(0);

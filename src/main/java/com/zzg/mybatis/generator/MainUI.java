@@ -24,6 +24,7 @@ public class MainUI extends Application {
         primaryStage.show();
 
         MainUIController controller = fxmlLoader.getController();
+`        XMLConfigHelper.createEmptyFiles();
         GeneratorConfig config = XMLConfigHelper.loadGeneratorConfig();
         if (config != null) {
             controller.setGeneratorConfigIntoUI(config);
