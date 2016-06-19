@@ -3,7 +3,7 @@ mybatis-generator-gui
 
 mybatis-generator-gui is a mybatis generator GUI tool, used to easy generate mybatis java mapping files and mapper xml file.
 
-![Main Page](https://raw.githubusercontent.com/astarring/mybatis-generator-gui/blob/develop/home.png)
+[[https://github.com/astarring/mybatis-generator-gui/blob/develop/home.png|alt=octocat]]
 
 ### Downloads
 
