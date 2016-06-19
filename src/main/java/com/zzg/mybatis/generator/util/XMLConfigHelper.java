@@ -25,44 +25,54 @@ public class XMLConfigHelper {
 
     private static final Logger _LOG = LoggerFactory.getLogger(XMLConfigHelper.class);
     private static final String CONFIG_FILE = "config.xml";
+    private static final String DB_CONFIG_FILE = "dbConfig.xml";
 
-    public static List<DatabaseConfig> loadDatabaseConfig() throws Exception {
+    public static List<DatabaseConfig> loadDatabaseConfig() {
         List<DatabaseConfig> dbs = new ArrayList<>();
         Configurations configs = new Configurations();
-        XMLConfiguration config = configs.xml(new File(CONFIG_FILE));
-        List<HierarchicalConfiguration<ImmutableNode>> list = config.childConfigurationsAt("Database");
-        System.out.println(list);
-        for (HierarchicalConfiguration<ImmutableNode> hc : list) {
-            String name = hc.getRootElementName();
-            DatabaseConfig dbConfig = new DatabaseConfig();
-            dbConfig.setName(name);
-            dbConfig.setHost(hc.getString("host"));
-            dbConfig.setPort(hc.getString("port"));
-            dbConfig.setUsername(hc.getString("userName"));
-            dbConfig.setPassword(hc.getString("password"));
-            dbConfig.setEncoding(hc.getString("encoding"));
-            dbConfig.setDbType(hc.getString("dbType"));
-            dbs.add(dbConfig);
+        try {
+            XMLConfiguration config = configs.xml(new File(DB_CONFIG_FILE));
+            List<HierarchicalConfiguration<ImmutableNode>> list = config.childConfigurationsAt("");
+            System.out.println(list);
+            for (HierarchicalConfiguration<ImmutableNode> hc : list) {
+                String name = hc.getRootElementName();
+                DatabaseConfig dbConfig = new DatabaseConfig();
+                dbConfig.setName(name);
+                dbConfig.setHost(hc.getString("host"));
+                dbConfig.setPort(hc.getString("port"));
+                dbConfig.setUsername(hc.getString("userName"));
+                dbConfig.setPassword(hc.getString("password"));
+                dbConfig.setEncoding(hc.getString("encoding"));
+                dbConfig.setDbType(hc.getString("dbType"));
+                dbs.add(dbConfig);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return dbs;
     }
 
-    public static void saveDatabaseConfig(String name, DatabaseConfig dbConfig) throws Exception {
+    public static void saveDatabaseConfig(String name, DatabaseConfig dbConfig) {
         Configurations configs = new Configurations();
-        // obtain the configuration
-        FileBasedConfigurationBuilder<XMLConfiguration> builder = configs.xmlBuilder(CONFIG_FILE);
-        XMLConfiguration config = builder.getConfiguration();
-        String rootElement = "Database.";
-        // update property
-        config.addProperty(rootElement + name + ".dbType", dbConfig.getDbType());
-        config.addProperty(rootElement + name + ".host", dbConfig.getHost());
-        config.addProperty(rootElement + name + ".port", dbConfig.getPort());
-        config.addProperty(rootElement + name + ".userName", dbConfig.getUsername());
-        config.addProperty(rootElement + name + ".password", dbConfig.getPassword());
-        config.addProperty(rootElement + name + ".encoding", dbConfig.getEncoding());
+        try {
+            // obtain the configuration
+            FileBasedConfigurationBuilder<XMLConfiguration> builder = configs.xmlBuilder(DB_CONFIG_FILE);
+            XMLConfiguration config = builder.getConfiguration();
 
-        // save configuration
-        builder.save();
+            // update property
+            config.addProperty(name + ".dbType", dbConfig.getDbType());
+            config.addProperty(name + ".host", dbConfig.getHost());
+            config.addProperty(name + ".port", dbConfig.getPort());
+            config.addProperty(name + ".userName", dbConfig.getUsername());
+            config.addProperty(name + ".password", dbConfig.getPassword());
+            config.addProperty(name + ".encoding", dbConfig.getEncoding());
+
+            // save configuration
+            builder.save();
+        } catch (ConfigurationException cex) {
+            // Something went wrong
+            cex.printStackTrace();
+        }
     }
 
     public static void saveGeneratorConfig(GeneratorConfig generatorConfig) throws Exception {
@@ -70,7 +80,7 @@ public class XMLConfigHelper {
         // obtain the configuration
         FileBasedConfigurationBuilder<XMLConfiguration> builder = configs.xmlBuilder(CONFIG_FILE);
         XMLConfiguration config = builder.getConfiguration();
-        config.clear();
+        //config.clear();
         // update property
         config.addProperty("GeneratorConfig.Current", JSON.toJSON(generatorConfig));
         builder.save();

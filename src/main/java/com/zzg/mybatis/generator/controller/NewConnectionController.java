@@ -33,8 +33,8 @@ public class NewConnectionController extends BaseFXController {
     private TextField userNameField;
     @FXML
     private TextField passwordField;
-    @FXML
-    private CheckBox savePwdCheckBox;
+//    @FXML
+//    private CheckBox savePwdCheckBox;
     @FXML
     private ChoiceBox<String> encodingChoice;
     @FXML
@@ -62,6 +62,8 @@ public class NewConnectionController extends BaseFXController {
         dbConfig.setDbType(dbType);
         dbConfig.setUsername(userName);
         dbConfig.setPassword(password);
+//        if (savePwdCheckBox.isSelected()) {
+//        }
         dbConfig.setEncoding(encoding);
         try {
             XMLConfigHelper.saveDatabaseConfig(name, dbConfig);

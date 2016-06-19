@@ -76,6 +76,8 @@ public class MainUIController extends BaseFXController {
     private TextField projectFolderField;
     @FXML
     private TreeView<String> leftDBTree;
+    @FXML
+    private TextArea consoleTextArea;
 
     private DatabaseConfig selectedDatabaseConfig;
 
@@ -127,8 +129,9 @@ public class MainUIController extends BaseFXController {
                             schemas = DbUtil.getSchemas(selectedConfig);
                             System.out.println(schemas);
                             if (schemas != null && schemas.size() > 0) {
+                                ObservableList<TreeItem<String>> children = cell.getTreeItem().getChildren();
+                                children.clear();
                                 for (String schema : schemas) {
-                                    ObservableList<TreeItem<String>> children = cell.getTreeItem().getChildren();
                                     TreeItem<String> treeItem = new TreeItem<>();
                                     ImageView imageView = new ImageView("icons/database.png");
                                     imageView.setFitHeight(16);
@@ -270,16 +273,12 @@ public class MainUIController extends BaseFXController {
 
         List<String> warnings = new ArrayList<>();
         Set<String> fullyqualifiedTables = new HashSet<String>();
-        Set<String> contexts = new HashSet<String>();
+        Set<String> contexts = new HashSet<>();
         ProgressCallback progressCallback = new VerboseProgressCallback();
 
         ShellCallback shellCallback = new DefaultShellCallback(true); // override=true
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
         myBatisGenerator.generate(progressCallback, contexts, fullyqualifiedTables);
-    }
-
-    private String getDatabaseUrl(DatabaseConfig dbConfig) {
-        return "jdbc:mysql://localhost:3306/test?user=root&password=&useUnicode=true&characterEncoding=utf8&autoReconnect=true";
     }
 
     public GeneratorConfig getGeneratorConfigFromUI() {

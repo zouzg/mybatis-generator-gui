@@ -63,7 +63,7 @@
                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="275.0" />
                             </columnConstraints>
                             <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -73,51 +73,21 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                        <TextField fx:id="connectorPathField" GridPane.columnIndex="1" GridPane.columnSpan="2" />
-                        <Label text="Connector Jar" />
-                                <Label text="Model Package" GridPane.rowIndex="4" />
-                                <Label text="Mapping XML Package" GridPane.rowIndex="6" />
-                                <Label text="DAO Package" GridPane.rowIndex="5" />
-                                <Button mnemonicParsing="false" onAction="#generateCode" text="Generate" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="261.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                    <children>
-                                        <TextField fx:id="modelTargetPackage" prefHeight="27.0" prefWidth="248.0">
-                                            <HBox.margin>
-                                                <Insets right="5.0" />
-                                            </HBox.margin>
-                                        </TextField>
-                                    </children>
-                                </HBox>
-                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                                    <children>
-                                        <TextField fx:id="mapperTargetPackage" prefHeight="27.0" prefWidth="248.0">
-                                            <HBox.margin>
-                                                <Insets right="5.0" />
-                                            </HBox.margin>
-                                        </TextField>
-                                    </children>
-                                </HBox>
-                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                    <children>
-                                        <TextField fx:id="daoTargetPackage" prefHeight="27.0" prefWidth="248.0">
-                                            <HBox.margin>
-                                                <Insets right="5.0" />
-                                            </HBox.margin>
-                                        </TextField>
-                                    </children>
-                                </HBox>
+                                <Label text="Connector Jar" />
+                                <TextField fx:id="connectorPathField" GridPane.columnIndex="1" GridPane.columnSpan="2" />
+                                <Button mnemonicParsing="false" onAction="#chooseConnectorFile" text="Choose" GridPane.columnIndex="3" />
                                 <Label text="Table Name" GridPane.rowIndex="1" />
                                 <TextField fx:id="tableNameField" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                     <GridPane.margin>
                                         <Insets right="5.0" />
                                     </GridPane.margin>
                                 </TextField>
+                                <Label text="Domain Object Name" GridPane.rowIndex="2" />
                                 <TextField fx:id="domainObjectNameField" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                     <GridPane.margin>
                                         <Insets right="5.0" />
                                     </GridPane.margin>
                                 </TextField>
-                                <Label text="Domain Object Name" GridPane.rowIndex="2" />
                                 <Label text="Project Folder" GridPane.rowIndex="3" />
                                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3">
                                     <children>
@@ -129,15 +99,46 @@
                                         <Button mnemonicParsing="false" onAction="#chooseProjectFolder" text="Choose" />
                                     </children>
                                 </HBox>
+                                <Label text="Model Package" GridPane.rowIndex="4" />
+                                <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="261.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                    <children>
+                                        <TextField fx:id="modelTargetPackage" prefHeight="27.0" prefWidth="248.0">
+                                            <HBox.margin>
+                                                <Insets right="5.0" />
+                                            </HBox.margin>
+                                        </TextField>
+                                    </children>
+                                </HBox>
                                 <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                                <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                                <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                                 <TextField fx:id="modelTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                                <TextField fx:id="mappingTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                                <Label text="DAO Package" GridPane.rowIndex="5" />
+                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                    <children>
+                                        <TextField fx:id="daoTargetPackage" prefHeight="27.0" prefWidth="248.0">
+                                            <HBox.margin>
+                                                <Insets right="5.0" />
+                                            </HBox.margin>
+                                        </TextField>
+                                    </children>
+                                </HBox>
+                                <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                                 <TextField fx:id="daoTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                        <Button mnemonicParsing="false" onAction="#chooseConnectorFile" text="Choose" GridPane.columnIndex="3" />
+                                <Label text="Mapping XML Package" GridPane.rowIndex="6" />
+                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                    <children>
+                                        <TextField fx:id="mapperTargetPackage" prefHeight="27.0" prefWidth="248.0">
+                                            <HBox.margin>
+                                                <Insets right="5.0" />
+                                            </HBox.margin>
+                                        </TextField>
+                                    </children>
+                                </HBox>
+                                <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                                <TextField fx:id="mappingTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                                <Button mnemonicParsing="false" onAction="#generateCode" text="Generate" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                             </children>
                         </GridPane>
+                  <TextArea fx:id="consoleTextArea" editable="false" layoutX="20.0" layoutY="422.0" prefHeight="106.0" prefWidth="721.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
                     </children>
                     <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

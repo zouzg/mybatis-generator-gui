@@ -75,10 +75,9 @@
                 <configuration>
                     <mainClass>com.zzg.mybatis.generator.MainUI</mainClass>
                     <vendor>Owen Zou</vendor>
-                    <bundleType>ALL</bundleType>
                     <verbose>false</verbose>
                     <jfxMainAppJarName>mybatis-generator-jfx.jar</jfxMainAppJarName>
-                    <nativeReleaseVersion>1.0</nativeReleaseVersion>
+                    <nativeReleaseVersion>0.1</nativeReleaseVersion>
                     <needShortcut>true</needShortcut>
                     <needMenu>true</needMenu>
                 </configuration>

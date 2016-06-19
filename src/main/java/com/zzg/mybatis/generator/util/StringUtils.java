@@ -8,7 +8,8 @@ public class StringUtils {
     public static String dbStringToCamelStyle(String str) {
         if (str != null) {
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < str.length(); i++) {
+            sb.append(String.valueOf(str.charAt(0)).toUpperCase());
+            for (int i = 1; i < str.length(); i++) {
                 char c = str.charAt(i);
                 if (c != '_') {
                     sb.append(c);
