@@ -136,6 +136,7 @@
                                 <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                                 <TextField fx:id="mappingTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="6" />
                                 <Button mnemonicParsing="false" onAction="#generateCode" text="Generate" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Button mnemonicParsing="false" onAction="#openTableColumnCustomizationPage" text="Customize" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                             </children>
                         </GridPane>
                   <TextArea fx:id="consoleTextArea" editable="false" layoutX="20.0" layoutY="422.0" prefHeight="106.0" prefWidth="721.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />

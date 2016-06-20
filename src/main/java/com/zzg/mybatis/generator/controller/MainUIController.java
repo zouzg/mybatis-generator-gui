@@ -81,6 +81,8 @@ public class MainUIController extends BaseFXController {
 
     private DatabaseConfig selectedDatabaseConfig;
 
+    private String tableName;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ImageView dbImage = new ImageView("icons/computer.png");
@@ -88,25 +90,8 @@ public class MainUIController extends BaseFXController {
         dbImage.setFitWidth(40);
         connectionLabel.setGraphic(dbImage);
         connectionLabel.setOnMouseClicked(event -> {
-            URL skeletonResource = Thread.currentThread().getContextClassLoader().getResource("fxml/newConnection.fxml");
-            FXMLLoader loader = new FXMLLoader(skeletonResource);
-            Parent loginNode;
-            try {
-                loginNode = loader.load();
-                NewConnectionController controller = loader.getController();
-                final Stage dialogStage = new Stage();
-                dialogStage.setTitle("New Connection");
-                dialogStage.initModality(Modality.APPLICATION_MODAL);
-                dialogStage.initOwner(getPrimaryStage());
-                dialogStage.setScene(new Scene(loginNode));
-                dialogStage.setMaximized(false);
-                dialogStage.setResizable(false);
-                dialogStage.show();
-                controller.setDialogStage(dialogStage);
-                controller.setMainUIController(this);
-            } catch (Exception e) {
-                _LOG.error(e.getMessage(), e);
-            }
+            NewConnectionController controller = loadFXMLPage("New Connection", FXMLPage.NEW_CONNECTION);
+            controller.setMainUIController(this);
         });
 
         leftDBTree.setShowRoot(false);
@@ -171,6 +156,7 @@ public class MainUIController extends BaseFXController {
                         selectedDatabaseConfig = (DatabaseConfig)item.getParent().getParent().getGraphic().getUserData();
                         String schema = (String)item.getParent().getValue();
                         selectedDatabaseConfig.setSchema(schema);
+                        this.tableName = tableName;
                         tableNameField.setText(tableName);
                         domainObjectNameField.setText(StringUtils.dbStringToCamelStyle(tableName));
                     }
@@ -303,6 +289,19 @@ public class MainUIController extends BaseFXController {
         daoTargetProject.setText(generatorConfig.getDaoPackage());
         mapperTargetPackage.setText(generatorConfig.getMappingXMLPackage());
         mappingTargetProject.setText(generatorConfig.getMappingXMLTargetFolder());
+    }
+
+    @FXML
+    public void openTableColumnCustomizationPage() {
+        SelectTableColumnController controller = loadFXMLPage("Select Columns", FXMLPage.SELECT_TABLE_COLUMN);
+        controller.setMainUIController(this);
+        try {
+            List<String> tableColumns = DbUtil.getTableColumns(selectedDatabaseConfig, selectedDatabaseConfig.getSchema(), tableName);
+            controller.setColumnList(tableColumns);
+        } catch (Exception e) {
+            e.printStackTrace();
+            _LOG.error(e.getMessage(), e);
+        }
     }
 
 }

@@ -45,6 +45,20 @@ public class DbUtil {
         return tables;
     }
 
+    public static List<String> getTableColumns(DatabaseConfig dbConfig, String schema, String tableName) throws Exception {
+        DbType dbType = DbType.valueOf(dbConfig.getDbType());
+        Class.forName(dbType.getDriverClass());
+        Connection conn = DriverManager.getConnection(getConnectionUrlWithoutSchema(dbConfig), dbConfig.getUsername(), dbConfig.getPassword());
+        conn.setSchema(schema);
+        DatabaseMetaData md = conn.getMetaData();
+        ResultSet rs = md.getColumns(schema, null, tableName, null);
+        List<String> columns = new ArrayList<>();
+        while (rs.next()) {
+            columns.add(rs.getString("COLUMN_NAME"));
+        }
+        return columns;
+    }
+
     public static String getConnectionUrlWithoutSchema(DatabaseConfig dbConfig) {
         DbType dbType = DbType.valueOf(dbConfig.getDbType());
         String connectionUrl = String.format(dbType.getConnectionUrlPattern(), dbConfig.getHost(), dbConfig.getPort(), dbConfig.getEncoding());

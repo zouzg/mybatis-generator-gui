@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zzg.mybatis.generator.controller.SelectTableColumnController">
+   <children>
+      <ListView fx:id="columnListView" layoutX="127.0" layoutY="60.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
+      <Label layoutX="14.0" layoutY="14.0" text="Please select the column you need" />
+      <Button layoutX="519.0" layoutY="359.0" mnemonicParsing="false" onAction="#ok" prefHeight="27.0" prefWidth="59.0" text="OK" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0" />
+   </children>
+</AnchorPane>
