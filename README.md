@@ -10,6 +10,10 @@ This tools require JRE 8.0, if you have JDK or JRE installed, you can download n
 you need download jre bundled version.
 
 ### Downloads
+You can download no jre release from here: https://github.com/astarring/mybatis-generator-gui/releases/download/v0.2/mybatis-generator-gui-no-jre.zip
+
+Cause github upload release binary is very very slow, I just upload no jre version
+if I found it faster, I will upload the jre bundled version.
 
 ### Building from source
     git clone https://github.com/astarring/mybatis-generator-gui
