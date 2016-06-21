@@ -1,5 +1,6 @@
 package com.zzg.mybatis.generator.view;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import org.mybatis.generator.api.ProgressCallback;
 
@@ -48,6 +49,9 @@ public class UIProgressCallback implements ProgressCallback {
     public void done() {
         sb.append("generation done\n");
         consoleTextArea.setText(sb.toString());
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Generation Completed");
+        alert.show();
     }
 
     @Override

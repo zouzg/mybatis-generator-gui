@@ -5,6 +5,10 @@ mybatis-generator-gui is a mybatis generator GUI tool, used to easy generate myb
 
 ![MainUI](https://cloud.githubusercontent.com/assets/3505708/16178144/35eabdcc-3673-11e6-9ff7-f701754f1550.png)
 
+### Requirements
+This tools require JRE 8.0, if you have JDK or JRE installed, you can download no jre version, otherwise
+you need download jre bundled version.
+
 ### Downloads
 
 ### Building from source

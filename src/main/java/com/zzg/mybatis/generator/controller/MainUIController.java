@@ -10,6 +10,7 @@ import com.zzg.mybatis.generator.model.GeneratorConfig;
 import com.zzg.mybatis.generator.util.DbUtil;
 import com.zzg.mybatis.generator.util.StringUtils;
 import com.zzg.mybatis.generator.util.XMLConfigHelper;
+import com.zzg.mybatis.generator.view.AlertUtil;
 import com.zzg.mybatis.generator.view.LeftDbTreeCell;
 import com.zzg.mybatis.generator.view.UIProgressCallback;
 import javafx.collections.FXCollections;
@@ -105,6 +106,7 @@ public class MainUIController extends BaseFXController {
                     int level = leftDBTree.getTreeItemLevel(cell.getTreeItem());
                     TreeCell<String> treeCell = (TreeCell<String>) event.getSource();
                     TreeItem<String> item = treeCell.getTreeItem();
+                    item.setExpanded(true);
                     if (level == 1) {
                         DatabaseConfig selectedConfig = (DatabaseConfig) item.getGraphic().getUserData();
                         // Accept clicks only on node cells, and not on empty spaces of the TreeView
@@ -134,12 +136,12 @@ public class MainUIController extends BaseFXController {
                         System.out.println("index: " + leftDBTree.getSelectionModel().getSelectedIndex());
                         DatabaseConfig selectedConfig = (DatabaseConfig) item.getParent().getGraphic().getUserData();
                         String schema = treeCell.getTreeItem().getValue();
-                        item.setExpanded(true);
                         try {
                             List<String> tables = DbUtil.getTableNames(selectedConfig, schema);
                             if (tables != null && tables.size() > 0) {
+                                ObservableList<TreeItem<String>> children = cell.getTreeItem().getChildren();
+                                children.clear();
                                 for (String tableName : tables) {
-                                    ObservableList<TreeItem<String>> children = cell.getTreeItem().getChildren();
                                     TreeItem<String> treeItem = new TreeItem<>();
                                     ImageView imageView = new ImageView("icons/table.png");
                                     imageView.setFitHeight(16);
@@ -219,6 +221,10 @@ public class MainUIController extends BaseFXController {
         tableConfig.setTableName(tableNameField.getText());
         tableConfig.setDomainObjectName(domainObjectNameField.getText());
         // JDBC config
+        if (selectedDatabaseConfig == null) {
+            AlertUtil.showInfoAlert("Please select the table from left DB tree");
+            return;
+        }
         JDBCConnectionConfiguration jdbcConfig = new JDBCConnectionConfiguration();
         jdbcConfig.setDriverClass(DbType.valueOf(selectedDatabaseConfig.getDbType()).getDriverClass());
         jdbcConfig.setConnectionURL(DbUtil.getConnectionUrlWithSchema(selectedDatabaseConfig));
