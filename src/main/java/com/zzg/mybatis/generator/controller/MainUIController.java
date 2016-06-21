@@ -11,6 +11,7 @@ import com.zzg.mybatis.generator.util.DbUtil;
 import com.zzg.mybatis.generator.util.StringUtils;
 import com.zzg.mybatis.generator.util.XMLConfigHelper;
 import com.zzg.mybatis.generator.view.LeftDbTreeCell;
+import com.zzg.mybatis.generator.view.UIProgressCallback;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -260,7 +261,7 @@ public class MainUIController extends BaseFXController {
         List<String> warnings = new ArrayList<>();
         Set<String> fullyqualifiedTables = new HashSet<String>();
         Set<String> contexts = new HashSet<>();
-        ProgressCallback progressCallback = new VerboseProgressCallback();
+        ProgressCallback progressCallback = new UIProgressCallback(consoleTextArea);
 
         ShellCallback shellCallback = new DefaultShellCallback(true); // override=true
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
