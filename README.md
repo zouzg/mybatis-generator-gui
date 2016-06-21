@@ -24,6 +24,11 @@ Run mybatis-generator-gui
 
     cd target/jfx/app/\
     java -jar mybatis-generator-gui.jar
+### Documentation
+----
+For more information on how to the GUI tool, please reference my wiki page:
+* [Usage](https://github.com/astarring/mybatis-generator-gui/wiki/Usage-Guide)
+
 
 ### Contribution
 This project currently is only develop by me, if you want's to join, I will
@@ -36,4 +41,5 @@ really appreciate and try my best to  improve the functionality, to support this
 
 ------
 Licensed under the Apache 2.0 License
+
 Copyright 2016 by Owen Zou
