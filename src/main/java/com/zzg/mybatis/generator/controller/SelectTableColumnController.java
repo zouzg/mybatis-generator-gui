@@ -1,8 +1,10 @@
 package com.zzg.mybatis.generator.controller;
 
+import com.zzg.mybatis.generator.model.UITableColumnVO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
 
 import java.net.URL;
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.ResourceBundle;
 public class SelectTableColumnController extends BaseFXController {
 
     @FXML
-    private ListView<String> columnListView;
+    private TableView<UITableColumnVO> columnListView;
 
     private MainUIController mainUIController;
 
@@ -29,7 +31,7 @@ public class SelectTableColumnController extends BaseFXController {
     }
 
     public void setColumnList(List<String> columns) {
-        columnListView.setItems(FXCollections.observableArrayList(columns));
+        columnListView.setItems(null);
     }
 
     public void setMainUIController(MainUIController mainUIController) {

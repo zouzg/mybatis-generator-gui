@@ -77,7 +77,10 @@
                                   <children>
                                       <Label text="Connector Jar" />
                                       <TextField fx:id="connectorPathField" GridPane.columnIndex="1" GridPane.columnSpan="2" />
-                                      <Button mnemonicParsing="false" onAction="#chooseConnectorFile" text="Choose" GridPane.columnIndex="3" />
+                                      <Button mnemonicParsing="false" onAction="#chooseConnectorFile" text="Choose" GridPane.columnIndex="3">
+                                 <GridPane.margin>
+                                    <Insets left="5.0" />
+                                 </GridPane.margin></Button>
                                       <Label text="Table Name" GridPane.rowIndex="1" />
                                       <TextField fx:id="tableNameField" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                           <GridPane.margin>
