@@ -4,9 +4,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.*;
 
-import com.zzg.mybatis.generator.model.DatabaseConfig;
-import com.zzg.mybatis.generator.model.DbType;
-import com.zzg.mybatis.generator.model.GeneratorConfig;
+import com.zzg.mybatis.generator.model.*;
 import com.zzg.mybatis.generator.util.DbUtil;
 import com.zzg.mybatis.generator.util.StringUtils;
 import com.zzg.mybatis.generator.util.XMLConfigHelper;
@@ -35,8 +33,6 @@ import org.mybatis.generator.config.*;
 import org.mybatis.generator.internal.DefaultShellCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.zzg.mybatis.generator.model.DatabaseDTO;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -303,8 +299,8 @@ public class MainUIController extends BaseFXController {
         SelectTableColumnController controller = loadFXMLPage("Select Columns", FXMLPage.SELECT_TABLE_COLUMN);
         controller.setMainUIController(this);
         try {
-            List<String> tableColumns = DbUtil.getTableColumns(selectedDatabaseConfig, selectedDatabaseConfig.getSchema(), tableName);
-            controller.setColumnList(tableColumns);
+            List<UITableColumnVO> tableColumns = DbUtil.getTableColumns(selectedDatabaseConfig, selectedDatabaseConfig.getSchema(), tableName);
+            controller.setColumnList(FXCollections.observableList(tableColumns));
         } catch (Exception e) {
             e.printStackTrace();
             _LOG.error(e.getMessage(), e);

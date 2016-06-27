@@ -10,38 +10,38 @@ import javafx.beans.property.StringProperty;
  */
 public class UITableColumnVO {
 
-    private BooleanProperty checked = new SimpleBooleanProperty();
+    private BooleanProperty checked = new SimpleBooleanProperty(true); // Default set to true
 
-    private String columnName;
+    private StringProperty columnName = new SimpleStringProperty();
 
-    private String jdbcType;
+    private StringProperty jdbcType = new SimpleStringProperty();
 
-    private String propertyName;
+    private StringProperty propertyName = new SimpleStringProperty();
 
     private StringProperty typeHandle = new SimpleStringProperty();
 
     public String getColumnName() {
-        return columnName;
+        return columnName.get();
     }
 
     public void setColumnName(String columnName) {
-        this.columnName = columnName;
+        this.columnName.set(columnName);
     }
 
     public String getJdbcType() {
-        return jdbcType;
+        return jdbcType.get();
     }
 
     public void setJdbcType(String jdbcType) {
-        this.jdbcType = jdbcType;
+        this.jdbcType.set(jdbcType);
     }
 
     public String getPropertyName() {
-        return propertyName;
+        return propertyName.get();
     }
 
     public void setPropertyName(String propertyName) {
-        this.propertyName = propertyName;
+        this.propertyName.set(propertyName);
     }
 
     public BooleanProperty checkedProperty() {
@@ -66,6 +66,18 @@ public class UITableColumnVO {
 
     public void setTypeHandle(String typeHandle) {
         this.typeHandle.set(typeHandle);
+    }
+
+    public StringProperty columnNameProperty() {
+        return columnName;
+    }
+
+    public StringProperty jdbcTypeProperty() {
+        return jdbcType;
+    }
+
+    public StringProperty propertyNameProperty() {
+        return propertyName;
     }
 
 }

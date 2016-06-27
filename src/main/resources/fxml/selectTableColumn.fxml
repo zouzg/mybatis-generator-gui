@@ -6,13 +6,13 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zzg.mybatis.generator.controller.SelectTableColumnController">
    <children>
-      <TableView prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+      <TableView fx:id="columnListView" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Checked" />
-          <TableColumn prefWidth="132.0" text="Column Name" />
-            <TableColumn prefWidth="123.0" text="JDBC Type" />
-            <TableColumn prefWidth="104.0" text="Property" />
-            <TableColumn prefWidth="136.0" text="Type Handle" />
+          <TableColumn fx:id="checkedColumn" prefWidth="75.0" sortable="false" text="Checked" />
+          <TableColumn fx:id="columnNameColumn" editable="false" prefWidth="132.0" sortable="false" text="Column Name" />
+            <TableColumn fx:id="jdbcTypeColumn" editable="false" prefWidth="123.0" sortable="false" text="JDBC Type" />
+            <TableColumn fx:id="propertyNameColumn" editable="false" prefWidth="104.0" sortable="false" text="Property Name" />
+            <TableColumn fx:id="typeHandlerColumn" prefWidth="136.0" sortable="false" text="Type Handler" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

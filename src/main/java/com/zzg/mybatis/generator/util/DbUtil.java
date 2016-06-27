@@ -2,6 +2,7 @@ package com.zzg.mybatis.generator.util;
 
 import com.zzg.mybatis.generator.model.DatabaseConfig;
 import com.zzg.mybatis.generator.model.DbType;
+import com.zzg.mybatis.generator.model.UITableColumnVO;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -45,16 +46,21 @@ public class DbUtil {
         return tables;
     }
 
-    public static List<String> getTableColumns(DatabaseConfig dbConfig, String schema, String tableName) throws Exception {
+    public static List<UITableColumnVO> getTableColumns(DatabaseConfig dbConfig, String schema, String tableName) throws Exception {
         DbType dbType = DbType.valueOf(dbConfig.getDbType());
         Class.forName(dbType.getDriverClass());
         Connection conn = DriverManager.getConnection(getConnectionUrlWithoutSchema(dbConfig), dbConfig.getUsername(), dbConfig.getPassword());
         conn.setSchema(schema);
         DatabaseMetaData md = conn.getMetaData();
         ResultSet rs = md.getColumns(schema, null, tableName, null);
-        List<String> columns = new ArrayList<>();
+        List<UITableColumnVO> columns = new ArrayList<>();
         while (rs.next()) {
-            columns.add(rs.getString("COLUMN_NAME"));
+            UITableColumnVO columnVO = new UITableColumnVO();
+            String columnName = rs.getString("COLUMN_NAME");
+            columnVO.setColumnName(columnName);
+            columnVO.setJdbcType(rs.getString("TYPE_NAME"));
+            columnVO.setPropertyName(StringUtils.dbStringToCamelStyle(columnName));
+            columns.add(columnVO);
         }
         return columns;
     }
