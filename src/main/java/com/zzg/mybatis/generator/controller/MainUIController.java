@@ -84,6 +84,8 @@ public class MainUIController extends BaseFXController {
 
     private List<IgnoredColumn> ignoredColumns;
 
+    private List<ColumnOverride> columnOverrides;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ImageView dbImage = new ImageView("icons/computer.png");
@@ -216,6 +218,7 @@ public class MainUIController extends BaseFXController {
         bridge.setGeneratorConfig(generatorConfig);
         bridge.setDatabaseConfig(selectedDatabaseConfig);
         bridge.setIgnoredColumns(ignoredColumns);
+        bridge.setColumnOverrides(columnOverrides);
         bridge.setProgressCallback(new UIProgressCallback(consoleTextArea));
         bridge.generate();
     }
@@ -261,5 +264,9 @@ public class MainUIController extends BaseFXController {
 
     public void setIgnoredColumns(List<IgnoredColumn> ignoredColumns) {
         this.ignoredColumns = ignoredColumns;
+    }
+
+    public void setColumnOverrides(List<ColumnOverride> columnOverrides) {
+        this.columnOverrides = columnOverrides;
     }
 }

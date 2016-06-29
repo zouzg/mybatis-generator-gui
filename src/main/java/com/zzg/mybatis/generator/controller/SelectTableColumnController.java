@@ -1,18 +1,16 @@
 package com.zzg.mybatis.generator.controller;
 
 import com.zzg.mybatis.generator.model.UITableColumnVO;
-import com.zzg.mybatis.generator.util.StringUtils;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.mybatis.generator.config.ColumnOverride;
 import org.mybatis.generator.config.IgnoredColumn;
 
 import java.net.URL;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 /**
  * Created by Owen on 6/20/16.
@@ -61,7 +59,7 @@ public class SelectTableColumnController extends BaseFXController {
                 }
             };
         });
-        propertyNameColumn.setCellFactory(column ->  {
+        propertyNameColumn.setCellFactory(column -> {
             return new TableCell<UITableColumnVO, String>() {
                 @Override
                 protected void updateItem(String item, boolean empty) {
@@ -77,7 +75,7 @@ public class SelectTableColumnController extends BaseFXController {
                 }
             };
         });
-        typeHandlerColumn.setCellFactory(column ->  {
+        typeHandlerColumn.setCellFactory(column -> {
             return new TableCell<UITableColumnVO, String>() {
                 @Override
                 protected void updateItem(String item, boolean empty) {
@@ -87,6 +85,9 @@ public class SelectTableColumnController extends BaseFXController {
                         setText(null);
                     } else {
                         TextField textField = new TextField();
+                        ObservableList<UITableColumnVO> items = this.getTableView().getItems();
+                        UITableColumnVO element = items.get(this.getIndex());
+                        textField.textProperty().bindBidirectional(element.typeHandleProperty());
                         setGraphic(textField);
                     }
                 }
@@ -98,14 +99,22 @@ public class SelectTableColumnController extends BaseFXController {
     public void ok() {
         ObservableList<UITableColumnVO> items = columnListView.getItems();
         if (items != null && items.size() > 0) {
-            List<IgnoredColumn> ignoredColumns = items.stream().map(item -> {
+            List<IgnoredColumn> ignoredColumns = new ArrayList<>();
+            List<ColumnOverride> columnOverrides = new ArrayList<>();
+            items.stream().forEach(item -> {
                 if (!item.getChecked()) {
                     IgnoredColumn ignoredColumn = new IgnoredColumn(item.getColumnName());
-                    return ignoredColumn;
+                    ignoredColumns.add(ignoredColumn);
+                } else if (item.getTypeHandle() != null) { // unchecked and have typeHandler value
+                    ColumnOverride columnOverride = new ColumnOverride(item.getColumnName());
+                    columnOverride.setTypeHandler(item.getTypeHandle());
+                    columnOverride.setJavaProperty(item.getPropertyName());
+                    columnOverride.setJavaType(item.getJdbcType());
+                    columnOverrides.add(columnOverride);
                 }
-                return null;
-            }).filter(item -> item != null).collect(Collectors.toList());
+            });
             mainUIController.setIgnoredColumns(ignoredColumns);
+            mainUIController.setColumnOverrides(columnOverrides);
         }
         getDialogStage().close();
     }

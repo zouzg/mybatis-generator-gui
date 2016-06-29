@@ -4,8 +4,6 @@ import com.zzg.mybatis.generator.model.DatabaseConfig;
 import com.zzg.mybatis.generator.model.DbType;
 import com.zzg.mybatis.generator.model.GeneratorConfig;
 import com.zzg.mybatis.generator.util.DbUtil;
-import com.zzg.mybatis.generator.view.AlertUtil;
-import com.zzg.mybatis.generator.view.UIProgressCallback;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.ShellCallback;
@@ -25,8 +23,6 @@ import java.util.Set;
  */
 public class MybatisGeneratorBridge {
 
-    private Context context;
-
     private GeneratorConfig generatorConfig;
 
     private DatabaseConfig selectedDatabaseConfig;
@@ -34,6 +30,8 @@ public class MybatisGeneratorBridge {
     private ProgressCallback progressCallback;
 
     private List<IgnoredColumn> ignoredColumns;
+
+    private List<ColumnOverride> columnOverrides;
 
     public MybatisGeneratorBridge() {
         init();
@@ -66,6 +64,11 @@ public class MybatisGeneratorBridge {
         if (ignoredColumns != null) {
             ignoredColumns.stream().forEach(ignoredColumn -> {
                 tableConfig.addIgnoredColumn(ignoredColumn);
+            });
+        }
+        if (columnOverrides != null) {
+            columnOverrides.stream().forEach(columnOverride -> {
+                tableConfig.addColumnOverride(columnOverride);
             });
         }
         JDBCConnectionConfiguration jdbcConfig = new JDBCConnectionConfiguration();
@@ -122,5 +125,9 @@ public class MybatisGeneratorBridge {
 
     public void setIgnoredColumns(List<IgnoredColumn> ignoredColumns) {
         this.ignoredColumns = ignoredColumns;
+    }
+
+    public void setColumnOverrides(List<ColumnOverride> columnOverrides) {
+        this.columnOverrides = columnOverrides;
     }
 }
