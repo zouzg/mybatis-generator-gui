@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.*;
 
+import com.zzg.mybatis.generator.bridge.MybatisGeneratorBridge;
 import com.zzg.mybatis.generator.model.*;
 import com.zzg.mybatis.generator.util.DbUtil;
 import com.zzg.mybatis.generator.util.StringUtils;
@@ -80,6 +81,8 @@ public class MainUIController extends BaseFXController {
     private DatabaseConfig selectedDatabaseConfig;
 
     private String tableName;
+
+    private List<IgnoredColumn> ignoredColumns;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -208,66 +211,13 @@ public class MainUIController extends BaseFXController {
 
     @FXML
     public void generateCode() throws Exception {
-        Configuration config = new Configuration();
-        config.addClasspathEntry(connectorPathField.getText());
-        Context context = new Context(ModelType.CONDITIONAL);
-        config.addContext(context);
-        // Table config
-        TableConfiguration tableConfig = new TableConfiguration(context);
-        tableConfig.setTableName(tableNameField.getText());
-        tableConfig.setDomainObjectName(domainObjectNameField.getText());
-        // JDBC config
-        if (selectedDatabaseConfig == null) {
-            AlertUtil.showInfoAlert("Please select the table from left DB tree");
-            return;
-        }
-        JDBCConnectionConfiguration jdbcConfig = new JDBCConnectionConfiguration();
-        jdbcConfig.setDriverClass(DbType.valueOf(selectedDatabaseConfig.getDbType()).getDriverClass());
-        jdbcConfig.setConnectionURL(DbUtil.getConnectionUrlWithSchema(selectedDatabaseConfig));
-        jdbcConfig.setUserId(selectedDatabaseConfig.getUsername());
-        jdbcConfig.setPassword(selectedDatabaseConfig.getPassword());
-        // java model
-        JavaModelGeneratorConfiguration modelConfig = new JavaModelGeneratorConfiguration();
-        modelConfig.setTargetPackage(modelTargetPackage.getText());
-        modelConfig.setTargetProject(projectFolderField.getText() + "/" + modelTargetProject.getText());
-        // Mapper config
-        SqlMapGeneratorConfiguration mapperConfig = new SqlMapGeneratorConfiguration();
-        mapperConfig.setTargetPackage(mapperTargetPackage.getText());
-        mapperConfig.setTargetProject(projectFolderField.getText() + "/" + mappingTargetProject.getText());
-        // DAO
-        JavaClientGeneratorConfiguration daoConfig = new JavaClientGeneratorConfiguration();
-        daoConfig.setConfigurationType("XMLMAPPER");
-        daoConfig.setTargetPackage(daoTargetPackage.getText());
-        daoConfig.setTargetProject(projectFolderField.getText() + "/" + daoTargetProject.getText());
-        // Comment
-        CommentGeneratorConfiguration commentConfig = new CommentGeneratorConfiguration();
-        commentConfig.addProperty("suppressAllComments", "true");
-        commentConfig.addProperty("suppressDate", "true");
-
-        context.setId("myid");
-        context.addTableConfiguration(tableConfig);
-        context.setJdbcConnectionConfiguration(jdbcConfig);
-        context.setJdbcConnectionConfiguration(jdbcConfig);
-        context.setJavaModelGeneratorConfiguration(modelConfig);
-        context.setSqlMapGeneratorConfiguration(mapperConfig);
-        context.setJavaClientGeneratorConfiguration(daoConfig);
-        context.setCommentGeneratorConfiguration(commentConfig);
-        // limit/offset插件
-        PluginConfiguration pluginConfiguration = new PluginConfiguration();
-        pluginConfiguration.addProperty("type", "com.zzg.mybatis.generator.plugins.MySQLLimitPlugin");
-        pluginConfiguration.setConfigurationType("com.zzg.mybatis.generator.plugins.MySQLLimitPlugin");
-        context.addPluginConfiguration(pluginConfiguration);
-
-        context.setTargetRuntime("MyBatis3");
-
-        List<String> warnings = new ArrayList<>();
-        Set<String> fullyqualifiedTables = new HashSet<String>();
-        Set<String> contexts = new HashSet<>();
-        ProgressCallback progressCallback = new UIProgressCallback(consoleTextArea);
-
-        ShellCallback shellCallback = new DefaultShellCallback(true); // override=true
-        MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
-        myBatisGenerator.generate(progressCallback, contexts, fullyqualifiedTables);
+        GeneratorConfig generatorConfig = getGeneratorConfigFromUI();
+        MybatisGeneratorBridge bridge = new MybatisGeneratorBridge();
+        bridge.setGeneratorConfig(generatorConfig);
+        bridge.setDatabaseConfig(selectedDatabaseConfig);
+        bridge.setIgnoredColumns(ignoredColumns);
+        bridge.setProgressCallback(new UIProgressCallback(consoleTextArea));
+        bridge.generate();
     }
 
     public GeneratorConfig getGeneratorConfigFromUI() {
@@ -280,6 +230,8 @@ public class MainUIController extends BaseFXController {
         generatorConfig.setDaoTargetFolder(daoTargetProject.getText());
         generatorConfig.setMappingXMLPackage(mapperTargetPackage.getText());
         generatorConfig.setMappingXMLTargetFolder(mappingTargetProject.getText());
+        generatorConfig.setTableName(tableNameField.getText());
+        generatorConfig.setDomainObjectName(domainObjectNameField.getText());
         return generatorConfig;
     }
 
@@ -307,4 +259,7 @@ public class MainUIController extends BaseFXController {
         }
     }
 
+    public void setIgnoredColumns(List<IgnoredColumn> ignoredColumns) {
+        this.ignoredColumns = ignoredColumns;
+    }
 }

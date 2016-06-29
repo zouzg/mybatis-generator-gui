@@ -6,11 +6,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.mybatis.generator.config.IgnoredColumn;
 
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 /**
  * Created by Owen on 6/20/16.
@@ -51,6 +53,9 @@ public class SelectTableColumnController extends BaseFXController {
                     } else {
                         CheckBox checkBox = new CheckBox();
                         checkBox.setSelected(item);
+                        ObservableList<UITableColumnVO> items = this.getTableView().getItems();
+                        UITableColumnVO element = items.get(this.getIndex());
+                        checkBox.selectedProperty().bindBidirectional(element.checkedProperty());
                         setGraphic(checkBox);
                     }
                 }
@@ -91,6 +96,22 @@ public class SelectTableColumnController extends BaseFXController {
 
     @FXML
     public void ok() {
+        ObservableList<UITableColumnVO> items = columnListView.getItems();
+        if (items != null && items.size() > 0) {
+            List<IgnoredColumn> ignoredColumns = items.stream().map(item -> {
+                if (!item.getChecked()) {
+                    IgnoredColumn ignoredColumn = new IgnoredColumn(item.getColumnName());
+                    return ignoredColumn;
+                }
+                return null;
+            }).filter(item -> item != null).collect(Collectors.toList());
+            mainUIController.setIgnoredColumns(ignoredColumns);
+        }
+        getDialogStage().close();
+    }
+
+    @FXML
+    public void cancel() {
         getDialogStage().close();
     }
 
