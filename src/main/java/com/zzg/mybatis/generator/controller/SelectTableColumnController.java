@@ -1,6 +1,8 @@
 package com.zzg.mybatis.generator.controller;
 
+import com.zzg.mybatis.generator.model.DatabaseConfig;
 import com.zzg.mybatis.generator.model.UITableColumnVO;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -19,7 +21,6 @@ public class SelectTableColumnController extends BaseFXController {
 
     @FXML
     private TableView<UITableColumnVO> columnListView;
-
     @FXML
     private TableColumn<UITableColumnVO, Boolean> checkedColumn;
     @FXML
@@ -33,6 +34,8 @@ public class SelectTableColumnController extends BaseFXController {
 
     private MainUIController mainUIController;
 
+    private String tableName;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         checkedColumn.setCellValueFactory(cellData -> cellData.getValue().checkedProperty());
@@ -42,6 +45,7 @@ public class SelectTableColumnController extends BaseFXController {
         typeHandlerColumn.setCellValueFactory(cellData -> cellData.getValue().typeHandleProperty());
         checkedColumn.setCellFactory(column -> {
             return new TableCell<UITableColumnVO, Boolean>() {
+
                 @Override
                 protected void updateItem(Boolean item, boolean empty) {
                     super.updateItem(item, empty);
@@ -130,6 +134,14 @@ public class SelectTableColumnController extends BaseFXController {
 
     public void setMainUIController(MainUIController mainUIController) {
         this.mainUIController = mainUIController;
+    }
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
     }
 
 

@@ -26,6 +26,7 @@ import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.ShellCallback;
@@ -77,9 +78,9 @@ public class MainUIController extends BaseFXController {
     private TreeView<String> leftDBTree;
     @FXML
     private TextArea consoleTextArea;
-
+    // Current selected databaseConfig
     private DatabaseConfig selectedDatabaseConfig;
-
+    // Current selected tableName
     private String tableName;
 
     private List<IgnoredColumn> ignoredColumns;
@@ -93,7 +94,7 @@ public class MainUIController extends BaseFXController {
         dbImage.setFitWidth(40);
         connectionLabel.setGraphic(dbImage);
         connectionLabel.setOnMouseClicked(event -> {
-            NewConnectionController controller = loadFXMLPage("New Connection", FXMLPage.NEW_CONNECTION);
+            NewConnectionController controller = (NewConnectionController) loadFXMLPage("New Connection", FXMLPage.NEW_CONNECTION);
             controller.setMainUIController(this);
         });
 
@@ -131,7 +132,7 @@ public class MainUIController extends BaseFXController {
                                 }
                             }
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            AlertUtil.showErrorAlert(e.getMessage() + "\n" + ExceptionUtils.getStackTrace(e));
                         }
                     } else if (level == 2) {
                         System.out.println("index: " + leftDBTree.getSelectionModel().getSelectedIndex());
@@ -158,7 +159,7 @@ public class MainUIController extends BaseFXController {
                     } else if (level == 3) {
                         String tableName = treeCell.getTreeItem().getValue();
                         selectedDatabaseConfig = (DatabaseConfig)item.getParent().getParent().getGraphic().getUserData();
-                        String schema = (String)item.getParent().getValue();
+                        String schema = item.getParent().getValue();
                         selectedDatabaseConfig.setSchema(schema);
                         this.tableName = tableName;
                         tableNameField.setText(tableName);
@@ -188,8 +189,8 @@ public class MainUIController extends BaseFXController {
                 rootTreeItem.getChildren().add(treeItem);
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            // show error TODO
+            _LOG.error("connect db failed, reason: {}", e);
+            AlertUtil.showErrorAlert(e.getMessage() + "\n" + ExceptionUtils.getStackTrace(e));
         }
     }
 
@@ -251,14 +252,19 @@ public class MainUIController extends BaseFXController {
 
     @FXML
     public void openTableColumnCustomizationPage() {
-        SelectTableColumnController controller = loadFXMLPage("Select Columns", FXMLPage.SELECT_TABLE_COLUMN);
+        SelectTableColumnController controller = (SelectTableColumnController) loadFXMLPage("Select Columns", FXMLPage.SELECT_TABLE_COLUMN);
         controller.setMainUIController(this);
         try {
-            List<UITableColumnVO> tableColumns = DbUtil.getTableColumns(selectedDatabaseConfig, selectedDatabaseConfig.getSchema(), tableName);
-            controller.setColumnList(FXCollections.observableList(tableColumns));
+            // If select same schema and another table, update table data
+            if (!tableName.equals(controller.getTableName())) {
+                List<UITableColumnVO> tableColumns = DbUtil.getTableColumns(selectedDatabaseConfig, selectedDatabaseConfig.getSchema(), tableName);
+                controller.setColumnList(FXCollections.observableList(tableColumns));
+                controller.setTableName(tableName);
+            }
+            controller.showDialogStage();
         } catch (Exception e) {
-            e.printStackTrace();
             _LOG.error(e.getMessage(), e);
+            AlertUtil.showErrorAlert(e.getMessage());
         }
     }
 
