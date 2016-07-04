@@ -6,7 +6,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zzg.mybatis.generator.controller.SelectTableColumnController">
    <children>
-      <TableView fx:id="columnListView" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+      <TableView fx:id="columnListView" editable="true" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
         <columns>
           <TableColumn fx:id="checkedColumn" prefWidth="75.0" sortable="false" text="Checked" />
           <TableColumn fx:id="columnNameColumn" editable="false" prefWidth="132.0" sortable="false" text="Column Name" />
@@ -19,7 +19,7 @@
          </columnResizePolicy>
       </TableView>
       <Label layoutX="14.0" layoutY="14.0" text="Please select the column you need" />
-      <Button layoutX="443.0" layoutY="360.0" mnemonicParsing="false" onAction="#ok" prefHeight="27.0" prefWidth="59.0" text="OK" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="98.0" />
-      <Button layoutX="520.0" layoutY="360.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+      <Button focusTraversable="false" layoutX="443.0" layoutY="360.0" mnemonicParsing="false" onAction="#ok" prefHeight="27.0" prefWidth="59.0" text="OK" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="98.0" />
+      <Button focusTraversable="false" layoutX="520.0" layoutY="360.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
    </children>
 </AnchorPane>

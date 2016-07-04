@@ -213,7 +213,11 @@ public class MainUIController extends BaseFXController {
     }
 
     @FXML
-    public void generateCode() throws Exception {
+    public void generateCode() {
+        if (tableName == null) {
+            AlertUtil.showErrorAlert("Please select table from left DB treee first");
+            return;
+        }
         GeneratorConfig generatorConfig = getGeneratorConfigFromUI();
         MybatisGeneratorBridge bridge = new MybatisGeneratorBridge();
         bridge.setGeneratorConfig(generatorConfig);
@@ -221,7 +225,11 @@ public class MainUIController extends BaseFXController {
         bridge.setIgnoredColumns(ignoredColumns);
         bridge.setColumnOverrides(columnOverrides);
         bridge.setProgressCallback(new UIProgressCallback(consoleTextArea));
-        bridge.generate();
+        try {
+            bridge.generate();
+        } catch (Exception e) {
+            AlertUtil.showErrorAlert(e.getMessage());
+        }
     }
 
     public GeneratorConfig getGeneratorConfigFromUI() {
@@ -252,6 +260,10 @@ public class MainUIController extends BaseFXController {
 
     @FXML
     public void openTableColumnCustomizationPage() {
+        if (tableName == null) {
+            AlertUtil.showErrorAlert("Please select table from left DB treee first");
+            return;
+        }
         SelectTableColumnController controller = (SelectTableColumnController) loadFXMLPage("Select Columns", FXMLPage.SELECT_TABLE_COLUMN);
         controller.setMainUIController(this);
         try {

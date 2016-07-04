@@ -2,6 +2,7 @@ package com.zzg.mybatis.generator.controller;
 
 import com.zzg.mybatis.generator.model.DatabaseConfig;
 import com.zzg.mybatis.generator.model.UITableColumnVO;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -38,6 +39,8 @@ public class SelectTableColumnController extends BaseFXController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        columnListView.setFocusTraversable(false);
+
         checkedColumn.setCellValueFactory(cellData -> cellData.getValue().checkedProperty());
         columnNameColumn.setCellValueFactory(cellData -> cellData.getValue().columnNameProperty());
         jdbcTypeColumn.setCellValueFactory(cellData -> cellData.getValue().jdbcTypeProperty());
@@ -55,26 +58,11 @@ public class SelectTableColumnController extends BaseFXController {
                     } else {
                         CheckBox checkBox = new CheckBox();
                         checkBox.setSelected(item);
+                        checkBox.setFocusTraversable(false);
                         ObservableList<UITableColumnVO> items = this.getTableView().getItems();
                         UITableColumnVO element = items.get(this.getIndex());
                         checkBox.selectedProperty().bindBidirectional(element.checkedProperty());
                         setGraphic(checkBox);
-                    }
-                }
-            };
-        });
-        propertyNameColumn.setCellFactory(column -> {
-            return new TableCell<UITableColumnVO, String>() {
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-
-                    if (empty) {
-                        setText(null);
-                    } else {
-                        TextField textField = new TextField();
-                        textField.setText(item);
-                        setGraphic(textField);
                     }
                 }
             };
@@ -89,6 +77,7 @@ public class SelectTableColumnController extends BaseFXController {
                         setText(null);
                     } else {
                         TextField textField = new TextField();
+                        textField.setFocusTraversable(false);
                         ObservableList<UITableColumnVO> items = this.getTableView().getItems();
                         UITableColumnVO element = items.get(this.getIndex());
                         textField.textProperty().bindBidirectional(element.typeHandleProperty());
@@ -112,8 +101,8 @@ public class SelectTableColumnController extends BaseFXController {
                 } else if (item.getTypeHandle() != null) { // unchecked and have typeHandler value
                     ColumnOverride columnOverride = new ColumnOverride(item.getColumnName());
                     columnOverride.setTypeHandler(item.getTypeHandle());
-                    columnOverride.setJavaProperty(item.getPropertyName());
-                    columnOverride.setJavaType(item.getJdbcType());
+                    //columnOverride.setJavaProperty(item.getPropertyName());
+                    //columnOverride.setJavaType(item.getJdbcType());
                     columnOverrides.add(columnOverride);
                 }
             });
