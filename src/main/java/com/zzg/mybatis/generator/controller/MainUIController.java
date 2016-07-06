@@ -154,7 +154,8 @@ public class MainUIController extends BaseFXController {
                                 }
                             }
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            _LOG.error(e.getMessage(), e);
+                            AlertUtil.showErrorAlert(e.getMessage());
                         }
                     } else if (level == 3) {
                         String tableName = treeCell.getTreeItem().getValue();

@@ -3,6 +3,7 @@ package com.zzg.mybatis.generator.util;
 import com.alibaba.fastjson.JSON;
 import com.zzg.mybatis.generator.model.DatabaseConfig;
 import com.zzg.mybatis.generator.model.GeneratorConfig;
+import com.zzg.mybatis.generator.view.AlertUtil;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
@@ -75,7 +76,8 @@ public class XMLConfigHelper {
                 dbs.add(dbConfig);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            _LOG.error(e.getMessage(), e);
+            AlertUtil.showErrorAlert(e.getMessage());
         }
         return dbs;
     }

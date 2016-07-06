@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.zzg.mybatis.generator.view.AlertUtil;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import org.slf4j.Logger;
@@ -51,8 +52,8 @@ public abstract class BaseFXController implements Initializable {
 
             return controller;
         } catch (IOException e) {
-            e.printStackTrace();
             _LOG.error(e.getMessage(), e);
+            AlertUtil.showErrorAlert(e.getMessage());
         }
         return null;
     }
