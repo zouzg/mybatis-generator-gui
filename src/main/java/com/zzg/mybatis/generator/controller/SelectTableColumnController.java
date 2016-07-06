@@ -29,6 +29,8 @@ public class SelectTableColumnController extends BaseFXController {
     @FXML
     private TableColumn<UITableColumnVO, String> jdbcTypeColumn;
     @FXML
+    private TableColumn<UITableColumnVO, String> javaTypeColumn;
+    @FXML
     private TableColumn<UITableColumnVO, String> propertyNameColumn;
     @FXML
     private TableColumn<UITableColumnVO, String> typeHandlerColumn;
@@ -67,6 +69,42 @@ public class SelectTableColumnController extends BaseFXController {
                 }
             };
         });
+        javaTypeColumn.setCellFactory(column -> {
+            return new TableCell<UITableColumnVO, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (empty) {
+                        setText(null);
+                    } else {
+                        TextField textField = new TextField();
+                        ObservableList<UITableColumnVO> items = this.getTableView().getItems();
+                        UITableColumnVO element = items.get(this.getIndex());
+                        textField.textProperty().bindBidirectional(element.javaTypeProperty());
+                        setGraphic(textField);
+                    }
+                }
+            };
+        });
+        propertyNameColumn.setCellFactory(column -> {
+            return new TableCell<UITableColumnVO, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (empty) {
+                        setText(null);
+                    } else {
+                        TextField textField = new TextField();
+                        ObservableList<UITableColumnVO> items = this.getTableView().getItems();
+                        UITableColumnVO element = items.get(this.getIndex());
+                        textField.textProperty().bindBidirectional(element.propertyNameProperty());
+                        setGraphic(textField);
+                    }
+                }
+            };
+        });
         typeHandlerColumn.setCellFactory(column -> {
             return new TableCell<UITableColumnVO, String>() {
                 @Override
@@ -77,7 +115,6 @@ public class SelectTableColumnController extends BaseFXController {
                         setText(null);
                     } else {
                         TextField textField = new TextField();
-                        textField.setFocusTraversable(false);
                         ObservableList<UITableColumnVO> items = this.getTableView().getItems();
                         UITableColumnVO element = items.get(this.getIndex());
                         textField.textProperty().bindBidirectional(element.typeHandleProperty());
@@ -101,8 +138,8 @@ public class SelectTableColumnController extends BaseFXController {
                 } else if (item.getTypeHandle() != null) { // unchecked and have typeHandler value
                     ColumnOverride columnOverride = new ColumnOverride(item.getColumnName());
                     columnOverride.setTypeHandler(item.getTypeHandle());
-                    //columnOverride.setJavaProperty(item.getPropertyName());
-                    //columnOverride.setJavaType(item.getJdbcType());
+                    columnOverride.setJavaProperty(item.getPropertyName());
+                    columnOverride.setJavaType(item.getJavaType());
                     columnOverrides.add(columnOverride);
                 }
             });

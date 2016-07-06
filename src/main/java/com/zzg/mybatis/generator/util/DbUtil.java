@@ -59,7 +59,7 @@ public class DbUtil {
             String columnName = rs.getString("COLUMN_NAME");
             columnVO.setColumnName(columnName);
             columnVO.setJdbcType(rs.getString("TYPE_NAME"));
-            columnVO.setPropertyName(StringUtils.dbStringToCamelStyle2(columnName));
+            //columnVO.setPropertyName(StringUtils.dbStringToCamelStyle2(columnName));
             columns.add(columnVO);
         }
         return columns;

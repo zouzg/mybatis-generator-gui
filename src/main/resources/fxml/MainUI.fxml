@@ -115,7 +115,7 @@
                                           </children>
                                       </HBox>
                                       <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                                      <TextField fx:id="modelTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                      <TextField fx:id="modelTargetProject" promptText="src/main/java" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                                       <Label text="DAO Package" GridPane.rowIndex="5" />
                                       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                           <children>
@@ -127,7 +127,7 @@
                                           </children>
                                       </HBox>
                                       <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                                      <TextField fx:id="daoTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                      <TextField fx:id="daoTargetProject" promptText="src/main/java" GridPane.columnIndex="3" GridPane.rowIndex="5" />
                                       <Label text="Mapping XML Package" GridPane.rowIndex="6" />
                                       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                           <children>
@@ -139,7 +139,7 @@
                                           </children>
                                       </HBox>
                                       <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                                      <TextField fx:id="mappingTargetProject" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                                      <TextField fx:id="mappingTargetProject" promptText="src/main/resources" GridPane.columnIndex="3" GridPane.rowIndex="6" />
                                       <Button mnemonicParsing="false" onAction="#generateCode" text="Generate" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                               <Button mnemonicParsing="false" onAction="#openTableColumnCustomizationPage" text="Customize" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                   </children>

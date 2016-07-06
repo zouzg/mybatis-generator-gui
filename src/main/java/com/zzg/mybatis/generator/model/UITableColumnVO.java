@@ -14,6 +14,8 @@ public class UITableColumnVO {
 
     private StringProperty columnName = new SimpleStringProperty();
 
+    private StringProperty javaType = new SimpleStringProperty();
+
     private StringProperty jdbcType = new SimpleStringProperty();
 
     private StringProperty propertyName = new SimpleStringProperty();
@@ -80,4 +82,15 @@ public class UITableColumnVO {
         return propertyName;
     }
 
+    public String getJavaType() {
+        return javaType.get();
+    }
+
+    public StringProperty javaTypeProperty() {
+        return javaType;
+    }
+
+    public void setJavaType(String javaType) {
+        this.javaType.set(javaType);
+    }
 }
