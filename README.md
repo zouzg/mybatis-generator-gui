@@ -10,7 +10,7 @@ This tools require JRE 8.0, if you have JDK or JRE installed, you can download n
 you need download jre bundled version.
 
 ### Downloads
-You can download no jre release from here: https://github.com/astarring/mybatis-generator-gui/releases/download/v0.2/mybatis-generator-gui-no-jre.zip
+You can download no jre release from here: https://github.com/astarring/mybatis-generator-gui/releases/download/v0.3/mybatis-generator-gui-no-jre.zip
 
 Cause github upload release binary is very very slow, I just upload no jre version
 if I found it faster, I will upload the jre bundled version.
@@ -20,10 +20,14 @@ if I found it faster, I will upload the jre bundled version.
     cd mybatis-generator-gui
     mvn jfx:jar
 ### Run
-Run mybatis-generator-gui
+* Run mybatis-generator-gui
+
 
     cd target/jfx/app/\
     java -jar mybatis-generator-gui.jar
+
+* Run in Eclipse or IntelliJ IDEA, just find the main class MainUI, and run this class.
+
 ### Documentation
 ----
 For more information on how to the GUI tool, please reference my wiki page:
