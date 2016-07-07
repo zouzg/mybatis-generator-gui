@@ -27,10 +27,10 @@ public abstract class BaseFXController implements Initializable {
     private static Map<FXMLPage, SoftReference<? extends BaseFXController>> cacheNodeMap = new HashMap<>();
 
     public BaseFXController loadFXMLPage(String title, FXMLPage fxmlPage) {
-//        SoftReference<? extends BaseFXController> parentNodeRef = cacheNodeMap.get(fxmlPage);
-//        if (parentNodeRef != null) {
-//            return parentNodeRef.get();
-//        }
+        SoftReference<? extends BaseFXController> parentNodeRef = cacheNodeMap.get(fxmlPage);
+        if (parentNodeRef != null) {
+            return parentNodeRef.get();
+        }
         URL skeletonResource = Thread.currentThread().getContextClassLoader().getResource(fxmlPage.getFxml());
         FXMLLoader loader = new FXMLLoader(skeletonResource);
         Parent loginNode;
@@ -47,8 +47,8 @@ public abstract class BaseFXController implements Initializable {
             dialogStage.show();
             controller.setDialogStage(dialogStage);
             // put into cache map
-            //SoftReference<BaseFXController> softReference = new SoftReference<>(controller);
-            // cacheNodeMap.put(fxmlPage, softReference);
+            SoftReference<BaseFXController> softReference = new SoftReference<>(controller);
+            cacheNodeMap.put(fxmlPage, softReference);
 
             return controller;
         } catch (IOException e) {

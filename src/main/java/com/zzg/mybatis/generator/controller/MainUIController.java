@@ -75,6 +75,11 @@ public class MainUIController extends BaseFXController {
     @FXML
     private TextField projectFolderField;
     @FXML
+    private CheckBox offsetLimitCheckBox;
+    @FXML
+    private CheckBox commentCheckBox;
+
+    @FXML
     private TreeView<String> leftDBTree;
     @FXML
     private TextArea consoleTextArea;
@@ -245,6 +250,8 @@ public class MainUIController extends BaseFXController {
         generatorConfig.setMappingXMLTargetFolder(mappingTargetProject.getText());
         generatorConfig.setTableName(tableNameField.getText());
         generatorConfig.setDomainObjectName(domainObjectNameField.getText());
+        generatorConfig.setOffsetLimit(offsetLimitCheckBox.isSelected());
+        generatorConfig.setComment(commentCheckBox.isSelected());
         return generatorConfig;
     }
 

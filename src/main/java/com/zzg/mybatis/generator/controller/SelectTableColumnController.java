@@ -7,6 +7,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import org.mybatis.generator.config.ColumnOverride;
 import org.mybatis.generator.config.IgnoredColumn;
 
@@ -41,87 +44,26 @@ public class SelectTableColumnController extends BaseFXController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        columnListView.setFocusTraversable(false);
-
-        checkedColumn.setCellValueFactory(cellData -> cellData.getValue().checkedProperty());
-        columnNameColumn.setCellValueFactory(cellData -> cellData.getValue().columnNameProperty());
-        jdbcTypeColumn.setCellValueFactory(cellData -> cellData.getValue().jdbcTypeProperty());
-        propertyNameColumn.setCellValueFactory(cellData -> cellData.getValue().propertyNameProperty());
-        typeHandlerColumn.setCellValueFactory(cellData -> cellData.getValue().typeHandleProperty());
-        checkedColumn.setCellFactory(column -> {
-            return new TableCell<UITableColumnVO, Boolean>() {
-
-                @Override
-                protected void updateItem(Boolean item, boolean empty) {
-                    super.updateItem(item, empty);
-
-                    if (item == null || empty) {
-                        setText(null);
-                    } else {
-                        CheckBox checkBox = new CheckBox();
-                        checkBox.setSelected(item);
-                        checkBox.setFocusTraversable(false);
-                        ObservableList<UITableColumnVO> items = this.getTableView().getItems();
-                        UITableColumnVO element = items.get(this.getIndex());
-                        checkBox.selectedProperty().bindBidirectional(element.checkedProperty());
-                        setGraphic(checkBox);
-                    }
-                }
-            };
+        // cellvaluefactory
+        checkedColumn.setCellValueFactory(new PropertyValueFactory<>("checked"));
+        columnNameColumn.setCellValueFactory(new PropertyValueFactory<>("columnName"));
+        jdbcTypeColumn.setCellValueFactory(new PropertyValueFactory<>("jdbcType"));
+        propertyNameColumn.setCellValueFactory(new PropertyValueFactory<>("propertyName"));
+        typeHandlerColumn.setCellValueFactory(new PropertyValueFactory<>("typeHandler"));
+        // Cell Factory that customize how the cell should render
+        checkedColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkedColumn));
+        javaTypeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        // handle commit event to save the user input data
+        javaTypeColumn.setOnEditCommit(event -> {
+            event.getTableView().getItems().get(event.getTablePosition().getRow()).setJavaType(event.getNewValue());
         });
-        javaTypeColumn.setCellFactory(column -> {
-            return new TableCell<UITableColumnVO, String>() {
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-
-                    if (empty) {
-                        setText(null);
-                    } else {
-                        TextField textField = new TextField();
-                        ObservableList<UITableColumnVO> items = this.getTableView().getItems();
-                        UITableColumnVO element = items.get(this.getIndex());
-                        textField.textProperty().bindBidirectional(element.javaTypeProperty());
-                        setGraphic(textField);
-                    }
-                }
-            };
+        propertyNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        propertyNameColumn.setOnEditCommit(event -> {
+            event.getTableView().getItems().get(event.getTablePosition().getRow()).setPropertyName(event.getNewValue());
         });
-        propertyNameColumn.setCellFactory(column -> {
-            return new TableCell<UITableColumnVO, String>() {
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-
-                    if (empty) {
-                        setText(null);
-                    } else {
-                        TextField textField = new TextField();
-                        ObservableList<UITableColumnVO> items = this.getTableView().getItems();
-                        UITableColumnVO element = items.get(this.getIndex());
-                        textField.textProperty().bindBidirectional(element.propertyNameProperty());
-                        setGraphic(textField);
-                    }
-                }
-            };
-        });
-        typeHandlerColumn.setCellFactory(column -> {
-            return new TableCell<UITableColumnVO, String>() {
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-
-                    if (empty) {
-                        setText(null);
-                    } else {
-                        TextField textField = new TextField();
-                        ObservableList<UITableColumnVO> items = this.getTableView().getItems();
-                        UITableColumnVO element = items.get(this.getIndex());
-                        textField.textProperty().bindBidirectional(element.typeHandleProperty());
-                        setGraphic(textField);
-                    }
-                }
-            };
+        typeHandlerColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        typeHandlerColumn.setOnEditCommit(event -> {
+            event.getTableView().getItems().get(event.getTablePosition().getRow()).setTypeHandle(event.getNewValue());
         });
     }
 
@@ -135,7 +77,7 @@ public class SelectTableColumnController extends BaseFXController {
                 if (!item.getChecked()) {
                     IgnoredColumn ignoredColumn = new IgnoredColumn(item.getColumnName());
                     ignoredColumns.add(ignoredColumn);
-                } else if (item.getTypeHandle() != null) { // unchecked and have typeHandler value
+                } else if (item.getTypeHandle() != null || item.getJavaType() != null || item.getPropertyName() != null) { // unchecked and have typeHandler value
                     ColumnOverride columnOverride = new ColumnOverride(item.getColumnName());
                     columnOverride.setTypeHandler(item.getTypeHandle());
                     columnOverride.setJavaProperty(item.getPropertyName());

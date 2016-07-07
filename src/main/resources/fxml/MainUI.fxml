@@ -57,7 +57,7 @@
                <children>
                   <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                              <GridPane layoutX="5.0" layoutY="29.0" prefHeight="387.0" prefWidth="736.0" vgap="5.0" AnchorPane.leftAnchor="-5.0" AnchorPane.rightAnchor="10.0">
+                              <GridPane layoutX="5.0" layoutY="29.0" prefHeight="404.0" prefWidth="732.0" vgap="5.0" AnchorPane.leftAnchor="-5.0" AnchorPane.rightAnchor="10.0">
                                   <columnConstraints>
                                       <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="157.0" minWidth="156.0" prefWidth="156.0" />
                                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="226.0" />
@@ -72,6 +72,7 @@
                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                   </rowConstraints>
                                   <children>
@@ -107,7 +108,7 @@
                                       <Label text="Model Package" GridPane.rowIndex="4" />
                                       <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="261.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                           <children>
-                                              <TextField fx:id="modelTargetPackage" prefHeight="27.0" prefWidth="248.0">
+                                              <TextField fx:id="modelTargetPackage" prefHeight="27.0" prefWidth="248.0" promptText="com.example.model">
                                                   <HBox.margin>
                                                       <Insets right="5.0" />
                                                   </HBox.margin>
@@ -119,7 +120,7 @@
                                       <Label text="DAO Package" GridPane.rowIndex="5" />
                                       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                           <children>
-                                              <TextField fx:id="daoTargetPackage" prefHeight="27.0" prefWidth="248.0">
+                                              <TextField fx:id="daoTargetPackage" prefHeight="27.0" prefWidth="248.0" promptText="com.example.mapper">
                                                   <HBox.margin>
                                                       <Insets right="5.0" />
                                                   </HBox.margin>
@@ -131,7 +132,7 @@
                                       <Label text="Mapping XML Package" GridPane.rowIndex="6" />
                                       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                           <children>
-                                              <TextField fx:id="mapperTargetPackage" prefHeight="27.0" prefWidth="248.0">
+                                              <TextField fx:id="mapperTargetPackage" prefHeight="27.0" prefWidth="248.0" promptText="com.example">
                                                   <HBox.margin>
                                                       <Insets right="5.0" />
                                                   </HBox.margin>
@@ -140,7 +141,13 @@
                                       </HBox>
                                       <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                                       <TextField fx:id="mappingTargetProject" promptText="src/main/resources" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                                      <Button mnemonicParsing="false" onAction="#generateCode" text="Generate" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                              <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7">
+                                 <children>
+                                    <CheckBox fx:id="offsetLimitCheckBox" mnemonicParsing="false" selected="true" text="offset/limit" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                    <CheckBox fx:id="commentCheckBox" mnemonicParsing="false" text="suppressAllComments" />
+                                 </children>
+                              </HBox>
+                                      <Button mnemonicParsing="false" onAction="#generateCode" text="Generate" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                               <Button mnemonicParsing="false" onAction="#openTableColumnCustomizationPage" text="Customize" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                   </children>
                               </GridPane>
@@ -149,7 +156,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </VBox>
-                  <TextArea fx:id="consoleTextArea" editable="false" focusTraversable="false" prefHeight="106.0" prefWidth="721.0" styleClass="consoleTextArea" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="396.0" />
+                  <TextArea fx:id="consoleTextArea" editable="false" focusTraversable="false" layoutY="429.0" prefHeight="77.0" prefWidth="722.0" styleClass="consoleTextArea" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="429.0" />
                </children>
             </AnchorPane>
             </items>

@@ -89,10 +89,6 @@ public class MybatisGeneratorBridge {
         daoConfig.setConfigurationType("XMLMAPPER");
         daoConfig.setTargetPackage(generatorConfig.getDaoPackage());
         daoConfig.setTargetProject(generatorConfig.getProjectFolder() + "/" + generatorConfig.getDaoTargetFolder());
-        // Comment
-        CommentGeneratorConfiguration commentConfig = new CommentGeneratorConfiguration();
-        commentConfig.addProperty("suppressAllComments", "true");
-        commentConfig.addProperty("suppressDate", "true");
 
         context.setId("myid");
         context.addTableConfiguration(tableConfig);
@@ -101,17 +97,24 @@ public class MybatisGeneratorBridge {
         context.setJavaModelGeneratorConfiguration(modelConfig);
         context.setSqlMapGeneratorConfiguration(mapperConfig);
         context.setJavaClientGeneratorConfiguration(daoConfig);
-        context.setCommentGeneratorConfiguration(commentConfig);
+        // Comment
+        if (generatorConfig.isComment()) {
+            CommentGeneratorConfiguration commentConfig = new CommentGeneratorConfiguration();
+            commentConfig.addProperty("suppressAllComments", "true");
+            commentConfig.addProperty("suppressDate", "true");
+            context.setCommentGeneratorConfiguration(commentConfig);
+        }
         // limit/offset插件
-        PluginConfiguration pluginConfiguration = new PluginConfiguration();
-        pluginConfiguration.addProperty("type", "com.zzg.mybatis.generator.plugins.MySQLLimitPlugin");
-        pluginConfiguration.setConfigurationType("com.zzg.mybatis.generator.plugins.MySQLLimitPlugin");
-        context.addPluginConfiguration(pluginConfiguration);
-
+        if (generatorConfig.isOffsetLimit()) {
+            PluginConfiguration pluginConfiguration = new PluginConfiguration();
+            pluginConfiguration.addProperty("type", "com.zzg.mybatis.generator.plugins.MySQLLimitPlugin");
+            pluginConfiguration.setConfigurationType("com.zzg.mybatis.generator.plugins.MySQLLimitPlugin");
+            context.addPluginConfiguration(pluginConfiguration);
+        }
         context.setTargetRuntime("MyBatis3");
 
         List<String> warnings = new ArrayList<>();
-        Set<String> fullyqualifiedTables = new HashSet<String>();
+        Set<String> fullyqualifiedTables = new HashSet<>();
         Set<String> contexts = new HashSet<>();
         ShellCallback shellCallback = new DefaultShellCallback(true); // override=true
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);

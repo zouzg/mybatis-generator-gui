@@ -28,6 +28,10 @@ public class GeneratorConfig {
 
     private String domainObjectName;
 
+    private boolean offsetLimit;
+
+    private boolean comment;
+
     public String getTableName() {
         return tableName;
     }
@@ -106,5 +110,21 @@ public class GeneratorConfig {
 
     public void setMappingXMLTargetFolder(String mappingXMLTargetFolder) {
         this.mappingXMLTargetFolder = mappingXMLTargetFolder;
+    }
+
+    public boolean isOffsetLimit() {
+        return offsetLimit;
+    }
+
+    public void setOffsetLimit(boolean offsetLimit) {
+        this.offsetLimit = offsetLimit;
+    }
+
+    public boolean isComment() {
+        return comment;
+    }
+
+    public void setComment(boolean comment) {
+        this.comment = comment;
     }
 }
