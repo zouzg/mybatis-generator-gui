@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zzg.mybatis.generator.controller.SelectTableColumnController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zzg.mybatis.generator.controller.SelectTableColumnController">
    <children>
-      <ListView fx:id="columnListView" layoutX="127.0" layoutY="60.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
-      <Label layoutX="14.0" layoutY="14.0" text="Please select the column you need" />
-      <Button layoutX="519.0" layoutY="359.0" mnemonicParsing="false" onAction="#ok" prefHeight="27.0" prefWidth="59.0" text="OK" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0" />
+      <TableView fx:id="columnListView" editable="true" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+        <columns>
+          <TableColumn fx:id="checkedColumn" prefWidth="75.0" text="Checked" />
+          <TableColumn fx:id="columnNameColumn" prefWidth="132.0" text="Column Name" />
+            <TableColumn fx:id="jdbcTypeColumn" prefWidth="122.0" text="JDBC Type" />
+            <TableColumn fx:id="javaTypeColumn" prefWidth="121.0" text="Java Type" />
+            <TableColumn fx:id="propertyNameColumn" prefWidth="104.0" text="Property Name" />
+            <TableColumn fx:id="typeHandlerColumn" prefWidth="136.0" text="Type Handler" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Button focusTraversable="false" layoutX="642.0" layoutY="453.0" mnemonicParsing="false" onAction="#ok" prefHeight="27.0" prefWidth="59.0" text="OK" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="29.0" />
+      <Button focusTraversable="false" layoutX="568.0" layoutY="486.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+      <Text layoutX="12.0" layoutY="64.0" lineSpacing="5.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Customize the Java Type, Property Name or Type Handler fields by double click the cell you want to customize, and enter to commit your change" wrappingWidth="706.0" />
+      <Text layoutX="14.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Uncheck the column you want to ignore" />
    </children>
 </AnchorPane>

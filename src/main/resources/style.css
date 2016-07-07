@@ -1,3 +1,7 @@
+* {
+	-fx-font-size: 12px;
+}
+
 .button {
 	-fx-font-size: 14px;
 }
@@ -7,6 +11,19 @@
 }
 
 .btn-primary {
-	-fx-background-color: blue;
+	-fx-background-color: #378bfa;
 	-fx-text-fill: white;
+}
+
+.btn-primary:hover {
+	-fx-background-color: #579efa;
+}
+
+.consoleTextArea {
+	-fx-stroke: white;
+	-fx-fill: black;
+	-fx-background-color: black;
+}
+
+.consoleTextArea:focused {
 }

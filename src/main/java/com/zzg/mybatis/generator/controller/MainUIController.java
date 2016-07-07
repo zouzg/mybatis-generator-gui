@@ -4,9 +4,8 @@ import java.io.File;
 import java.net.URL;
 import java.util.*;
 
-import com.zzg.mybatis.generator.model.DatabaseConfig;
-import com.zzg.mybatis.generator.model.DbType;
-import com.zzg.mybatis.generator.model.GeneratorConfig;
+import com.zzg.mybatis.generator.bridge.MybatisGeneratorBridge;
+import com.zzg.mybatis.generator.model.*;
 import com.zzg.mybatis.generator.util.DbUtil;
 import com.zzg.mybatis.generator.util.StringUtils;
 import com.zzg.mybatis.generator.util.XMLConfigHelper;
@@ -27,6 +26,7 @@ import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.ShellCallback;
@@ -35,8 +35,6 @@ import org.mybatis.generator.config.*;
 import org.mybatis.generator.internal.DefaultShellCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.zzg.mybatis.generator.model.DatabaseDTO;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -77,13 +75,22 @@ public class MainUIController extends BaseFXController {
     @FXML
     private TextField projectFolderField;
     @FXML
+    private CheckBox offsetLimitCheckBox;
+    @FXML
+    private CheckBox commentCheckBox;
+
+    @FXML
     private TreeView<String> leftDBTree;
     @FXML
     private TextArea consoleTextArea;
-
+    // Current selected databaseConfig
     private DatabaseConfig selectedDatabaseConfig;
-
+    // Current selected tableName
     private String tableName;
+
+    private List<IgnoredColumn> ignoredColumns;
+
+    private List<ColumnOverride> columnOverrides;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -92,7 +99,7 @@ public class MainUIController extends BaseFXController {
         dbImage.setFitWidth(40);
         connectionLabel.setGraphic(dbImage);
         connectionLabel.setOnMouseClicked(event -> {
-            NewConnectionController controller = loadFXMLPage("New Connection", FXMLPage.NEW_CONNECTION);
+            NewConnectionController controller = (NewConnectionController) loadFXMLPage("New Connection", FXMLPage.NEW_CONNECTION);
             controller.setMainUIController(this);
         });
 
@@ -130,7 +137,7 @@ public class MainUIController extends BaseFXController {
                                 }
                             }
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            AlertUtil.showErrorAlert(e.getMessage() + "\n" + ExceptionUtils.getStackTrace(e));
                         }
                     } else if (level == 2) {
                         System.out.println("index: " + leftDBTree.getSelectionModel().getSelectedIndex());
@@ -152,12 +159,13 @@ public class MainUIController extends BaseFXController {
                                 }
                             }
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            _LOG.error(e.getMessage(), e);
+                            AlertUtil.showErrorAlert(e.getMessage());
                         }
                     } else if (level == 3) {
                         String tableName = treeCell.getTreeItem().getValue();
                         selectedDatabaseConfig = (DatabaseConfig)item.getParent().getParent().getGraphic().getUserData();
-                        String schema = (String)item.getParent().getValue();
+                        String schema = item.getParent().getValue();
                         selectedDatabaseConfig.setSchema(schema);
                         this.tableName = tableName;
                         tableNameField.setText(tableName);
@@ -187,8 +195,8 @@ public class MainUIController extends BaseFXController {
                 rootTreeItem.getChildren().add(treeItem);
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            // show error TODO
+            _LOG.error("connect db failed, reason: {}", e);
+            AlertUtil.showErrorAlert(e.getMessage() + "\n" + ExceptionUtils.getStackTrace(e));
         }
     }
 
@@ -211,67 +219,23 @@ public class MainUIController extends BaseFXController {
     }
 
     @FXML
-    public void generateCode() throws Exception {
-        Configuration config = new Configuration();
-        config.addClasspathEntry(connectorPathField.getText());
-        Context context = new Context(ModelType.CONDITIONAL);
-        config.addContext(context);
-        // Table config
-        TableConfiguration tableConfig = new TableConfiguration(context);
-        tableConfig.setTableName(tableNameField.getText());
-        tableConfig.setDomainObjectName(domainObjectNameField.getText());
-        // JDBC config
-        if (selectedDatabaseConfig == null) {
-            AlertUtil.showInfoAlert("Please select the table from left DB tree");
+    public void generateCode() {
+        if (tableName == null) {
+            AlertUtil.showErrorAlert("Please select table from left DB treee first");
             return;
         }
-        JDBCConnectionConfiguration jdbcConfig = new JDBCConnectionConfiguration();
-        jdbcConfig.setDriverClass(DbType.valueOf(selectedDatabaseConfig.getDbType()).getDriverClass());
-        jdbcConfig.setConnectionURL(DbUtil.getConnectionUrlWithSchema(selectedDatabaseConfig));
-        jdbcConfig.setUserId(selectedDatabaseConfig.getUsername());
-        jdbcConfig.setPassword(selectedDatabaseConfig.getPassword());
-        // java model
-        JavaModelGeneratorConfiguration modelConfig = new JavaModelGeneratorConfiguration();
-        modelConfig.setTargetPackage(modelTargetPackage.getText());
-        modelConfig.setTargetProject(projectFolderField.getText() + "/" + modelTargetProject.getText());
-        // Mapper config
-        SqlMapGeneratorConfiguration mapperConfig = new SqlMapGeneratorConfiguration();
-        mapperConfig.setTargetPackage(mapperTargetPackage.getText());
-        mapperConfig.setTargetProject(projectFolderField.getText() + "/" + mappingTargetProject.getText());
-        // DAO
-        JavaClientGeneratorConfiguration daoConfig = new JavaClientGeneratorConfiguration();
-        daoConfig.setConfigurationType("XMLMAPPER");
-        daoConfig.setTargetPackage(daoTargetPackage.getText());
-        daoConfig.setTargetProject(projectFolderField.getText() + "/" + daoTargetProject.getText());
-        // Comment
-        CommentGeneratorConfiguration commentConfig = new CommentGeneratorConfiguration();
-        commentConfig.addProperty("suppressAllComments", "true");
-        commentConfig.addProperty("suppressDate", "true");
-
-        context.setId("myid");
-        context.addTableConfiguration(tableConfig);
-        context.setJdbcConnectionConfiguration(jdbcConfig);
-        context.setJdbcConnectionConfiguration(jdbcConfig);
-        context.setJavaModelGeneratorConfiguration(modelConfig);
-        context.setSqlMapGeneratorConfiguration(mapperConfig);
-        context.setJavaClientGeneratorConfiguration(daoConfig);
-        context.setCommentGeneratorConfiguration(commentConfig);
-        // limit/offset插件
-        PluginConfiguration pluginConfiguration = new PluginConfiguration();
-        pluginConfiguration.addProperty("type", "com.zzg.mybatis.generator.plugins.MySQLLimitPlugin");
-        pluginConfiguration.setConfigurationType("com.zzg.mybatis.generator.plugins.MySQLLimitPlugin");
-        context.addPluginConfiguration(pluginConfiguration);
-
-        context.setTargetRuntime("MyBatis3");
-
-        List<String> warnings = new ArrayList<>();
-        Set<String> fullyqualifiedTables = new HashSet<String>();
-        Set<String> contexts = new HashSet<>();
-        ProgressCallback progressCallback = new UIProgressCallback(consoleTextArea);
-
-        ShellCallback shellCallback = new DefaultShellCallback(true); // override=true
-        MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
-        myBatisGenerator.generate(progressCallback, contexts, fullyqualifiedTables);
+        GeneratorConfig generatorConfig = getGeneratorConfigFromUI();
+        MybatisGeneratorBridge bridge = new MybatisGeneratorBridge();
+        bridge.setGeneratorConfig(generatorConfig);
+        bridge.setDatabaseConfig(selectedDatabaseConfig);
+        bridge.setIgnoredColumns(ignoredColumns);
+        bridge.setColumnOverrides(columnOverrides);
+        bridge.setProgressCallback(new UIProgressCallback(consoleTextArea));
+        try {
+            bridge.generate();
+        } catch (Exception e) {
+            AlertUtil.showErrorAlert(e.getMessage());
+        }
     }
 
     public GeneratorConfig getGeneratorConfigFromUI() {
@@ -284,6 +248,10 @@ public class MainUIController extends BaseFXController {
         generatorConfig.setDaoTargetFolder(daoTargetProject.getText());
         generatorConfig.setMappingXMLPackage(mapperTargetPackage.getText());
         generatorConfig.setMappingXMLTargetFolder(mappingTargetProject.getText());
+        generatorConfig.setTableName(tableNameField.getText());
+        generatorConfig.setDomainObjectName(domainObjectNameField.getText());
+        generatorConfig.setOffsetLimit(offsetLimitCheckBox.isSelected());
+        generatorConfig.setComment(commentCheckBox.isSelected());
         return generatorConfig;
     }
 
@@ -291,24 +259,40 @@ public class MainUIController extends BaseFXController {
         connectorPathField.setText(generatorConfig.getConnectorJarPath());
         projectFolderField.setText(generatorConfig.getProjectFolder());
         modelTargetPackage.setText(generatorConfig.getModelPackage());
-        modelTargetProject.setText(generatorConfig.getModelPackage());
+        modelTargetProject.setText(generatorConfig.getModelPackageTargetFolder());
         daoTargetPackage.setText(generatorConfig.getDaoPackage());
-        daoTargetProject.setText(generatorConfig.getDaoPackage());
+        daoTargetProject.setText(generatorConfig.getDaoTargetFolder());
         mapperTargetPackage.setText(generatorConfig.getMappingXMLPackage());
         mappingTargetProject.setText(generatorConfig.getMappingXMLTargetFolder());
     }
 
     @FXML
     public void openTableColumnCustomizationPage() {
-        SelectTableColumnController controller = loadFXMLPage("Select Columns", FXMLPage.SELECT_TABLE_COLUMN);
+        if (tableName == null) {
+            AlertUtil.showErrorAlert("Please select table from left DB treee first");
+            return;
+        }
+        SelectTableColumnController controller = (SelectTableColumnController) loadFXMLPage("Select Columns", FXMLPage.SELECT_TABLE_COLUMN);
         controller.setMainUIController(this);
         try {
-            List<String> tableColumns = DbUtil.getTableColumns(selectedDatabaseConfig, selectedDatabaseConfig.getSchema(), tableName);
-            controller.setColumnList(tableColumns);
+            // If select same schema and another table, update table data
+            if (!tableName.equals(controller.getTableName())) {
+                List<UITableColumnVO> tableColumns = DbUtil.getTableColumns(selectedDatabaseConfig, selectedDatabaseConfig.getSchema(), tableName);
+                controller.setColumnList(FXCollections.observableList(tableColumns));
+                controller.setTableName(tableName);
+            }
+            controller.showDialogStage();
         } catch (Exception e) {
-            e.printStackTrace();
             _LOG.error(e.getMessage(), e);
+            AlertUtil.showErrorAlert(e.getMessage());
         }
     }
 
+    public void setIgnoredColumns(List<IgnoredColumn> ignoredColumns) {
+        this.ignoredColumns = ignoredColumns;
+    }
+
+    public void setColumnOverrides(List<ColumnOverride> columnOverrides) {
+        this.columnOverrides = columnOverrides;
+    }
 }

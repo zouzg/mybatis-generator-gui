@@ -3,6 +3,7 @@ package com.zzg.mybatis.generator.controller;
 import com.zzg.mybatis.generator.model.DatabaseConfig;
 import com.zzg.mybatis.generator.util.DbUtil;
 import com.zzg.mybatis.generator.util.XMLConfigHelper;
+import com.zzg.mybatis.generator.view.AlertUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
@@ -12,6 +13,8 @@ import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -22,6 +25,8 @@ import java.util.Iterator;
 import java.util.ResourceBundle;
 
 public class NewConnectionController extends BaseFXController {
+
+    private static final Logger _LOG = LoggerFactory.getLogger(NewConnectionController.class);
 
     @FXML
     private TextField nameField;
@@ -70,8 +75,8 @@ public class NewConnectionController extends BaseFXController {
             getDialogStage().close();
             mainUIController.loadLeftDBTree();
         } catch (Exception e) {
-            e.printStackTrace();
-            // TODO show error
+            _LOG.error(e.getMessage(), e);
+            AlertUtil.showErrorAlert(e.getMessage());
         }
     }
 
@@ -99,7 +104,6 @@ public class NewConnectionController extends BaseFXController {
             alert.setContentText("Connection success");
             alert.show();
         } catch (Exception e) {
-            //e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Connection failed");
             alert.show();
