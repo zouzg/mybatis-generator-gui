@@ -77,19 +77,19 @@
                                   </rowConstraints>
                                   <children>
                                       <Label text="Connector Jar" />
-                                      <TextField fx:id="connectorPathField" GridPane.columnIndex="1" GridPane.columnSpan="2" />
+                                      <TextField fx:id="connectorPathField" promptText="C:\path\mysql-connector-java-5.1.37.jar" GridPane.columnIndex="1" GridPane.columnSpan="2" />
                                       <Button mnemonicParsing="false" onAction="#chooseConnectorFile" text="Choose" GridPane.columnIndex="3">
                                  <GridPane.margin>
                                     <Insets left="5.0" />
                                  </GridPane.margin></Button>
                                       <Label text="Table Name" GridPane.rowIndex="1" />
-                                      <TextField fx:id="tableNameField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                      <TextField fx:id="tableNameField" promptText="person" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                           <GridPane.margin>
                                               <Insets right="5.0" />
                                           </GridPane.margin>
                                       </TextField>
                                       <Label text="Domain Object Name" GridPane.rowIndex="2" />
-                                      <TextField fx:id="domainObjectNameField" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                      <TextField fx:id="domainObjectNameField" promptText="Person" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                           <GridPane.margin>
                                               <Insets right="5.0" />
                                           </GridPane.margin>
@@ -97,7 +97,7 @@
                                       <Label text="Project Folder" GridPane.rowIndex="3" />
                                       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3">
                                           <children>
-                                              <TextField fx:id="projectFolderField" prefHeight="27.0" prefWidth="348.0">
+                                              <TextField fx:id="projectFolderField" prefHeight="27.0" prefWidth="348.0" promptText="D:\workspace\example">
                                                   <HBox.margin>
                                                       <Insets right="5.0" />
                                                   </HBox.margin>
