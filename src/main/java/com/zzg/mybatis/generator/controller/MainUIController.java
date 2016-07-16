@@ -162,7 +162,7 @@ public class MainUIController extends BaseFXController {
                             _LOG.error(e.getMessage(), e);
                             AlertUtil.showErrorAlert(e.getMessage());
                         }
-                    } else if (level == 3) {
+                    } else if (level == 3) { // left DB tree level3
                         String tableName = treeCell.getTreeItem().getValue();
                         selectedDatabaseConfig = (DatabaseConfig)item.getParent().getParent().getGraphic().getUserData();
                         String schema = item.getParent().getValue();
