@@ -3,7 +3,7 @@ mybatis-generator-gui
 
 mybatis-generator-gui is a mybatis generator GUI tool, used to easy generate mybatis java mapping files and mapper xml file.
 
-![MainUI](https://cloud.githubusercontent.com/assets/3505708/16178144/35eabdcc-3673-11e6-9ff7-f701754f1550.png)
+![MainUI](https://cloud.githubusercontent.com/assets/3505708/16894610/0416f83a-4b8e-11e6-9a25-904f8d2e5583.png)
 
 ### Requirements
 This tools require JRE 8.0, if you have JDK or JRE installed, you can download no jre version, otherwise
