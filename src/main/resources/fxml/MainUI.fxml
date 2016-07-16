@@ -144,7 +144,7 @@
                               <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7">
                                  <children>
                                     <CheckBox fx:id="offsetLimitCheckBox" mnemonicParsing="false" selected="true" text="offset/limit" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                    <CheckBox fx:id="commentCheckBox" mnemonicParsing="false" text="suppressAllComments" />
+                                    <CheckBox fx:id="commentCheckBox" mnemonicParsing="false" selected="true" text="column remarks" />
                                  </children>
                               </HBox>
                                       <Button mnemonicParsing="false" onAction="#generateCode" text="Generate" GridPane.columnIndex="1" GridPane.rowIndex="8" />

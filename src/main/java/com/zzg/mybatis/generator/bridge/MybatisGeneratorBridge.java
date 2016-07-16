@@ -3,6 +3,7 @@ package com.zzg.mybatis.generator.bridge;
 import com.zzg.mybatis.generator.model.DatabaseConfig;
 import com.zzg.mybatis.generator.model.DbType;
 import com.zzg.mybatis.generator.model.GeneratorConfig;
+import com.zzg.mybatis.generator.plugins.DbRemarksCommentGenerator;
 import com.zzg.mybatis.generator.util.DbUtil;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.api.ProgressCallback;
@@ -98,12 +99,12 @@ public class MybatisGeneratorBridge {
         context.setSqlMapGeneratorConfiguration(mapperConfig);
         context.setJavaClientGeneratorConfiguration(daoConfig);
         // Comment
+        CommentGeneratorConfiguration commentConfig = new CommentGeneratorConfiguration();
+        commentConfig.setConfigurationType(DbRemarksCommentGenerator.class.getName());
         if (generatorConfig.isComment()) {
-            CommentGeneratorConfiguration commentConfig = new CommentGeneratorConfiguration();
-            commentConfig.addProperty("suppressAllComments", "true");
-            commentConfig.addProperty("suppressDate", "true");
-            context.setCommentGeneratorConfiguration(commentConfig);
+            commentConfig.addProperty("columnRemarks", "true");
         }
+        context.setCommentGeneratorConfiguration(commentConfig);
         // limit/offset插件
         if (generatorConfig.isOffsetLimit()) {
             PluginConfiguration pluginConfiguration = new PluginConfiguration();
