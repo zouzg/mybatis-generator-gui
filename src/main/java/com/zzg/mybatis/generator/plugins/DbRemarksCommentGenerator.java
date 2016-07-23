@@ -78,12 +78,12 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
             IntrospectedTable introspectedTable,
             IntrospectedColumn introspectedColumn) {
         String columnRemarks = introspectedColumn.getRemarks();
-        if (!this.columnRemarks && StringUtils.isEmpty(columnRemarks)) {
+        if (!this.columnRemarks || StringUtils.isEmpty(columnRemarks)) {
             return;
         }
         field.addJavaDocLine("/**");
-        field.addJavaDocLine(" * " + columnRemarks);
-        field.addJavaDocLine(" */");
+        field.addJavaDocLine("* " + columnRemarks);
+        field.addJavaDocLine("*/");
     }
 
     public void addFieldComment(Field field, IntrospectedTable introspectedTable) {

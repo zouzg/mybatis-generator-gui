@@ -105,6 +105,21 @@ public class XMLConfigHelper {
         }
     }
 
+    public static void deleteDatabaseConfig(String name) {
+        Configurations configs = new Configurations();
+        try {
+            // obtain the configuration
+            FileBasedConfigurationBuilder<XMLConfiguration> builder = configs.xmlBuilder(BASE_DIR + DB_CONFIG_FILE);
+            XMLConfiguration config = builder.getConfiguration();
+
+            // save configuration
+            builder.save();
+        } catch (ConfigurationException cex) {
+            // Something went wrong
+            cex.printStackTrace();
+        }
+    }
+
     public static void saveGeneratorConfig(GeneratorConfig generatorConfig) throws Exception {
         Configurations configs = new Configurations();
         // obtain the configuration

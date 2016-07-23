@@ -13,15 +13,19 @@ import java.util.List;
  */
 public class DbUtil {
 
+    private static final int DB_CONNECTION_TIMEOUTS_SENCONDS = 1;
+
     public static Connection getConnection(DatabaseConfig config) throws ClassNotFoundException, SQLException {
         DbType dbType = DbType.valueOf(config.getDbType());
         Class.forName(dbType.getDriverClass());
+        DriverManager.setLoginTimeout(DB_CONNECTION_TIMEOUTS_SENCONDS);
         return DriverManager.getConnection(getConnectionUrlWithoutSchema(config), config.getUsername(), config.getPassword());
     }
 
     public static List<String> getSchemas(DatabaseConfig config) throws Exception {
         DbType dbType = DbType.valueOf(config.getDbType());
         Class.forName(dbType.getDriverClass());
+        DriverManager.setLoginTimeout(DB_CONNECTION_TIMEOUTS_SENCONDS);
         Connection conn = DriverManager.getConnection(getConnectionUrlWithoutSchema(config), config.getUsername(), config.getPassword());
         DatabaseMetaData md = conn.getMetaData();
         ResultSet rs = md.getCatalogs();
@@ -35,6 +39,7 @@ public class DbUtil {
     public static List<String> getTableNames(DatabaseConfig config, String schema) throws Exception {
         DbType dbType = DbType.valueOf(config.getDbType());
         Class.forName(dbType.getDriverClass());
+        DriverManager.setLoginTimeout(DB_CONNECTION_TIMEOUTS_SENCONDS);
         Connection conn = DriverManager.getConnection(getConnectionUrlWithoutSchema(config), config.getUsername(), config.getPassword());
         conn.setSchema(schema);
         DatabaseMetaData md = conn.getMetaData();
@@ -49,6 +54,7 @@ public class DbUtil {
     public static List<UITableColumnVO> getTableColumns(DatabaseConfig dbConfig, String schema, String tableName) throws Exception {
         DbType dbType = DbType.valueOf(dbConfig.getDbType());
         Class.forName(dbType.getDriverClass());
+        DriverManager.setLoginTimeout(DB_CONNECTION_TIMEOUTS_SENCONDS);
         Connection conn = DriverManager.getConnection(getConnectionUrlWithoutSchema(dbConfig), dbConfig.getUsername(), dbConfig.getPassword());
         conn.setSchema(schema);
         DatabaseMetaData md = conn.getMetaData();

@@ -52,7 +52,9 @@
             <ChoiceBox fx:id="encodingChoice" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="UTF-8" />
+                        <String fx:value="utf8" />
+                        <String fx:value="gb2312" />
+                        <String fx:value="gbk" />
                     </FXCollections>
                 </items>
              </ChoiceBox>
