@@ -24,8 +24,9 @@ mybatis-generator-gui是基于[mybatis generator](http://www.mybatis.org/generat
     mvn jfx:jar
 ### 启动本软件
 * 下载的zip包
+    解压zip包，如果安装好了JRE或者JDK 8，直接cd至软件目录运行java -jar mybatis-generator-gui.jar
 
-
+* 自助构建
     cd target/jfx/app/\
     java -jar mybatis-generator-gui.jar
 
