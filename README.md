@@ -32,7 +32,6 @@ mybatis-generator-gui是基于[mybatis generator](https://github.com/mybatis/gen
 * Eclipse or IntelliJ IDEA中启动, 找到MainUI类并运行就可以了
 
 ### 文档
-----
 更多详细文档请参考本库的Wiki
 * [Usage](https://github.com/astarring/mybatis-generator-gui/wiki/Usage-Guide)
 
