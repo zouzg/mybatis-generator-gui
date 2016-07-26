@@ -22,7 +22,7 @@ mybatis-generator-gui是基于[mybatis generator](https://github.com/mybatis/gen
     git clone https://github.com/astarring/mybatis-generator-gui
     cd mybatis-generator-gui
     mvn jfx:jar
-### 启动本囫
+### 启动本软件
 * 下载的zip包
 
 
