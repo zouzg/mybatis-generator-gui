@@ -5,42 +5,44 @@ mybatis-generator-gui is a mybatis generator GUI tool, used to easy generate myb
 
 ![MainUI](https://cloud.githubusercontent.com/assets/3505708/16894610/0416f83a-4b8e-11e6-9a25-904f8d2e5583.png)
 
-### Requirements
-This tools require JRE 8.0, if you have JDK or JRE installed, you can download no jre version, otherwise
-you need download jre bundled version.
+### 核心特性
+* 按照界面步骤轻松生成代码，省去XML繁琐的学习与配置过程
+* 保存数据库连接与配置，每次代码生成轻松搞定
+* 内置常用插件，比如offset
+* 可选的去除掉对版本管理不友好的注释，这样新增或删除字段重新生成的文件比较过来清楚
+* 目前仅支持Mysql，后续会马上支持postgreSql，如果对Oracle及DB2有需求请提Issue，我会后续跟进。
 
-### Downloads
-You can download no jre release from here: https://github.com/astarring/mybatis-generator-gui/releases/download/v0.3/mybatis-generator-gui-no-jre.zip
+### 要求
+本工具由于使用了Java 8的众多特性，所以要求 JRE或者JDK 8.0以上版本，对于JDK版本还没有升级的童鞋表示歉意。
 
-Cause github upload release binary is very very slow, I just upload no jre version
-if I found it faster, I will upload the jre bundled version.
+### 下载
+你可以从本链接下载本工具: https://github.com/astarring/mybatis-generator-gui/releases
 
-### Building from source
+### 自助构建
     git clone https://github.com/astarring/mybatis-generator-gui
     cd mybatis-generator-gui
     mvn jfx:jar
-### Run
-* Run mybatis-generator-gui
+### 启动本囫
+* 下载的zip包
 
 
     cd target/jfx/app/\
     java -jar mybatis-generator-gui.jar
 
-* Run in Eclipse or IntelliJ IDEA, just find the main class MainUI, and run this class.
+* Eclipse or IntelliJ IDEA中启动, 找到MainUI类并运行就可以了
 
-### Documentation
+### 文档
 ----
-For more information on how to the GUI tool, please reference my wiki page:
+更多详细文档请参考本库的Wiki
 * [Usage](https://github.com/astarring/mybatis-generator-gui/wiki/Usage-Guide)
 
 
-### Contribution
-This project currently is only develop by me, if you want's to join, I will
-really appreciate and try my best to  improve the functionality, to support this project you can:
-* Post thoughts or issues about new features/optimizations that important to you
-* Submit bug using one of the following patterns:
-    * The step how to reproduce the issue
-    * Any snapshot that show the issue is appreciate
+### 贡献
+目前本工具只是本人项目人使用到了并且觉得非常有用所以把它开源，如果你觉得有用并且想改进本软件，你可以：
+* 对于你认为有用的功能，你可以在Issue提，我可以开发的尽量满足
+* 对于有Bug的地方，请按如下方式在Issue中提bug
+    * 如何重现你的bug，包括你使用的系统，JDK版本，数据库类型及版本
+    * 如果有任何的错误截图会更好
 
 
 ------
