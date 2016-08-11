@@ -72,6 +72,7 @@ public class XMLConfigHelper {
                 dbConfig.setUsername(hc.getString("userName"));
                 dbConfig.setPassword(hc.getString("password"));
                 dbConfig.setEncoding(hc.getString("encoding"));
+                dbConfig.setSchema(hc.getString("schema"));
                 dbConfig.setDbType(hc.getString("dbType"));
                 dbs.add(dbConfig);
             }
@@ -95,6 +96,7 @@ public class XMLConfigHelper {
             config.addProperty(name + ".port", dbConfig.getPort());
             config.addProperty(name + ".userName", dbConfig.getUsername());
             config.addProperty(name + ".password", dbConfig.getPassword());
+            config.addProperty(name + ".schema", dbConfig.getSchema());
             config.addProperty(name + ".encoding", dbConfig.getEncoding());
 
             // save configuration

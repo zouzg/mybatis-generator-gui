@@ -5,7 +5,7 @@ package com.zzg.mybatis.generator.model;
  */
 public enum DbType {
     MYSQL("com.mysql.jdbc.Driver", "jdbc:mysql://%s:%s?useUnicode=true&useSSL=false&characterEncoding=%s", "jdbc:mysql://%s:%s/%s?useUnicode=true&useSSL=false&characterEncoding=%s"),
-    ORACLE("oracle.jdbc.driver.OracleDriver", "jdbc:oracle:thin:@%s:%s", "");
+    ORACLE("oracle.jdbc.driver.OracleDriver", "jdbc:oracle:thin:@%s:%s", "jdbc:oracle:thin:@%s:%s:%s");
 
     private final String driverClass;
     private final String connectionUrlPattern;

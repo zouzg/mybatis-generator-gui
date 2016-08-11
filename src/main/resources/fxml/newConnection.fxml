@@ -23,6 +23,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label text="Connection Name:" />
@@ -32,6 +33,7 @@
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="MYSQL" />
+                        <String fx:value="ORACLE" />
                     </FXCollections>
                 </items>
             </ChoiceBox>
@@ -48,8 +50,8 @@
                   <CheckBox fx:id="savePwdCheckBox" mnemonicParsing="false" text="Save password" visible="false" />
                </children>
             </HBox>
-            <Label text="Encoding:" GridPane.rowIndex="6" />
-            <ChoiceBox fx:id="encodingChoice" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6">
+            <Label text="Encoding:" GridPane.rowIndex="7" />
+            <ChoiceBox fx:id="encodingChoice" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="utf8" />
@@ -58,6 +60,8 @@
                     </FXCollections>
                 </items>
              </ChoiceBox>
+            <Label text="Schema" GridPane.rowIndex="6" />
+            <TextField fx:id="schemaField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
          </children>
       </GridPane>
       <AnchorPane layoutY="390.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
