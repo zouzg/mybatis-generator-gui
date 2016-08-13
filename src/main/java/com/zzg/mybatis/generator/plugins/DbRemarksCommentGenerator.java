@@ -16,6 +16,7 @@
 
 package com.zzg.mybatis.generator.plugins;
 
+import org.apache.commons.lang3.StringUtils;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -27,6 +28,8 @@ import java.util.Properties;
 import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 
 /**
+ * 此插件使用数据库表中列的注释来生成Java Model中属性的注释
+ *
  * @author Owen Zou
  * 
  */
@@ -59,7 +62,6 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
 
     public void addConfigurationProperties(Properties properties) {
         this.properties.putAll(properties);
-
         columnRemarks = isTrue(properties
                 .getProperty("columnRemarks"));
     }
@@ -75,12 +77,13 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
     public void addFieldComment(Field field,
             IntrospectedTable introspectedTable,
             IntrospectedColumn introspectedColumn) {
-        if (!columnRemarks) {
+        String columnRemarks = introspectedColumn.getRemarks();
+        if (!this.columnRemarks || StringUtils.isEmpty(columnRemarks)) {
             return;
         }
-        field.addJavaDocLine("/**"); //$NON-NLS-1$
-        field.addJavaDocLine(" * " + introspectedColumn.getRemarks());
-        field.addJavaDocLine(" */"); //$NON-NLS-1$
+        field.addJavaDocLine("/**");
+        field.addJavaDocLine("* " + columnRemarks);
+        field.addJavaDocLine("*/");
     }
 
     public void addFieldComment(Field field, IntrospectedTable introspectedTable) {

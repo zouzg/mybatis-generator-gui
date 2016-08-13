@@ -41,6 +41,8 @@ public class NewConnectionController extends BaseFXController {
 //    @FXML
 //    private CheckBox savePwdCheckBox;
     @FXML
+    private TextField schemaField;
+    @FXML
     private ChoiceBox<String> encodingChoice;
     @FXML
     private ChoiceBox<String> dbTypeChoice;
@@ -69,6 +71,7 @@ public class NewConnectionController extends BaseFXController {
         dbConfig.setPassword(password);
 //        if (savePwdCheckBox.isSelected()) {
 //        }
+        dbConfig.setSchema(schemaField.getText());
         dbConfig.setEncoding(encoding);
         try {
             XMLConfigHelper.saveDatabaseConfig(name, dbConfig);
@@ -90,13 +93,15 @@ public class NewConnectionController extends BaseFXController {
         String encoding = encodingChoice.getValue();
         String dbType = dbTypeChoice.getValue();
         DatabaseConfig config = new DatabaseConfig();
+        config.setName(name);
         config.setDbType(dbType);
         config.setHost(host);
         config.setPort(port);
         config.setUsername(userName);
         config.setPassword(password);
+        config.setSchema(schemaField.getText());
         config.setEncoding(encoding);
-        String url = DbUtil.getConnectionUrlWithoutSchema(config);
+        String url = DbUtil.getConnectionUrlWithSchema(config);
         System.out.println(url);
         try {
             DbUtil.getConnection(config);
