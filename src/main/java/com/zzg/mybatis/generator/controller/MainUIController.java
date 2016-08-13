@@ -128,39 +128,10 @@ public class MainUIController extends BaseFXController {
                 if (event.getClickCount() == 2) {
                     treeItem.setExpanded(true);
                     if (level == 1) {
-                        DatabaseConfig selectedConfig = (DatabaseConfig) treeItem.getGraphic().getUserData();
-                        // Accept clicks only on node cells, and not on empty spaces of the TreeView
-                        leftDBTree.getSelectionModel().getSelectedItem().setExpanded(true);
-                        System.out.println("Node click: " + selectedConfig);
-                        List<String> schemas = null;
-                        try {
-                            schemas = DbUtil.getSchemas(selectedConfig);
-                            System.out.println(schemas);
-                            if (schemas != null && schemas.size() > 0) {
-                                ObservableList<TreeItem<String>> children = cell.getTreeItem().getChildren();
-                                children.clear();
-                                for (String schema : schemas) {
-                                    TreeItem<String> newTreeItem = new TreeItem<>();
-                                    ImageView imageView = new ImageView("icons/database.png");
-                                    imageView.setFitHeight(16);
-                                    imageView.setFitWidth(16);
-                                    newTreeItem.setGraphic(imageView);
-                                    newTreeItem.setValue(schema);
-                                    children.add(newTreeItem);
-                                }
-                            }
-                        } catch (CommunicationsException e) {
-                            _LOG.error(e.getMessage(), e);
-                            AlertUtil.showErrorAlert("Connection timeout");
-                        } catch (Exception e) {
-                            AlertUtil.showErrorAlert(e.getMessage() + "\n" + ExceptionUtils.getStackTrace(e));
-                        }
-                    } else if (level == 2) {
                         System.out.println("index: " + leftDBTree.getSelectionModel().getSelectedIndex());
-                        DatabaseConfig selectedConfig = (DatabaseConfig) treeItem.getParent().getGraphic().getUserData();
-                        String schema = treeCell.getTreeItem().getValue();
+                        DatabaseConfig selectedConfig = (DatabaseConfig) treeItem.getGraphic().getUserData();
                         try {
-                            List<String> tables = DbUtil.getTableNames(selectedConfig, schema);
+                            List<String> tables = DbUtil.getTableNames(selectedConfig);
                             if (tables != null && tables.size() > 0) {
                                 ObservableList<TreeItem<String>> children = cell.getTreeItem().getChildren();
                                 children.clear();
@@ -181,11 +152,9 @@ public class MainUIController extends BaseFXController {
                             _LOG.error(e.getMessage(), e);
                             AlertUtil.showErrorAlert(e.getMessage());
                         }
-                    } else if (level == 3) { // left DB tree level3
+                    } else if (level == 2) { // left DB tree level3
                         String tableName = treeCell.getTreeItem().getValue();
-                        selectedDatabaseConfig = (DatabaseConfig) treeItem.getParent().getParent().getGraphic().getUserData();
-                        String schema = treeItem.getParent().getValue();
-                        selectedDatabaseConfig.setSchema(schema);
+                        selectedDatabaseConfig = (DatabaseConfig) treeItem.getParent().getGraphic().getUserData();
                         this.tableName = tableName;
                         tableNameField.setText(tableName);
                         domainObjectNameField.setText(StringUtils.dbStringToCamelStyle(tableName));
@@ -296,7 +265,7 @@ public class MainUIController extends BaseFXController {
         try {
             // If select same schema and another table, update table data
             if (!tableName.equals(controller.getTableName())) {
-                List<UITableColumnVO> tableColumns = DbUtil.getTableColumns(selectedDatabaseConfig, selectedDatabaseConfig.getSchema(), tableName);
+                List<UITableColumnVO> tableColumns = DbUtil.getTableColumns(selectedDatabaseConfig, tableName);
                 controller.setColumnList(FXCollections.observableList(tableColumns));
                 controller.setTableName(tableName);
             }

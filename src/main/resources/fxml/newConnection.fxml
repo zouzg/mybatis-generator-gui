@@ -32,8 +32,8 @@
             <ChoiceBox fx:id="dbTypeChoice" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="MYSQL" />
-                        <String fx:value="ORACLE" />
+                        <String fx:value="MySQL" />
+                        <String fx:value="Oracle" />
                     </FXCollections>
                 </items>
             </ChoiceBox>
@@ -51,6 +51,7 @@
                </children>
             </HBox>
             <Label text="Encoding:" GridPane.rowIndex="7" />
+            <TextField fx:id="schemaField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <ChoiceBox fx:id="encodingChoice" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
@@ -60,8 +61,7 @@
                     </FXCollections>
                 </items>
              </ChoiceBox>
-            <Label text="Schema" GridPane.rowIndex="6" />
-            <TextField fx:id="schemaField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label text="Database:" GridPane.rowIndex="6" />
          </children>
       </GridPane>
       <AnchorPane layoutY="390.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">

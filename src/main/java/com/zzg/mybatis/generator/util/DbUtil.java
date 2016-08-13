@@ -27,32 +27,15 @@ public class DbUtil {
         return DriverManager.getConnection(url, config.getUsername(), config.getPassword());
     }
 
-    public static List<String> getSchemas(DatabaseConfig config) throws Exception {
+    public static List<String> getTableNames(DatabaseConfig config) throws Exception {
         DbType dbType = DbType.valueOf(config.getDbType());
         Class.forName(dbType.getDriverClass());
-        DriverManager.setLoginTimeout(DB_CONNECTION_TIMEOUTS_SENCONDS);
         String url = getConnectionUrlWithSchema(config);
-        _LOG.info("getSchemas, connection url: {}", url);
-        Connection conn = DriverManager.getConnection(url, config.getUsername(), config.getPassword());
-        DatabaseMetaData md = conn.getMetaData();
-        ResultSet rs = md.getCatalogs();
-        List<String> schemas = new ArrayList<>();
-        while (rs.next()) {
-            schemas.add(rs.getString("TABLE_CAT"));
-        }
-        return schemas;
-    }
-
-    public static List<String> getTableNames(DatabaseConfig config, String schema) throws Exception {
-        DbType dbType = DbType.valueOf(config.getDbType());
-        Class.forName(dbType.getDriverClass());
-        String url = getConnectionUrlWithoutSchema(config);
         _LOG.info("getTableNames, connection url: {}", url);
         DriverManager.setLoginTimeout(DB_CONNECTION_TIMEOUTS_SENCONDS);
         Connection conn = DriverManager.getConnection(url, config.getUsername(), config.getPassword());
-        conn.setSchema(schema);
         DatabaseMetaData md = conn.getMetaData();
-        ResultSet rs = md.getTables(schema, null, null, null);
+        ResultSet rs = md.getTables(null, null, null, null);
         List<String> tables = new ArrayList<>();
         while (rs.next()) {
             tables.add(rs.getString(3));
@@ -60,16 +43,15 @@ public class DbUtil {
         return tables;
     }
 
-    public static List<UITableColumnVO> getTableColumns(DatabaseConfig dbConfig, String schema, String tableName) throws Exception {
+    public static List<UITableColumnVO> getTableColumns(DatabaseConfig dbConfig, String tableName) throws Exception {
         DbType dbType = DbType.valueOf(dbConfig.getDbType());
         Class.forName(dbType.getDriverClass());
         DriverManager.setLoginTimeout(DB_CONNECTION_TIMEOUTS_SENCONDS);
-        String url = getConnectionUrlWithoutSchema(dbConfig);
+        String url = getConnectionUrlWithSchema(dbConfig);
         _LOG.info("getTableColumns, connection url: {}", url);
         Connection conn = DriverManager.getConnection(url, dbConfig.getUsername(), dbConfig.getPassword());
-        conn.setSchema(schema);
         DatabaseMetaData md = conn.getMetaData();
-        ResultSet rs = md.getColumns(schema, null, tableName, null);
+        ResultSet rs = md.getColumns(null, null, tableName, null);
         List<UITableColumnVO> columns = new ArrayList<>();
         while (rs.next()) {
             UITableColumnVO columnVO = new UITableColumnVO();
@@ -82,16 +64,9 @@ public class DbUtil {
         return columns;
     }
 
-    public static String getConnectionUrlWithoutSchema(DatabaseConfig dbConfig) {
-        DbType dbType = DbType.valueOf(dbConfig.getDbType());
-        String connectionUrl = String.format(dbType.getConnectionUrlPattern(), dbConfig.getHost(), dbConfig.getPort(), dbConfig.getEncoding());
-        _LOG.info("getConnectionUrlWithoutSchema, connection url: {}", connectionUrl);
-        return connectionUrl;
-    }
-
     public static String getConnectionUrlWithSchema(DatabaseConfig dbConfig) {
         DbType dbType = DbType.valueOf(dbConfig.getDbType());
-        String connectionUrl = String.format(dbType.getFullConnectionUrlPattern(), dbConfig.getHost(), dbConfig.getPort(), dbConfig.getSchema(), dbConfig.getEncoding());
+        String connectionUrl = String.format(dbType.getConnectionUrlPattern(), dbConfig.getHost(), dbConfig.getPort(), dbConfig.getSchema(), dbConfig.getEncoding());
         _LOG.info("getConnectionUrlWithSchema, connection url: {}", connectionUrl);
         return connectionUrl;
     }
