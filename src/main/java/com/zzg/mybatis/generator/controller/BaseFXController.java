@@ -26,9 +26,9 @@ public abstract class BaseFXController implements Initializable {
 
     private static Map<FXMLPage, SoftReference<? extends BaseFXController>> cacheNodeMap = new HashMap<>();
 
-    public BaseFXController loadFXMLPage(String title, FXMLPage fxmlPage) {
+    public BaseFXController loadFXMLPage(String title, FXMLPage fxmlPage, boolean cache) {
         SoftReference<? extends BaseFXController> parentNodeRef = cacheNodeMap.get(fxmlPage);
-        if (parentNodeRef != null) {
+        if (cache && parentNodeRef != null) {
             return parentNodeRef.get();
         }
         URL skeletonResource = Thread.currentThread().getContextClassLoader().getResource(fxmlPage.getFxml());

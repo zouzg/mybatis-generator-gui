@@ -34,6 +34,7 @@
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="MySQL" />
                         <String fx:value="Oracle" />
+                        <String fx:value="PostgreSQL" />
                     </FXCollections>
                 </items>
             </ChoiceBox>

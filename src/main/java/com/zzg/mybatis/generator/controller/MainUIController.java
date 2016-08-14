@@ -99,8 +99,9 @@ public class MainUIController extends BaseFXController {
         dbImage.setFitWidth(40);
         connectionLabel.setGraphic(dbImage);
         connectionLabel.setOnMouseClicked(event -> {
-            NewConnectionController controller = (NewConnectionController) loadFXMLPage("New Connection", FXMLPage.NEW_CONNECTION);
+            NewConnectionController controller = (NewConnectionController) loadFXMLPage("New Connection", FXMLPage.NEW_CONNECTION, false);
             controller.setMainUIController(this);
+            controller.showDialogStage();
         });
 
         leftDBTree.setShowRoot(false);
@@ -260,7 +261,7 @@ public class MainUIController extends BaseFXController {
             AlertUtil.showErrorAlert("Please select table from left DB treee first");
             return;
         }
-        SelectTableColumnController controller = (SelectTableColumnController) loadFXMLPage("Select Columns", FXMLPage.SELECT_TABLE_COLUMN);
+        SelectTableColumnController controller = (SelectTableColumnController) loadFXMLPage("Select Columns", FXMLPage.SELECT_TABLE_COLUMN, true);
         controller.setMainUIController(this);
         try {
             // If select same schema and another table, update table data

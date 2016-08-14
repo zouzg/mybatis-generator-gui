@@ -10,7 +10,7 @@ mybatis-generator-gui是基于[mybatis generator](http://www.mybatis.org/generat
 * 保存数据库连接与配置，每次代码生成轻松搞定
 * 内置常用插件，比如offset
 * 可选的去除掉对版本管理不友好的注释，这样新增或删除字段重新生成的文件比较过来清楚
-* 目前仅支持Mysql与Oracle，如果有对其它数据库有需求的请提Issue我会跟进。
+* 目前已经支持Mysql、Oracle与PostgreSQL，如果有对其它数据库有需求的请提Issue我会跟进。
 
 ### 要求
 本工具由于使用了Java 8的众多特性，所以要求 JRE或者JDK 8.0以上版本，对于JDK版本还没有升级的童鞋表示歉意。

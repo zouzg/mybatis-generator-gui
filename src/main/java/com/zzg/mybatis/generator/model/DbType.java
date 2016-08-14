@@ -6,7 +6,8 @@ package com.zzg.mybatis.generator.model;
 public enum DbType {
 
     MySQL("com.mysql.jdbc.Driver", "jdbc:mysql://%s:%s/%s?useUnicode=true&useSSL=false&characterEncoding=%s"),
-    Oracle("oracle.jdbc.driver.OracleDriver", "jdbc:oracle:thin:@%s:%s:%s");
+    Oracle("oracle.jdbc.driver.OracleDriver", "jdbc:oracle:thin:@%s:%s:%s"),
+    PostgreSQL("org.postgresql.Driver", "jdbc:postgresql://%s:%s/%s");
 
     private final String driverClass;
     private final String connectionUrlPattern;
