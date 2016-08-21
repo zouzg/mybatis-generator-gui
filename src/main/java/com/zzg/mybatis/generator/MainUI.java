@@ -33,20 +33,7 @@ public class MainUI extends Application {
         primaryStage.show();
 
         MainUIController controller = fxmlLoader.getController();
-        GeneratorConfig config = ConfigHelper.loadGeneratorConfig();
-        if (config != null) {
-            controller.setGeneratorConfigIntoUI(config);
-        }
         controller.setPrimaryStage(primaryStage);
-        primaryStage.setOnCloseRequest(event -> {
-            GeneratorConfig generatorConfig = controller.getGeneratorConfigFromUI();
-            try {
-                ConfigHelper.saveGeneratorConfig(generatorConfig);
-            } catch (Exception e) {
-                _LOG.error(e.getMessage(), e);
-                AlertUtil.showErrorAlert(e.getMessage());
-            }
-        });
     }
 
 

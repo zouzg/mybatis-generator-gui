@@ -35,6 +35,8 @@ public class MainUIController extends BaseFXController {
     @FXML
     private Label connectionLabel;
     @FXML
+    private Label configsLabel;
+    @FXML
     private TextField connectorPathField;
     @FXML
     private TextField modelTargetPackage;
@@ -80,6 +82,15 @@ public class MainUIController extends BaseFXController {
         connectionLabel.setGraphic(dbImage);
         connectionLabel.setOnMouseClicked(event -> {
             NewConnectionController controller = (NewConnectionController) loadFXMLPage("New Connection", FXMLPage.NEW_CONNECTION, false);
+            controller.setMainUIController(this);
+            controller.showDialogStage();
+        });
+        ImageView configImage = new ImageView("icons/config-list.png");
+        configImage.setFitHeight(40);
+        configImage.setFitWidth(40);
+        configsLabel.setGraphic(configImage);
+        configsLabel.setOnMouseClicked(event -> {
+            GeneratorConfigController controller = (GeneratorConfigController) loadFXMLPage("Generator Config", FXMLPage.GENERATOR_CONFIG, false);
             controller.setMainUIController(this);
             controller.showDialogStage();
         });
@@ -210,6 +221,25 @@ public class MainUIController extends BaseFXController {
             bridge.generate();
         } catch (Exception e) {
             AlertUtil.showErrorAlert(e.getMessage());
+        }
+    }
+
+    @FXML
+    public void saveGeneratorConfig() {
+        TextInputDialog dialog = new TextInputDialog("保存配置");
+        dialog.setTitle("保存当前配置");
+        dialog.setContentText("请输入配置名称");
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            String name = result.get();
+            _LOG.info("user choose name: {}", name);
+            try {
+                GeneratorConfig generatorConfig = getGeneratorConfigFromUI();
+                generatorConfig.setName(name);
+                ConfigHelper.saveGeneratorConfig(generatorConfig);
+            } catch (Exception e) {
+                AlertUtil.showErrorAlert("删除配置失败");
+            }
         }
     }
 

@@ -8,6 +8,11 @@ package com.zzg.mybatis.generator.model;
  */
 public class GeneratorConfig {
 
+    /**
+     * 本配置的名称
+     */
+    private String name;
+
     private String connectorJarPath;
 
     private String projectFolder;
@@ -31,6 +36,14 @@ public class GeneratorConfig {
     private boolean offsetLimit;
 
     private boolean comment;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getTableName() {
         return tableName;

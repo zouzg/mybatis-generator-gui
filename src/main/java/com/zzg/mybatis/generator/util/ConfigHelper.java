@@ -124,7 +124,7 @@ public class ConfigHelper {
             conn = ConnectionManager.getConnection();
             stat = conn.createStatement();
             String jsonStr = JSON.toJSONString(generatorConfig);
-            String sql = String.format("INSERT INTO generator_config values('%s', '%s')", "current", jsonStr);
+            String sql = String.format("INSERT INTO generator_config values('%s', '%s')", generatorConfig.getName(), jsonStr);
             stat.executeUpdate(sql);
         } finally {
             if (rs != null) rs.close();
@@ -133,14 +133,14 @@ public class ConfigHelper {
         }
     }
 
-    public static GeneratorConfig loadGeneratorConfig() throws Exception {
+    public static GeneratorConfig loadGeneratorConfig(String name) throws Exception {
         Connection conn = null;
         Statement stat = null;
         ResultSet rs = null;
         try {
             conn = ConnectionManager.getConnection();
             stat = conn.createStatement();
-            String sql = String.format("SELECT * FROM generator_config where name='%s'", "current");
+            String sql = String.format("SELECT * FROM generator_config where name='%s'", name);
             _LOG.info("sql: ", sql);
             rs = stat.executeQuery(sql);
             GeneratorConfig generatorConfig = null;
@@ -151,6 +151,44 @@ public class ConfigHelper {
             return generatorConfig;
         } finally {
             if (rs != null) rs.close();
+            if (stat != null) stat.close();
+            if (conn != null) conn.close();
+        }
+    }
+
+    public static List<GeneratorConfig> loadGeneratorConfigs() throws Exception {
+        Connection conn = null;
+        Statement stat = null;
+        ResultSet rs = null;
+        try {
+            conn = ConnectionManager.getConnection();
+            stat = conn.createStatement();
+            String sql = String.format("SELECT * FROM generator_config");
+            _LOG.info("sql: ", sql);
+            rs = stat.executeQuery(sql);
+            List<GeneratorConfig> configs = new ArrayList<>();
+            while (rs.next()) {
+                String value = rs.getString("value");
+                configs.add(JSON.parseObject(value, GeneratorConfig.class));
+            }
+            return configs;
+        } finally {
+            if (rs != null) rs.close();
+            if (stat != null) stat.close();
+            if (conn != null) conn.close();
+        }
+    }
+
+    public static int deleteGeneratorConfig(String name) throws Exception {
+        Connection conn = null;
+        Statement stat = null;
+        try {
+            conn = ConnectionManager.getConnection();
+            stat = conn.createStatement();
+            String sql = String.format("DELETE FROM generator_config where name='%s'", name);
+            _LOG.info("sql: {}", sql);
+            return stat.executeUpdate(sql);
+        } finally {
             if (stat != null) stat.close();
             if (conn != null) conn.close();
         }

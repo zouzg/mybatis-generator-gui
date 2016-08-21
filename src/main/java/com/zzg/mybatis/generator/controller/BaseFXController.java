@@ -80,4 +80,10 @@ public abstract class BaseFXController implements Initializable {
         }
     }
 
+    public void closeDialogStage() {
+        if (dialogStage != null) {
+            dialogStage.close();
+        }
+    }
+
 }
