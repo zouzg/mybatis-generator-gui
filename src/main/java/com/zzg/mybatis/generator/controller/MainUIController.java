@@ -2,7 +2,6 @@ package com.zzg.mybatis.generator.controller;
 
 import java.io.File;
 import java.net.URL;
-import java.sql.SQLTimeoutException;
 import java.util.*;
 
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
@@ -10,42 +9,23 @@ import com.zzg.mybatis.generator.bridge.MybatisGeneratorBridge;
 import com.zzg.mybatis.generator.model.*;
 import com.zzg.mybatis.generator.util.DbUtil;
 import com.zzg.mybatis.generator.util.StringUtils;
-import com.zzg.mybatis.generator.util.XMLConfigHelper;
+import com.zzg.mybatis.generator.util.ConfigHelper;
 import com.zzg.mybatis.generator.view.AlertUtil;
-import com.zzg.mybatis.generator.view.LeftDbTreeCell;
 import com.zzg.mybatis.generator.view.UIProgressCallback;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTreeCell;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
 import javafx.stage.*;
 import javafx.util.Callback;
-import org.apache.commons.configuration2.HierarchicalConfiguration;
-import org.apache.commons.configuration2.XMLConfiguration;
-import org.apache.commons.configuration2.builder.fluent.Configurations;
-import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.mybatis.generator.api.MyBatisGenerator;
-import org.mybatis.generator.api.ProgressCallback;
-import org.mybatis.generator.api.ShellCallback;
-import org.mybatis.generator.api.VerboseProgressCallback;
 import org.mybatis.generator.config.*;
-import org.mybatis.generator.internal.DefaultShellCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
-import javafx.stage.FileChooser.ExtensionFilter;
 
 public class MainUIController extends BaseFXController {
 
@@ -172,7 +152,7 @@ public class MainUIController extends BaseFXController {
         rootTreeItem.getChildren().clear();
         List<DatabaseConfig> dbConfigs = null;
         try {
-            dbConfigs = XMLConfigHelper.loadDatabaseConfig();
+            dbConfigs = ConfigHelper.loadDatabaseConfig();
             for (DatabaseConfig dbConfig : dbConfigs) {
                 TreeItem<String> treeItem = new TreeItem<>();
                 treeItem.setValue(dbConfig.getName());

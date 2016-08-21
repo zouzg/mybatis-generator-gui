@@ -5,7 +5,7 @@ import java.net.URL;
 import com.zzg.mybatis.generator.controller.MainUIController;
 
 import com.zzg.mybatis.generator.model.GeneratorConfig;
-import com.zzg.mybatis.generator.util.XMLConfigHelper;
+import com.zzg.mybatis.generator.util.ConfigHelper;
 import com.zzg.mybatis.generator.view.AlertUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +24,7 @@ public class MainUI extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        ConfigHelper.createEmptyFiles();
         URL url = Thread.currentThread().getContextClassLoader().getResource("fxml/MainUI.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(url);
         Parent root = fxmlLoader.load();
@@ -32,8 +33,7 @@ public class MainUI extends Application {
         primaryStage.show();
 
         MainUIController controller = fxmlLoader.getController();
-        XMLConfigHelper.createEmptyFiles();
-        GeneratorConfig config = XMLConfigHelper.loadGeneratorConfig();
+        GeneratorConfig config = ConfigHelper.loadGeneratorConfig();
         if (config != null) {
             controller.setGeneratorConfigIntoUI(config);
         }
@@ -41,7 +41,7 @@ public class MainUI extends Application {
         primaryStage.setOnCloseRequest(event -> {
             GeneratorConfig generatorConfig = controller.getGeneratorConfigFromUI();
             try {
-                XMLConfigHelper.saveGeneratorConfig(generatorConfig);
+                ConfigHelper.saveGeneratorConfig(generatorConfig);
             } catch (Exception e) {
                 _LOG.error(e.getMessage(), e);
                 AlertUtil.showErrorAlert(e.getMessage());
