@@ -99,11 +99,17 @@ public class MainUIController extends BaseFXController {
                     item1.setOnAction(event1 -> {
                         treeItem.getChildren().clear();
                     });
-                    MenuItem item2 = new MenuItem("Delete");
+                    MenuItem item2 = new MenuItem("Delete Connection");
                     item2.setOnAction(event1 -> {
-                        // TODO
+                        DatabaseConfig selectedConfig = (DatabaseConfig) treeItem.getGraphic().getUserData();
+                        try {
+                            ConfigHelper.deleteDatabaseConfig(selectedConfig.getName());
+                            this.loadLeftDBTree();
+                        } catch (Exception e) {
+                            AlertUtil.showErrorAlert("Delete connection failed! Reason: " + e.getMessage());
+                        }
                     });
-                    contextMenu.getItems().addAll(item1);
+                    contextMenu.getItems().addAll(item1, item2);
                     cell.setContextMenu(contextMenu);
                 }
                 if (event.getClickCount() == 2) {

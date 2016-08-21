@@ -107,7 +107,7 @@ public class ConfigHelper {
         try {
             conn = ConnectionManager.getConnection();
             stat = conn.createStatement();
-            String sql = String.format("delete from dbs where name=%s", name);
+            String sql = String.format("delete from dbs where name='%s'", name);
             stat.executeUpdate(sql);
         } finally {
             if (rs != null) rs.close();
