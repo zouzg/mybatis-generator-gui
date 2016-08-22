@@ -10,6 +10,11 @@
 	-fx-border: none;
 }
 
+.btn {
+    -fx-border: 1px solid transparent;
+    -fx-border-radius: 4px;
+}
+
 .btn-primary {
 	-fx-background-color: #378bfa;
 	-fx-text-fill: white;
@@ -17,6 +22,29 @@
 
 .btn-primary:hover {
 	-fx-background-color: #579efa;
+}
+
+.btn-default {
+    -fx-text-fill: #333;
+    -fx-background-color: #fff;
+    -fx-border-color: #ccc;
+}
+
+.btn-default:hover {
+    -fx-background-color: #e6e6e6;
+    -fx-border-color: #adadad;
+}
+
+.btn-success:hover {
+    -fx-text-fill: #fff;
+    -fx-background-color: #449d44;
+    -fx-border-color: #398439;
+}
+
+.btn-success {
+    -fx-text-fill: #fff;
+    -fx-background-color: #5cb85c;
+    -fx-border-color: #4cae4c;
 }
 
 .consoleTextArea {

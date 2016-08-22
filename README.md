@@ -3,11 +3,11 @@ mybatis-generator-gui
 
 mybatis-generator-gui是基于[mybatis generator](http://www.mybatis.org/generator/index.html)开发一款界面工具, 本工具可以使你非常容易及快速生成Mybatis的Java POJO文件及数据库Mapping文件。
 
-![MainUI](https://cloud.githubusercontent.com/assets/3505708/16894610/0416f83a-4b8e-11e6-9a25-904f8d2e5583.png)
+![MainUI](https://cloud.githubusercontent.com/assets/3505708/17854987/ab4ed078-68a8-11e6-824e-ada64d0b4ad1.png)
 
 ### 核心特性
 * 按照界面步骤轻松生成代码，省去XML繁琐的学习与配置过程
-* 保存数据库连接与配置，每次代码生成轻松搞定
+* 保存数据库连接与Generator配置，每次代码生成轻松搞定
 * 内置常用插件，比如offset
 * 可选的去除掉对版本管理不友好的注释，这样新增或删除字段重新生成的文件比较过来清楚
 * 目前已经支持Mysql、Oracle与PostgreSQL，如果有对其它数据库有需求的请提Issue我会跟进。
