@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 /**
+ * 管理GeneratorConfig的Controller
+ *
  * Created by Owen on 8/21/16.
  */
 public class GeneratorConfigController extends BaseFXController {
@@ -49,6 +51,7 @@ public class GeneratorConfigController extends BaseFXController {
                     super.updateItem(item, empty);
                     if (item == null || empty) {
                         setText(null);
+                        setGraphic(null);
                     } else {
                         Button btn1 = new Button("应用");
                         Button btn2 = new Button("删除");

@@ -106,11 +106,11 @@ public class MainUIController extends BaseFXController {
                 TreeItem<String> treeItem = treeCell.getTreeItem();
                 if (level == 1) {
                     final ContextMenu contextMenu = new ContextMenu();
-                    MenuItem item1 = new MenuItem("Close Connection");
+                    MenuItem item1 = new MenuItem("新建连接");
                     item1.setOnAction(event1 -> {
                         treeItem.getChildren().clear();
                     });
-                    MenuItem item2 = new MenuItem("Delete Connection");
+                    MenuItem item2 = new MenuItem("删除连接");
                     item2.setOnAction(event1 -> {
                         DatabaseConfig selectedConfig = (DatabaseConfig) treeItem.getGraphic().getUserData();
                         try {
