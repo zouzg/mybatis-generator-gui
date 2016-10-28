@@ -1,31 +1,36 @@
 package com.zzg.mybatis.generator.controller;
 
-import java.io.File;
-import java.net.URL;
-import java.util.*;
-
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import com.zzg.mybatis.generator.bridge.MybatisGeneratorBridge;
-import com.zzg.mybatis.generator.model.*;
+import com.zzg.mybatis.generator.model.DatabaseConfig;
+import com.zzg.mybatis.generator.model.GeneratorConfig;
+import com.zzg.mybatis.generator.model.UITableColumnVO;
+import com.zzg.mybatis.generator.util.ConfigHelper;
 import com.zzg.mybatis.generator.util.DbUtil;
 import com.zzg.mybatis.generator.util.StringUtils;
-import com.zzg.mybatis.generator.util.ConfigHelper;
 import com.zzg.mybatis.generator.view.AlertUtil;
 import com.zzg.mybatis.generator.view.UIProgressCallback;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTreeCell;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.*;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.mybatis.generator.config.*;
+import org.mybatis.generator.config.ColumnOverride;
+import org.mybatis.generator.config.IgnoredColumn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javafx.fxml.FXML;
-import javafx.scene.image.ImageView;
+import java.io.File;
+import java.net.URL;
+import java.util.List;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class MainUIController extends BaseFXController {
 
@@ -60,6 +65,8 @@ public class MainUIController extends BaseFXController {
     private CheckBox offsetLimitCheckBox;
     @FXML
     private CheckBox commentCheckBox;
+    @FXML
+    private CheckBox annotationCheckBox;
 
     @FXML
     private TreeView<String> leftDBTree;
@@ -257,6 +264,7 @@ public class MainUIController extends BaseFXController {
         generatorConfig.setDomainObjectName(domainObjectNameField.getText());
         generatorConfig.setOffsetLimit(offsetLimitCheckBox.isSelected());
         generatorConfig.setComment(commentCheckBox.isSelected());
+        generatorConfig.setAnnotation(annotationCheckBox.isSelected());
         return generatorConfig;
     }
 
