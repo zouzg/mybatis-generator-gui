@@ -70,6 +70,10 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
             IntrospectedTable introspectedTable) {
     }
 
+    public void addModelClassComment(TopLevelClass topLevelClass,
+                                IntrospectedTable introspectedTable) {
+    }
+
     public void addEnumComment(InnerEnum innerEnum,
             IntrospectedTable introspectedTable) {
     }
