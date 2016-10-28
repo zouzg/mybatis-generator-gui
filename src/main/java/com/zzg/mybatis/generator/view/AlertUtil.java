@@ -25,4 +25,16 @@ public class AlertUtil {
         alert.show();
     }
 
+    /**
+     * build both OK and Cancel buttons for the user
+     * to click on to dismiss the dialog.
+     *
+     * @param message
+     */
+    public static Alert buildConfirmationAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText(message);
+        return alert;
+    }
+
 }

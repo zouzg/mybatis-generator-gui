@@ -58,4 +58,14 @@ public class StringUtils {
         }
         return null;
     }
+
+    /**
+     * check string is blank
+     *
+     * @param str
+     * @return
+     */
+    public static boolean isBlank(String str) {
+        return org.apache.commons.lang3.StringUtils.isBlank(str);
+    }
 }
