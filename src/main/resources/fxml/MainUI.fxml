@@ -154,7 +154,7 @@
                                  <children>
                                     <CheckBox fx:id="offsetLimitCheckBox" mnemonicParsing="false" selected="true" text="Pagination" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                     <CheckBox fx:id="commentCheckBox" mnemonicParsing="false" selected="true" text="Use Column Comments As Java Model Comments" />
-                                    <CheckBox fx:id="annotationCheckBox" mnemonicParsing="false" selected="true" text="generate annotation" />
+                                    <CheckBox fx:id="annotationCheckBox" mnemonicParsing="false" selected="false" text="Generate Annotation" />
                                  </children>
                               </HBox>
                               <Button mnemonicParsing="false" onAction="#openTableColumnCustomizationPage" text="Choose" GridPane.columnIndex="2" GridPane.rowIndex="2">
