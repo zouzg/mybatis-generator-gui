@@ -104,6 +104,9 @@ public class MybatisGeneratorBridge {
         if (generatorConfig.isComment()) {
             commentConfig.addProperty("columnRemarks", "true");
         }
+        if (generatorConfig.isAnnotation()) {
+            commentConfig.addProperty("annotations", "true");
+        }
         context.setCommentGeneratorConfiguration(commentConfig);
         // limit/offset插件
         if (generatorConfig.isOffsetLimit()) {
