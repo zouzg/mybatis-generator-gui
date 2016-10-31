@@ -25,6 +25,8 @@ public class GeneratorConfig {
 
     private String daoTargetFolder;
 
+    private String mapperName;
+
     private String mappingXMLPackage;
 
     private String mappingXMLTargetFolder;
@@ -147,5 +149,13 @@ public class GeneratorConfig {
 
     public void setAnnotation(boolean annotation){
         this.annotation=annotation;
+    }
+
+    public String getMapperName() {
+        return mapperName;
+    }
+
+    public void setMapperName(String mapperName) {
+        this.mapperName = mapperName;
     }
 }

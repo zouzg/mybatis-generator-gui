@@ -63,6 +63,9 @@ public class MybatisGeneratorBridge {
         TableConfiguration tableConfig = new TableConfiguration(context);
         tableConfig.setTableName(generatorConfig.getTableName());
         tableConfig.setDomainObjectName(generatorConfig.getDomainObjectName());
+        if (generatorConfig.getMapperName() != null) {
+            tableConfig.setMapperName(generatorConfig.getMapperName());
+        }
         // add ignore columns
         if (ignoredColumns != null) {
             ignoredColumns.stream().forEach(ignoredColumn -> {

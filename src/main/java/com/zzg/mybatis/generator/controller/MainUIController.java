@@ -71,6 +71,8 @@ public class MainUIController extends BaseFXController {
     @FXML
     private TextField daoTargetProject;
     @FXML
+    private TextField mapperName;
+    @FXML
     private TextField projectFolderField;
     @FXML
     private CheckBox offsetLimitCheckBox;
@@ -275,6 +277,7 @@ public class MainUIController extends BaseFXController {
         generatorConfig.setModelPackageTargetFolder(modelTargetProject.getText());
         generatorConfig.setDaoPackage(daoTargetPackage.getText());
         generatorConfig.setDaoTargetFolder(daoTargetProject.getText());
+        generatorConfig.setMapperName(mapperName.getText());
         generatorConfig.setMappingXMLPackage(mapperTargetPackage.getText());
         generatorConfig.setMappingXMLTargetFolder(mappingTargetProject.getText());
         generatorConfig.setTableName(tableNameField.getText());

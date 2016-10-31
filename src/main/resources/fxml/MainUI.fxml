@@ -10,7 +10,7 @@
 <?import javafx.collections.*?>
 <?import com.zzg.mybatis.generator.model.*?>
 
-<BorderPane prefHeight="613.0" prefWidth="879.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zzg.mybatis.generator.controller.MainUIController">
+<BorderPane prefHeight="613.0" prefWidth="918.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zzg.mybatis.generator.controller.MainUIController">
     <top>
         <VBox>
             <children>
@@ -61,9 +61,11 @@
                               <GridPane layoutX="5.0" layoutY="29.0" prefHeight="404.0" prefWidth="732.0" vgap="5.0" AnchorPane.leftAnchor="-5.0" AnchorPane.rightAnchor="10.0">
                                   <columnConstraints>
                                       <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="157.0" minWidth="156.0" prefWidth="156.0" />
-                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="226.0" />
-                                      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="688.0" minWidth="90.0" prefWidth="105.0" />
-                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="275.0" />
+                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="159.0" />
+                                      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="688.0" minWidth="74.0" prefWidth="86.0" />
+                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="164.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="85.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="147.0" />
                                   </columnConstraints>
                                   <rowConstraints>
                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -100,7 +102,7 @@
                                           </GridPane.margin>
                                       </TextField>
                                       <Label text="Project Folder" GridPane.rowIndex="3" />
-                                      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3">
+                                      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="3">
                                           <children>
                                               <TextField fx:id="projectFolderField" prefHeight="27.0" prefWidth="348.0" promptText="D:\workspace\example">
                                                   <HBox.margin>
@@ -117,7 +119,7 @@
                                       <Label text="Model Package" GridPane.rowIndex="4" />
                                       <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="261.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                           <children>
-                                              <TextField fx:id="modelTargetPackage" prefHeight="27.0" prefWidth="248.0" promptText="com.example.model">
+                                              <TextField fx:id="modelTargetPackage" prefHeight="27.0" prefWidth="152.0" promptText="com.example.model">
                                                   <HBox.margin>
                                                       <Insets right="5.0" />
                                                   </HBox.margin>
@@ -150,7 +152,7 @@
                                       </HBox>
                                       <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                                       <TextField fx:id="mappingTargetProject" promptText="src/main/resources" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                              <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7">
+                              <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="7">
                                  <children>
                                     <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7">
                                        <children>
@@ -184,6 +186,12 @@
                                        </styleClass></Button>
                                  </children>
                               </HBox>
+                              <Label text="DAO Name" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                                 <padding>
+                                    <Insets left="5.0" />
+                                 </padding>
+                              </Label>
+                              <TextField fx:id="mapperName" prefHeight="23.0" prefWidth="88.0" promptText="PersonDAO" GridPane.columnIndex="5" GridPane.rowIndex="5" />
                                   </children>
                               </GridPane>
                      </children>
