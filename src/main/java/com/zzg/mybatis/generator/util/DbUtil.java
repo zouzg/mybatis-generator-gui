@@ -16,7 +16,7 @@ import java.util.List;
 public class DbUtil {
 
     private static final Logger _LOG = LoggerFactory.getLogger(DbUtil.class);
-    private static final int DB_CONNECTION_TIMEOUTS_SENCONDS = 1;
+    private static final int DB_CONNECTION_TIMEOUTS_SENCONDS = 10;
 
     public static Connection getConnection(DatabaseConfig config) throws ClassNotFoundException, SQLException {
         DbType dbType = DbType.valueOf(config.getDbType());

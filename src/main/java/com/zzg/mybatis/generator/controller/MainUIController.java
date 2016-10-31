@@ -76,6 +76,8 @@ public class MainUIController extends BaseFXController {
     private CheckBox offsetLimitCheckBox;
     @FXML
     private CheckBox commentCheckBox;
+    @FXML
+    private CheckBox annotationCheckBox;
 
     @FXML
     private TreeView<String> leftDBTree;
@@ -89,6 +91,8 @@ public class MainUIController extends BaseFXController {
     private List<IgnoredColumn> ignoredColumns;
 
     private List<ColumnOverride> columnOverrides;
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -277,6 +281,7 @@ public class MainUIController extends BaseFXController {
         generatorConfig.setDomainObjectName(domainObjectNameField.getText());
         generatorConfig.setOffsetLimit(offsetLimitCheckBox.isSelected());
         generatorConfig.setComment(commentCheckBox.isSelected());
+        generatorConfig.setAnnotation(annotationCheckBox.isSelected());
         return generatorConfig;
     }
 

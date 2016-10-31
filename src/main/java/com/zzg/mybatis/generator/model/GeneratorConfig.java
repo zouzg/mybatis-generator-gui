@@ -37,6 +37,8 @@ public class GeneratorConfig {
 
     private boolean comment;
 
+    private boolean annotation;
+
     public String getName() {
         return name;
     }
@@ -139,5 +141,11 @@ public class GeneratorConfig {
 
     public void setComment(boolean comment) {
         this.comment = comment;
+    }
+
+    public boolean isAnnotation(){return annotation;}
+
+    public void setAnnotation(boolean annotation){
+        this.annotation=annotation;
     }
 }
