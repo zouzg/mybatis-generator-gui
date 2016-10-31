@@ -4,6 +4,7 @@ import com.zzg.mybatis.generator.model.DatabaseConfig;
 import com.zzg.mybatis.generator.model.DbType;
 import com.zzg.mybatis.generator.model.GeneratorConfig;
 import com.zzg.mybatis.generator.plugins.DbRemarksCommentGenerator;
+import com.zzg.mybatis.generator.util.ConfigHelper;
 import com.zzg.mybatis.generator.util.DbUtil;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.api.ProgressCallback;
@@ -54,7 +55,8 @@ public class MybatisGeneratorBridge {
 
     public void generate() throws Exception {
         Configuration config = new Configuration();
-        config.addClasspathEntry(generatorConfig.getConnectorJarPath());
+        String connectorLibPath = ConfigHelper.findConnectorLibPath(selectedDatabaseConfig.getDbType());
+        config.addClasspathEntry(connectorLibPath);
         Context context = new Context(ModelType.CONDITIONAL);
         config.addContext(context);
         // Table config
