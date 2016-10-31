@@ -58,13 +58,13 @@
                <children>
                   <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                              <GridPane layoutX="5.0" layoutY="29.0" prefHeight="404.0" prefWidth="732.0" vgap="5.0" AnchorPane.leftAnchor="-5.0" AnchorPane.rightAnchor="10.0">
+                              <GridPane alignment="TOP_RIGHT" layoutX="5.0" layoutY="29.0" prefHeight="404.0" prefWidth="732.0" vgap="5.0" AnchorPane.leftAnchor="-5.0" AnchorPane.rightAnchor="10.0">
                                   <columnConstraints>
-                                      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="157.0" minWidth="156.0" prefWidth="156.0" />
-                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="159.0" />
-                                      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="688.0" minWidth="74.0" prefWidth="86.0" />
+                                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="157.0" minWidth="132.0" prefWidth="138.0" />
+                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="170.0" />
+                                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="688.0" minWidth="74.0" prefWidth="86.0" />
                                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="164.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="85.0" />
+                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="85.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="147.0" />
                                   </columnConstraints>
                                   <rowConstraints>
@@ -80,7 +80,10 @@
                                   </rowConstraints>
                                   <children>
                                       <Label text="Connector Jar" />
-                                      <TextField fx:id="connectorPathField" promptText="C:\path\mysql-connector-java-5.1.37.jar" GridPane.columnIndex="1" GridPane.columnSpan="2" />
+                                      <TextField fx:id="connectorPathField" prefHeight="27.0" prefWidth="243.0" promptText="C:\path\mysql-connector-java-5.1.37.jar" GridPane.columnIndex="1" GridPane.columnSpan="2">
+                                 <GridPane.margin>
+                                    <Insets left="5.0" />
+                                 </GridPane.margin></TextField>
                                       <Button mnemonicParsing="false" onAction="#chooseConnectorFile" text="Choose" GridPane.columnIndex="3">
                                  <GridPane.margin>
                                     <Insets left="5.0" />
@@ -90,23 +93,39 @@
                                     <String fx:value="btn-default" />
                                  </styleClass></Button>
                                       <Label text="Table Name" GridPane.rowIndex="1" />
-                                      <TextField fx:id="tableNameField" promptText="person" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                      <TextField fx:id="tableNameField" prefHeight="27.0" prefWidth="156.0" promptText="person" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                           <GridPane.margin>
-                                              <Insets right="5.0" />
+                                              <Insets left="5.0" right="5.0" />
                                           </GridPane.margin>
                                       </TextField>
                                       <Label text="Domain Object Name" GridPane.rowIndex="2" />
-                                      <TextField fx:id="domainObjectNameField" promptText="Person" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                          <GridPane.margin>
-                                              <Insets right="5.0" />
-                                          </GridPane.margin>
-                                      </TextField>
+                              <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                 <children>
+                                            <TextField fx:id="domainObjectNameField" prefHeight="27.0" prefWidth="154.0" promptText="Person" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                <GridPane.margin>
+                                                    <Insets left="5.0" right="5.0" />
+                                                </GridPane.margin>
+                                       <HBox.margin>
+                                          <Insets right="5.0" />
+                                       </HBox.margin>
+                                            </TextField>
+                                    <Button mnemonicParsing="false" onAction="#openTableColumnCustomizationPage" text="Choose">
+                                       <styleClass>
+                                          <String fx:value="btn" />
+                                          <String fx:value="btn-default" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                                 <GridPane.margin>
+                                    <Insets left="5.0" />
+                                 </GridPane.margin>
+                              </HBox>
                                       <Label text="Project Folder" GridPane.rowIndex="3" />
                                       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="3">
                                           <children>
                                               <TextField fx:id="projectFolderField" prefHeight="27.0" prefWidth="348.0" promptText="D:\workspace\example">
                                                   <HBox.margin>
-                                                      <Insets right="5.0" />
+                                                      <Insets left="5.0" right="5.0" />
                                                   </HBox.margin>
                                               </TextField>
                                               <Button mnemonicParsing="false" onAction="#chooseProjectFolder" text="Choose">
@@ -117,41 +136,47 @@
                                           </children>
                                       </HBox>
                                       <Label text="Model Package" GridPane.rowIndex="4" />
-                                      <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="261.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                          <children>
-                                              <TextField fx:id="modelTargetPackage" prefHeight="27.0" prefWidth="152.0" promptText="com.example.model">
-                                                  <HBox.margin>
-                                                      <Insets right="5.0" />
-                                                  </HBox.margin>
-                                              </TextField>
-                                          </children>
-                                      </HBox>
+                                        <TextField fx:id="modelTargetPackage" prefHeight="27.0" prefWidth="152.0" promptText="com.example.model" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                            <HBox.margin>
+                                                <Insets right="5.0" />
+                                            </HBox.margin>
+                                 <GridPane.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </GridPane.margin>
+                                        </TextField>
                                       <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                                      <TextField fx:id="modelTargetProject" promptText="src/main/java" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                      <TextField fx:id="modelTargetProject" prefHeight="27.0" prefWidth="155.0" promptText="src/main/java" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                                 <GridPane.margin>
+                                    <Insets left="5.0" />
+                                 </GridPane.margin></TextField>
                                       <Label text="DAO Package" GridPane.rowIndex="5" />
-                                      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                          <children>
-                                              <TextField fx:id="daoTargetPackage" prefHeight="27.0" prefWidth="248.0" promptText="com.example.mapper">
-                                                  <HBox.margin>
-                                                      <Insets right="5.0" />
-                                                  </HBox.margin>
-                                              </TextField>
-                                          </children>
-                                      </HBox>
+                                        <TextField fx:id="daoTargetPackage" prefHeight="27.0" prefWidth="248.0" promptText="com.example.mapper" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                            <HBox.margin>
+                                                <Insets right="5.0" />
+                                            </HBox.margin>
+                                 <GridPane.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </GridPane.margin>
+                                        </TextField>
                                       <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                                      <TextField fx:id="daoTargetProject" promptText="src/main/java" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                      <TextField fx:id="daoTargetProject" prefHeight="27.0" prefWidth="155.0" promptText="src/main/java" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                                 <GridPane.margin>
+                                    <Insets left="5.0" />
+                                 </GridPane.margin></TextField>
                                       <Label text="Mapping XML Package" GridPane.rowIndex="6" />
-                                      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                                          <children>
-                                              <TextField fx:id="mapperTargetPackage" prefHeight="27.0" prefWidth="248.0" promptText="com.example">
-                                                  <HBox.margin>
-                                                      <Insets right="5.0" />
-                                                  </HBox.margin>
-                                              </TextField>
-                                          </children>
-                                      </HBox>
+                                        <TextField fx:id="mapperTargetPackage" prefHeight="27.0" prefWidth="248.0" promptText="com.example" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                            <HBox.margin>
+                                                <Insets right="5.0" />
+                                            </HBox.margin>
+                                 <GridPane.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </GridPane.margin>
+                                        </TextField>
                                       <Label text="Target Folder" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                                      <TextField fx:id="mappingTargetProject" promptText="src/main/resources" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                                      <TextField fx:id="mappingTargetProject" prefHeight="27.0" prefWidth="155.0" promptText="src/main/resources" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                                 <GridPane.margin>
+                                    <Insets left="5.0" />
+                                 </GridPane.margin></TextField>
                               <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="7">
                                  <children>
                                     <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7">
@@ -166,12 +191,10 @@
                                        </children>
                                     </HBox>
                                  </children>
+                                 <padding>
+                                    <Insets left="5.0" />
+                                 </padding>
                               </VBox>
-                              <Button mnemonicParsing="false" onAction="#openTableColumnCustomizationPage" text="Choose" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                 <styleClass>
-                                    <String fx:value="btn" />
-                                    <String fx:value="btn-default" />
-                                 </styleClass></Button>
                               <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8">
                                  <children>
                                             <Button mnemonicParsing="false" onAction="#generateCode" text="Generate">
@@ -191,7 +214,10 @@
                                     <Insets left="5.0" />
                                  </padding>
                               </Label>
-                              <TextField fx:id="mapperName" prefHeight="23.0" prefWidth="88.0" promptText="PersonDAO" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+                              <TextField fx:id="mapperName" prefHeight="27.0" prefWidth="138.0" promptText="PersonDAO" GridPane.columnIndex="5" GridPane.rowIndex="5">
+                                 <GridPane.margin>
+                                    <Insets left="5.0" />
+                                 </GridPane.margin></TextField>
                                   </children>
                               </GridPane>
                      </children>
