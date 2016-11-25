@@ -4,7 +4,6 @@ import com.zzg.mybatis.generator.model.DatabaseConfig;
 import com.zzg.mybatis.generator.model.DbType;
 import com.zzg.mybatis.generator.model.GeneratorConfig;
 import com.zzg.mybatis.generator.plugins.DbRemarksCommentGenerator;
-import com.zzg.mybatis.generator.util.ConfigHelper;
 import com.zzg.mybatis.generator.util.DbUtil;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.api.ProgressCallback;
@@ -55,17 +54,13 @@ public class MybatisGeneratorBridge {
 
     public void generate() throws Exception {
         Configuration config = new Configuration();
-        String connectorLibPath = ConfigHelper.findConnectorLibPath(selectedDatabaseConfig.getDbType());
-        config.addClasspathEntry(connectorLibPath);
+        config.addClasspathEntry(generatorConfig.getConnectorJarPath());
         Context context = new Context(ModelType.CONDITIONAL);
         config.addContext(context);
         // Table config
         TableConfiguration tableConfig = new TableConfiguration(context);
         tableConfig.setTableName(generatorConfig.getTableName());
         tableConfig.setDomainObjectName(generatorConfig.getDomainObjectName());
-        if (generatorConfig.getMapperName() != null) {
-            tableConfig.setMapperName(generatorConfig.getMapperName());
-        }
         // add ignore columns
         if (ignoredColumns != null) {
             ignoredColumns.stream().forEach(ignoredColumn -> {
@@ -109,9 +104,6 @@ public class MybatisGeneratorBridge {
         if (generatorConfig.isComment()) {
             commentConfig.addProperty("columnRemarks", "true");
         }
-        if (generatorConfig.isAnnotation()) {
-            commentConfig.addProperty("annotations", "true");
-        }
         context.setCommentGeneratorConfiguration(commentConfig);
         // limit/offset插件
         if (generatorConfig.isOffsetLimit()) {
@@ -120,6 +112,12 @@ public class MybatisGeneratorBridge {
             pluginConfiguration.setConfigurationType("com.zzg.mybatis.generator.plugins.MySQLLimitPlugin");
             context.addPluginConfiguration(pluginConfiguration);
         }
+        // 序列化插件 add by huxiong
+        PluginConfiguration pluginConfiguration = new PluginConfiguration();
+        pluginConfiguration.addProperty("type", "com.zzg.mybatis.generator.plugins.SerializablePlugin");
+        pluginConfiguration.setConfigurationType("com.zzg.mybatis.generator.plugins.SerializablePlugin");
+        context.addPluginConfiguration(pluginConfiguration);
+
         context.setTargetRuntime("MyBatis3");
 
         List<String> warnings = new ArrayList<>();
