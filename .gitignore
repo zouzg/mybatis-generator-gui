@@ -1,4 +1,5 @@
 /target/
+/config/
 .idea
 .settings
 logs
