@@ -105,6 +105,8 @@ public class MybatisGeneratorBridge {
             commentConfig.addProperty("columnRemarks", "true");
         }
         context.setCommentGeneratorConfiguration(commentConfig);
+        // set java file encoding
+        context.addProperty(PropertyRegistry.CONTEXT_JAVA_FILE_ENCODING, generatorConfig.getEncoding());
         // limit/offset插件
         if (generatorConfig.isOffsetLimit()) {
             PluginConfiguration pluginConfiguration = new PluginConfiguration();

@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.collections.*?>
-<?import com.zzg.mybatis.generator.model.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="613.0" prefWidth="879.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zzg.mybatis.generator.controller.MainUIController">
+<BorderPane prefHeight="613.0" prefWidth="879.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zzg.mybatis.generator.controller.MainUIController">
     <top>
         <VBox>
             <children>
@@ -64,6 +77,8 @@
                                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="226.0" />
                                       <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="688.0" minWidth="90.0" prefWidth="105.0" />
                                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="275.0" />
+                              <ColumnConstraints />
+                              <ColumnConstraints />
                                   </columnConstraints>
                                   <rowConstraints>
                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -154,6 +169,8 @@
                                  <children>
                                     <CheckBox fx:id="offsetLimitCheckBox" mnemonicParsing="false" selected="true" text="Pagination" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                     <CheckBox fx:id="commentCheckBox" mnemonicParsing="false" selected="true" text="Use Column Comments As Java Model Comments" />
+                                    <Label text="Encoding" />
+                                    <ChoiceBox fx:id="encodingChoice" prefHeight="23.0" prefWidth="71.0" />
                                  </children>
                               </HBox>
                               <Button mnemonicParsing="false" onAction="#openTableColumnCustomizationPage" text="Choose" GridPane.columnIndex="2" GridPane.rowIndex="2">

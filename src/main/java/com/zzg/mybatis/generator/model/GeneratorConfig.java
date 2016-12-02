@@ -37,6 +37,8 @@ public class GeneratorConfig {
 
     private boolean comment;
 
+    private String encoding;
+
     public String getName() {
         return name;
     }
@@ -139,5 +141,13 @@ public class GeneratorConfig {
 
     public void setComment(boolean comment) {
         this.comment = comment;
+    }
+
+    public String getEncoding() {
+        return encoding;
+    }
+
+    public void setEncoding(String encoding) {
+        this.encoding = encoding;
     }
 }
