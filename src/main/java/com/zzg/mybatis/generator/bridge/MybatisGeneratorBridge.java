@@ -6,6 +6,7 @@ import com.zzg.mybatis.generator.model.GeneratorConfig;
 import com.zzg.mybatis.generator.plugins.DbRemarksCommentGenerator;
 import com.zzg.mybatis.generator.util.ConfigHelper;
 import com.zzg.mybatis.generator.util.DbUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.ShellCallback;
@@ -64,8 +65,10 @@ public class MybatisGeneratorBridge {
         tableConfig.setTableName(generatorConfig.getTableName());
         tableConfig.setDomainObjectName(generatorConfig.getDomainObjectName());
         //添加GeneratedKey主键生成
-        tableConfig.setGeneratedKey(new GeneratedKey(generatorConfig.getGenerateKeys(), selectedDatabaseConfig.getDbType(), true, null));
-        
+		if (StringUtils.isNoneEmpty(generatorConfig.getGenerateKeys())) {
+			tableConfig.setGeneratedKey(new GeneratedKey(generatorConfig.getGenerateKeys(), selectedDatabaseConfig.getDbType(), true, null));
+		}
+
         if (generatorConfig.getMapperName() != null) {
             tableConfig.setMapperName(generatorConfig.getMapperName());
         }
