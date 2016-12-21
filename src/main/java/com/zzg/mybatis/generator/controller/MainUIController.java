@@ -65,6 +65,8 @@ public class MainUIController extends BaseFXController {
     @FXML
     private TextField domainObjectNameField;
     @FXML
+    private TextField generateKeysField;	//添加输入框
+    @FXML
     private TextField modelTargetProject;
     @FXML
     private TextField mappingTargetProject;
@@ -274,6 +276,7 @@ public class MainUIController extends BaseFXController {
         generatorConfig.setConnectorJarPath(connectorPathField.getText());
         generatorConfig.setProjectFolder(projectFolderField.getText());
         generatorConfig.setModelPackage(modelTargetPackage.getText());
+        generatorConfig.setGenerateKeys(generateKeysField.getText());
         generatorConfig.setModelPackageTargetFolder(modelTargetProject.getText());
         generatorConfig.setDaoPackage(daoTargetPackage.getText());
         generatorConfig.setDaoTargetFolder(daoTargetProject.getText());
@@ -292,6 +295,7 @@ public class MainUIController extends BaseFXController {
         connectorPathField.setText(generatorConfig.getConnectorJarPath());
         projectFolderField.setText(generatorConfig.getProjectFolder());
         modelTargetPackage.setText(generatorConfig.getModelPackage());
+        generateKeysField.setText(generatorConfig.getGenerateKeys());
         modelTargetProject.setText(generatorConfig.getModelPackageTargetFolder());
         daoTargetPackage.setText(generatorConfig.getDaoPackage());
         daoTargetProject.setText(generatorConfig.getDaoTargetFolder());

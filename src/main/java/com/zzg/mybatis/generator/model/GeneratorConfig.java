@@ -2,160 +2,173 @@ package com.zzg.mybatis.generator.model;
 
 /**
  *
- * GeneratorConfig is the Config of mybatis generator config exclude database config
+ * GeneratorConfig is the Config of mybatis generator config exclude database
+ * config
  *
  * Created by Owen on 6/16/16.
  */
 public class GeneratorConfig {
 
-    /**
-     * 本配置的名称
-     */
-    private String name;
+	/**
+	 * 本配置的名称
+	 */
+	private String name;
 
-    private String connectorJarPath;
+	private String connectorJarPath;
 
-    private String projectFolder;
+	private String projectFolder;
 
-    private String modelPackage;
+	private String modelPackage;
 
-    private String modelPackageTargetFolder;
+	private String modelPackageTargetFolder;
 
-    private String daoPackage;
+	private String daoPackage;
 
-    private String daoTargetFolder;
+	private String daoTargetFolder;
 
-    private String mapperName;
+	private String mapperName;
 
-    private String mappingXMLPackage;
+	private String mappingXMLPackage;
 
-    private String mappingXMLTargetFolder;
+	private String mappingXMLTargetFolder;
 
-    private String tableName;
+	private String tableName;
 
-    private String domainObjectName;
+	private String domainObjectName;
 
-    private boolean offsetLimit;
+	private boolean offsetLimit;
 
-    private boolean comment;
+	private boolean comment;
 
-    private boolean annotation;
+	private boolean annotation;
 
-    public String getName() {
-        return name;
-    }
+	private String generateKeys;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getTableName() {
-        return tableName;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
-    }
+	public String getTableName() {
+		return tableName;
+	}
 
-    public String getDomainObjectName() {
-        return domainObjectName;
-    }
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
+	}
 
-    public void setDomainObjectName(String domainObjectName) {
-        this.domainObjectName = domainObjectName;
-    }
+	public String getDomainObjectName() {
+		return domainObjectName;
+	}
 
-    public String getConnectorJarPath() {
-        return connectorJarPath;
-    }
+	public void setDomainObjectName(String domainObjectName) {
+		this.domainObjectName = domainObjectName;
+	}
 
-    public void setConnectorJarPath(String connectorJarPath) {
-        this.connectorJarPath = connectorJarPath;
-    }
+	public String getConnectorJarPath() {
+		return connectorJarPath;
+	}
 
-    public String getProjectFolder() {
-        return projectFolder;
-    }
+	public void setConnectorJarPath(String connectorJarPath) {
+		this.connectorJarPath = connectorJarPath;
+	}
 
-    public void setProjectFolder(String projectFolder) {
-        this.projectFolder = projectFolder;
-    }
+	public String getProjectFolder() {
+		return projectFolder;
+	}
 
-    public String getModelPackage() {
-        return modelPackage;
-    }
+	public void setProjectFolder(String projectFolder) {
+		this.projectFolder = projectFolder;
+	}
 
-    public void setModelPackage(String modelPackage) {
-        this.modelPackage = modelPackage;
-    }
+	public String getModelPackage() {
+		return modelPackage;
+	}
 
-    public String getModelPackageTargetFolder() {
-        return modelPackageTargetFolder;
-    }
+	public void setModelPackage(String modelPackage) {
+		this.modelPackage = modelPackage;
+	}
 
-    public void setModelPackageTargetFolder(String modelPackageTargetFolder) {
-        this.modelPackageTargetFolder = modelPackageTargetFolder;
-    }
+	public String getModelPackageTargetFolder() {
+		return modelPackageTargetFolder;
+	}
 
-    public String getDaoPackage() {
-        return daoPackage;
-    }
+	public void setModelPackageTargetFolder(String modelPackageTargetFolder) {
+		this.modelPackageTargetFolder = modelPackageTargetFolder;
+	}
 
-    public void setDaoPackage(String daoPackage) {
-        this.daoPackage = daoPackage;
-    }
+	public String getDaoPackage() {
+		return daoPackage;
+	}
 
-    public String getDaoTargetFolder() {
-        return daoTargetFolder;
-    }
+	public void setDaoPackage(String daoPackage) {
+		this.daoPackage = daoPackage;
+	}
 
-    public void setDaoTargetFolder(String daoTargetFolder) {
-        this.daoTargetFolder = daoTargetFolder;
-    }
+	public String getDaoTargetFolder() {
+		return daoTargetFolder;
+	}
 
-    public String getMappingXMLPackage() {
-        return mappingXMLPackage;
-    }
+	public void setDaoTargetFolder(String daoTargetFolder) {
+		this.daoTargetFolder = daoTargetFolder;
+	}
 
-    public void setMappingXMLPackage(String mappingXMLPackage) {
-        this.mappingXMLPackage = mappingXMLPackage;
-    }
+	public String getMappingXMLPackage() {
+		return mappingXMLPackage;
+	}
 
-    public String getMappingXMLTargetFolder() {
-        return mappingXMLTargetFolder;
-    }
+	public void setMappingXMLPackage(String mappingXMLPackage) {
+		this.mappingXMLPackage = mappingXMLPackage;
+	}
 
-    public void setMappingXMLTargetFolder(String mappingXMLTargetFolder) {
-        this.mappingXMLTargetFolder = mappingXMLTargetFolder;
-    }
+	public String getMappingXMLTargetFolder() {
+		return mappingXMLTargetFolder;
+	}
 
-    public boolean isOffsetLimit() {
-        return offsetLimit;
-    }
+	public void setMappingXMLTargetFolder(String mappingXMLTargetFolder) {
+		this.mappingXMLTargetFolder = mappingXMLTargetFolder;
+	}
 
-    public void setOffsetLimit(boolean offsetLimit) {
-        this.offsetLimit = offsetLimit;
-    }
+	public boolean isOffsetLimit() {
+		return offsetLimit;
+	}
 
-    public boolean isComment() {
-        return comment;
-    }
+	public void setOffsetLimit(boolean offsetLimit) {
+		this.offsetLimit = offsetLimit;
+	}
 
-    public void setComment(boolean comment) {
-        this.comment = comment;
-    }
+	public boolean isComment() {
+		return comment;
+	}
 
-    public boolean isAnnotation(){return annotation;}
+	public void setComment(boolean comment) {
+		this.comment = comment;
+	}
 
-    public void setAnnotation(boolean annotation){
-        this.annotation=annotation;
-    }
+	public boolean isAnnotation() {
+		return annotation;
+	}
 
-    public String getMapperName() {
-        return mapperName;
-    }
+	public void setAnnotation(boolean annotation) {
+		this.annotation = annotation;
+	}
 
-    public void setMapperName(String mapperName) {
-        this.mapperName = mapperName;
-    }
+	public String getMapperName() {
+		return mapperName;
+	}
+
+	public void setMapperName(String mapperName) {
+		this.mapperName = mapperName;
+	}
+
+	public String getGenerateKeys() {
+		return generateKeys;
+	}
+
+	public void setGenerateKeys(String generateKeys) {
+		this.generateKeys = generateKeys;
+	}
 }
