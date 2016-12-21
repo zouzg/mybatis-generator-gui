@@ -63,6 +63,9 @@ public class MybatisGeneratorBridge {
         TableConfiguration tableConfig = new TableConfiguration(context);
         tableConfig.setTableName(generatorConfig.getTableName());
         tableConfig.setDomainObjectName(generatorConfig.getDomainObjectName());
+        //添加GeneratedKey主键生成
+        tableConfig.setGeneratedKey(new GeneratedKey(generatorConfig.getGenerateKeys(), selectedDatabaseConfig.getDbType(), true, null));
+        
         if (generatorConfig.getMapperName() != null) {
             tableConfig.setMapperName(generatorConfig.getMapperName());
         }
@@ -113,6 +116,13 @@ public class MybatisGeneratorBridge {
             commentConfig.addProperty("annotations", "true");
         }
         context.setCommentGeneratorConfiguration(commentConfig);
+        
+        //实体添加序列化
+        PluginConfiguration serializablePluginConfiguration = new PluginConfiguration();
+        serializablePluginConfiguration.addProperty("type", "org.mybatis.generator.plugins.SerializablePlugin");
+        serializablePluginConfiguration.setConfigurationType("org.mybatis.generator.plugins.SerializablePlugin");
+        context.addPluginConfiguration(serializablePluginConfiguration);
+        
         // limit/offset插件
         if (generatorConfig.isOffsetLimit()) {
             PluginConfiguration pluginConfiguration = new PluginConfiguration();
