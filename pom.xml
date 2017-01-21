@@ -55,8 +55,6 @@
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc14</artifactId>
             <version>10.2.0.3.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/resources/connector/ojdbc14.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>

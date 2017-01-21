@@ -35,7 +35,7 @@ public class DbUtil {
         DriverManager.setLoginTimeout(DB_CONNECTION_TIMEOUTS_SECONDS);
         Connection conn = DriverManager.getConnection(url, config.getUsername(), config.getPassword());
         DatabaseMetaData md = conn.getMetaData();
-        ResultSet rs = md.getTables(null, null, null, null);
+        ResultSet rs = md.getTables(null, config.getUsername().toUpperCase(), null, null);
         List<String> tables = new ArrayList<>();
         while (rs.next()) {
             tables.add(rs.getString(3));
