@@ -53,8 +53,6 @@ public class MainUIController extends BaseFXController {
     @FXML
     private Label configsLabel;
     @FXML
-    private TextField connectorPathField;
-    @FXML
     private TextField modelTargetPackage;
     @FXML
     private TextField mapperTargetPackage;
@@ -208,15 +206,6 @@ public class MainUIController extends BaseFXController {
     }
 
     @FXML
-    public void chooseConnectorFile() {
-        FileChooser directoryChooser = new FileChooser();
-        File selectedFolder = directoryChooser.showOpenDialog(getPrimaryStage());
-        if (selectedFolder != null) {
-            connectorPathField.setText(selectedFolder.getAbsolutePath());
-        }
-    }
-
-    @FXML
     public void chooseProjectFolder() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File selectedFolder = directoryChooser.showDialog(getPrimaryStage());
@@ -272,7 +261,6 @@ public class MainUIController extends BaseFXController {
 
     public GeneratorConfig getGeneratorConfigFromUI() {
         GeneratorConfig generatorConfig = new GeneratorConfig();
-        generatorConfig.setConnectorJarPath(connectorPathField.getText());
         generatorConfig.setProjectFolder(projectFolderField.getText());
         generatorConfig.setModelPackage(modelTargetPackage.getText());
         generatorConfig.setGenerateKeys(generateKeysField.getText());
@@ -291,7 +279,6 @@ public class MainUIController extends BaseFXController {
     }
 
     public void setGeneratorConfigIntoUI(GeneratorConfig generatorConfig) {
-        connectorPathField.setText(generatorConfig.getConnectorJarPath());
         projectFolderField.setText(generatorConfig.getProjectFolder());
         modelTargetPackage.setText(generatorConfig.getModelPackage());
         generateKeysField.setText(generatorConfig.getGenerateKeys());

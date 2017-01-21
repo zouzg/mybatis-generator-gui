@@ -34,6 +34,7 @@ mybatis-generator-gui是基于[mybatis generator](http://www.mybatis.org/generat
 
     cd target/jfx/app/
     java -jar mybatis-generator-gui.jar
+    
 
 * 方法三: IDE中运行
 

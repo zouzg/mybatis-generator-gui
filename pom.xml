@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.zzg</groupId>
     <artifactId>mybatis-generator-gui</artifactId>
-    <version>0.3</version>
+    <version>0.6</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -56,7 +56,7 @@
             <artifactId>ojdbc14</artifactId>
             <version>10.2.0.3.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/resources/lib/ojdbc14.jar</systemPath>
+            <systemPath>${project.basedir}/src/main/resources/connector/ojdbc14.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
