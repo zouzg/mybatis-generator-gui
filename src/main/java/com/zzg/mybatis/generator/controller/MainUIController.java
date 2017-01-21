@@ -82,11 +82,8 @@ public class MainUIController extends BaseFXController {
     private CheckBox commentCheckBox;
     @FXML
     private CheckBox annotationCheckBox;
-
     @FXML
     private TreeView<String> leftDBTree;
-    @FXML
-    private TextArea consoleTextArea;
     // Current selected databaseConfig
     private DatabaseConfig selectedDatabaseConfig;
     // Current selected tableName
@@ -130,7 +127,7 @@ public class MainUIController extends BaseFXController {
                 TreeItem<String> treeItem = treeCell.getTreeItem();
                 if (level == 1) {
                     final ContextMenu contextMenu = new ContextMenu();
-                    MenuItem item1 = new MenuItem("新建连接");
+                    MenuItem item1 = new MenuItem("关闭连接");
                     item1.setOnAction(event1 -> {
                         treeItem.getChildren().clear();
                     });
@@ -169,7 +166,7 @@ public class MainUIController extends BaseFXController {
                             }
                         } catch (CommunicationsException e) {
                             _LOG.error(e.getMessage(), e);
-                            AlertUtil.showErrorAlert("Connection timeout");
+                            AlertUtil.showErrorAlert("连接超时");
                         } catch (Exception e) {
                             _LOG.error(e.getMessage(), e);
                             AlertUtil.showErrorAlert(e.getMessage());
@@ -231,7 +228,7 @@ public class MainUIController extends BaseFXController {
     @FXML
     public void generateCode() {
         if (tableName == null) {
-            AlertUtil.showErrorAlert("Please select table from left DB treee first");
+            AlertUtil.showErrorAlert("Please select table from left DB tree first");
             return;
         }
         GeneratorConfig generatorConfig = getGeneratorConfigFromUI();
@@ -244,8 +241,10 @@ public class MainUIController extends BaseFXController {
         bridge.setDatabaseConfig(selectedDatabaseConfig);
         bridge.setIgnoredColumns(ignoredColumns);
         bridge.setColumnOverrides(columnOverrides);
-        bridge.setProgressCallback(new UIProgressCallback(consoleTextArea));
-        try {
+		UIProgressCallback alert = new UIProgressCallback(Alert.AlertType.INFORMATION);
+		bridge.setProgressCallback(alert);
+		alert.show();
+		try {
             bridge.generate();
         } catch (Exception e) {
             AlertUtil.showErrorAlert(e.getMessage());

@@ -16,12 +16,12 @@ import java.util.List;
 public class DbUtil {
 
     private static final Logger _LOG = LoggerFactory.getLogger(DbUtil.class);
-    private static final int DB_CONNECTION_TIMEOUTS_SENCONDS = 10;
+    private static final int DB_CONNECTION_TIMEOUTS_SECONDS = 1;
 
     public static Connection getConnection(DatabaseConfig config) throws ClassNotFoundException, SQLException {
         DbType dbType = DbType.valueOf(config.getDbType());
         Class.forName(dbType.getDriverClass());
-        DriverManager.setLoginTimeout(DB_CONNECTION_TIMEOUTS_SENCONDS);
+        DriverManager.setLoginTimeout(DB_CONNECTION_TIMEOUTS_SECONDS);
         String url = getConnectionUrlWithSchema(config);
         _LOG.info("getConnection, connection url: {}", url);
         return DriverManager.getConnection(url, config.getUsername(), config.getPassword());
@@ -32,7 +32,7 @@ public class DbUtil {
         Class.forName(dbType.getDriverClass());
         String url = getConnectionUrlWithSchema(config);
         _LOG.info("getTableNames, connection url: {}", url);
-        DriverManager.setLoginTimeout(DB_CONNECTION_TIMEOUTS_SENCONDS);
+        DriverManager.setLoginTimeout(DB_CONNECTION_TIMEOUTS_SECONDS);
         Connection conn = DriverManager.getConnection(url, config.getUsername(), config.getPassword());
         DatabaseMetaData md = conn.getMetaData();
         ResultSet rs = md.getTables(null, null, null, null);
@@ -46,7 +46,7 @@ public class DbUtil {
     public static List<UITableColumnVO> getTableColumns(DatabaseConfig dbConfig, String tableName) throws Exception {
         DbType dbType = DbType.valueOf(dbConfig.getDbType());
         Class.forName(dbType.getDriverClass());
-        DriverManager.setLoginTimeout(DB_CONNECTION_TIMEOUTS_SENCONDS);
+        DriverManager.setLoginTimeout(DB_CONNECTION_TIMEOUTS_SECONDS);
         String url = getConnectionUrlWithSchema(dbConfig);
         _LOG.info("getTableColumns, connection url: {}", url);
         Connection conn = DriverManager.getConnection(url, dbConfig.getUsername(), dbConfig.getPassword());

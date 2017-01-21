@@ -1,57 +1,45 @@
 package com.zzg.mybatis.generator.view;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextArea;
 import org.mybatis.generator.api.ProgressCallback;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Owen on 6/21/16.
  */
-public class UIProgressCallback implements ProgressCallback {
+public class UIProgressCallback extends Alert implements ProgressCallback  {
 
-    private TextArea consoleTextArea;
+    private StringProperty progressText = new SimpleStringProperty();
 
-    private StringBuilder sb;
-
-    public UIProgressCallback(TextArea textArea) {
-        sb = new StringBuilder();
-        this.consoleTextArea = textArea;
+    public UIProgressCallback(AlertType alertType) {
+		super(alertType);
+		this.contentTextProperty().bindBidirectional(progressText);
     }
 
     @Override
     public void introspectionStarted(int totalTasks) {
-        sb.append("introspection started\n");
-        consoleTextArea.setText(sb.toString());
-    }
+		progressText.setValue("开始代码检查");
+	}
 
     @Override
     public void generationStarted(int totalTasks) {
-        sb.append("generate started\n");
-        consoleTextArea.setText(sb.toString());
+		progressText.setValue("开始代码生成");
     }
 
     @Override
     public void saveStarted(int totalTasks) {
-        sb.append("save started\n");
-        consoleTextArea.setText(sb.toString());
+		progressText.setValue("开始保存生成的文件");
     }
 
     @Override
     public void startTask(String taskName) {
-        sb.append("start task\n");
-        consoleTextArea.setText(sb.toString());
+		progressText.setValue("代码生成任务开始");
     }
 
     @Override
     public void done() {
-        sb.append("generation done\n");
-        consoleTextArea.setText(sb.toString());
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Generation Completed");
-        alert.show();
+		progressText.setValue("代码生成完成");
     }
 
     @Override
