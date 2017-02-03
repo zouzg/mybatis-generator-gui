@@ -7,7 +7,7 @@ import com.zzg.mybatis.generator.model.GeneratorConfig;
 import com.zzg.mybatis.generator.model.UITableColumnVO;
 import com.zzg.mybatis.generator.util.ConfigHelper;
 import com.zzg.mybatis.generator.util.DbUtil;
-import com.zzg.mybatis.generator.util.StringUtils;
+import com.zzg.mybatis.generator.util.MyStringUtils;
 import com.zzg.mybatis.generator.view.AlertUtil;
 import com.zzg.mybatis.generator.view.UIProgressCallback;
 import javafx.collections.FXCollections;
@@ -18,9 +18,10 @@ import javafx.scene.control.cell.TextFieldTreeCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.mybatis.generator.config.ColumnOverride;
 import org.mybatis.generator.config.IgnoredColumn;
@@ -29,6 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -38,15 +40,7 @@ import static org.junit.Assert.assertNotNull;
 public class MainUIController extends BaseFXController {
 
     private static final Logger _LOG = LoggerFactory.getLogger(MainUIController.class);
-    private static final String PROJECT_FOLDER_NOT_SELECT = "Please choose project folder!";
-    private static final String PROJECT_FOLDER_NOT_EXIST = "Project folder not exist，create?";
-    private static final String MODEL_FOLDER_NOT_INPUT = "Please input model folder!";
-    private static final String MODEL_FOLDER_NOT_EXIST = "Model target folder not exist, create?";
-    private static final String DAO_FOLDER_NOT_INPUT = "Please input dao folder!";
-    private static final String DAO_FOLDER_NOT_EXIST = "Dao target folder not exist, create?";
-    private static final String MAPPER_FOLDER_NOT_INPUT = "Please input mapping folder!";
-    private static final String MAPPER_FOLDER_NOT_EXIST = "Mapping target folder not exist, create?";
-
+    private static final String FOLDER_NO_EXIST = "部分目录不存在，是否创建";
     // tool bar buttons
     @FXML
     private Label connectionLabel;
@@ -174,7 +168,7 @@ public class MainUIController extends BaseFXController {
                         selectedDatabaseConfig = (DatabaseConfig) treeItem.getParent().getGraphic().getUserData();
                         this.tableName = tableName;
                         tableNameField.setText(tableName);
-                        domainObjectNameField.setText(StringUtils.dbStringToCamelStyle(tableName));
+                        domainObjectNameField.setText(MyStringUtils.dbStringToCamelStyle(tableName));
                     }
                 }
             });
@@ -217,7 +211,7 @@ public class MainUIController extends BaseFXController {
     @FXML
     public void generateCode() {
         if (tableName == null) {
-            AlertUtil.showErrorAlert("Please select table from left DB tree first");
+            AlertUtil.showWarnAlert("请先在左侧选择数据库表");
             return;
         }
         GeneratorConfig generatorConfig = getGeneratorConfigFromUI();
@@ -292,10 +286,10 @@ public class MainUIController extends BaseFXController {
     @FXML
     public void openTableColumnCustomizationPage() {
         if (tableName == null) {
-            AlertUtil.showErrorAlert("Please select table from left DB treee first");
+            AlertUtil.showWarnAlert("请先在左侧选择数据库表");
             return;
         }
-        SelectTableColumnController controller = (SelectTableColumnController) loadFXMLPage("Select Columns", FXMLPage.SELECT_TABLE_COLUMN, true);
+        SelectTableColumnController controller = (SelectTableColumnController) loadFXMLPage("定制列", FXMLPage.SELECT_TABLE_COLUMN, true);
         controller.setMainUIController(this);
         try {
             // If select same schema and another table, update table data
@@ -320,91 +314,42 @@ public class MainUIController extends BaseFXController {
     }
 
     /**
-     * check dirs exist
+     * 检查并创建不存在的文件夹
      *
      * @return
      */
     private boolean checkDirs(GeneratorConfig config) {
-        assertNotNull(config);
-
-        /* check project folder */
-        String projectFolder = config.getProjectFolder();
-        if (StringUtils.isBlank(projectFolder)) {
-            AlertUtil.showInfoAlert(PROJECT_FOLDER_NOT_SELECT);
-            return false;
-        }
-
-        if(!accept(projectFolder, PROJECT_FOLDER_NOT_EXIST)) {
-            return false;
-        }
-
-        if(!projectFolder.endsWith(File.separator)) {
-            projectFolder = projectFolder.concat(File.separator);
-        }
-
-        /* check model target folder */
-        String modelTargetFolder = config.getModelPackageTargetFolder();
-        if (StringUtils.isBlank(modelTargetFolder)) {
-            AlertUtil.showInfoAlert(MODEL_FOLDER_NOT_INPUT);
-            return false;
-        }
-
-        if(!accept(projectFolder.concat(modelTargetFolder), MODEL_FOLDER_NOT_EXIST)) {
-            return false;
-        }
-
-        /* check dao target folder */
-        String daoTargetFolder = config.getDaoTargetFolder();
-        if (StringUtils.isBlank(daoTargetFolder)) {
-            AlertUtil.showInfoAlert(DAO_FOLDER_NOT_INPUT);
-            return false;
-        }
-
-        if(!accept(projectFolder.concat(daoTargetFolder), DAO_FOLDER_NOT_EXIST)) {
-            return false;
-        }
-
-        /* check mapper target folder */
-        String mapperTargetFolder = config.getMappingXMLTargetFolder();
-        if (StringUtils.isBlank(mapperTargetFolder)) {
-            AlertUtil.showInfoAlert(MAPPER_FOLDER_NOT_INPUT);
-            return false;
-        }
-
-        if(!accept(projectFolder.concat(mapperTargetFolder), MAPPER_FOLDER_NOT_EXIST)) {
-            return false;
-        }
-
+		List<String> dirs = new ArrayList<>();
+		dirs.add(FilenameUtils.normalize(config.getProjectFolder().concat("/").concat(config.getModelPackageTargetFolder())));
+		dirs.add(FilenameUtils.normalize(config.getProjectFolder().concat("/").concat(config.getDaoTargetFolder())));
+		dirs.add(FilenameUtils.normalize(config.getProjectFolder().concat("/").concat(config.getMappingXMLTargetFolder())));
+		boolean haveNotExistFolder = false;
+		for (String dir : dirs) {
+			File file = new File(dir);
+			if (!file.exists()) {
+				haveNotExistFolder = true;
+			}
+		}
+		if (haveNotExistFolder) {
+			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+			alert.setContentText(FOLDER_NO_EXIST);
+			Optional<ButtonType> optional = alert.showAndWait();
+			if (optional.isPresent()) {
+				if (ButtonType.OK == optional.get()) {
+					try {
+						for (String dir : dirs) {
+							FileUtils.forceMkdir(new File(dir));
+						}
+						return true;
+					} catch (Exception e) {
+						AlertUtil.showErrorAlert("创建目录失败，请检查目录是否是文件而非目录");
+					}
+				} else {
+					return false;
+				}
+			}
+		}
         return true;
-    }
-
-    /**
-     * check dir exist && confirm mkdir
-     *
-     * @param dirPath
-     * @param message
-     * @return
-     */
-    private boolean accept(String dirPath, String message) {
-        File file = new File(dirPath);
-        if (file.exists()) {
-            return true;
-        }
-
-        Alert confirmationAlert = AlertUtil.buildConfirmationAlert(message);
-        Optional<ButtonType> optional = confirmationAlert.showAndWait();
-        if (optional.isPresent()) {
-            if (ButtonType.OK == optional.get()) {
-                try {
-                    FileUtils.forceMkdir(new File(dirPath));
-                    return true;
-                } catch (Exception e) {
-                    AlertUtil.showErrorAlert("创建失败");
-                }
-            }
-        }
-
-        return false;
     }
 
 }
