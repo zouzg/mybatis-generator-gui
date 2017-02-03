@@ -14,25 +14,6 @@
     <top>
         <VBox>
             <children>
-                <MenuBar>
-                    <menus>
-                        <Menu mnemonicParsing="false" text="File">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Close" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Edit">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Delete" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Help">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="About" />
-                            </items>
-                        </Menu>
-                    </menus>
-                </MenuBar>
                 <ToolBar minHeight="70.0" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <items>
                         <Label fx:id="connectionLabel" contentDisplay="TOP" text="Connections">
