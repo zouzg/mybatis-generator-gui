@@ -19,20 +19,17 @@ public class DbUtil {
     private static final int DB_CONNECTION_TIMEOUTS_SECONDS = 1;
 
     public static Connection getConnection(DatabaseConfig config) throws ClassNotFoundException, SQLException {
-        DbType dbType = DbType.valueOf(config.getDbType());
-        Class.forName(dbType.getDriverClass());
-        DriverManager.setLoginTimeout(DB_CONNECTION_TIMEOUTS_SECONDS);
+		DriverManager.setLoginTimeout(DB_CONNECTION_TIMEOUTS_SECONDS);
+		DbType dbType = DbType.valueOf(config.getDbType());
+		Class.forName(dbType.getDriverClass());
         String url = getConnectionUrlWithSchema(config);
         _LOG.info("getConnection, connection url: {}", url);
         return DriverManager.getConnection(url, config.getUsername(), config.getPassword());
     }
 
     public static List<String> getTableNames(DatabaseConfig config) throws Exception {
-        DbType dbType = DbType.valueOf(config.getDbType());
-        Class.forName(dbType.getDriverClass());
         String url = getConnectionUrlWithSchema(config);
         _LOG.info("getTableNames, connection url: {}", url);
-        DriverManager.setLoginTimeout(DB_CONNECTION_TIMEOUTS_SECONDS);
         Connection conn = DriverManager.getConnection(url, config.getUsername(), config.getPassword());
         DatabaseMetaData md = conn.getMetaData();
         ResultSet rs = md.getTables(null, config.getUsername().toUpperCase(), null, null);
@@ -44,13 +41,10 @@ public class DbUtil {
     }
 
     public static List<UITableColumnVO> getTableColumns(DatabaseConfig dbConfig, String tableName) throws Exception {
-        DbType dbType = DbType.valueOf(dbConfig.getDbType());
-        Class.forName(dbType.getDriverClass());
-        DriverManager.setLoginTimeout(DB_CONNECTION_TIMEOUTS_SECONDS);
         String url = getConnectionUrlWithSchema(dbConfig);
         _LOG.info("getTableColumns, connection url: {}", url);
-        Connection conn = DriverManager.getConnection(url, dbConfig.getUsername(), dbConfig.getPassword());
-        DatabaseMetaData md = conn.getMetaData();
+		Connection conn = getConnection(dbConfig);
+		DatabaseMetaData md = conn.getMetaData();
         ResultSet rs = md.getColumns(null, null, tableName, null);
         List<UITableColumnVO> columns = new ArrayList<>();
         while (rs.next()) {
@@ -58,15 +52,14 @@ public class DbUtil {
             String columnName = rs.getString("COLUMN_NAME");
             columnVO.setColumnName(columnName);
             columnVO.setJdbcType(rs.getString("TYPE_NAME"));
-            //columnVO.setPropertyName(StringUtils.dbStringToCamelStyle2(columnName));
             columns.add(columnVO);
         }
         return columns;
     }
 
-    public static String getConnectionUrlWithSchema(DatabaseConfig dbConfig) {
-        DbType dbType = DbType.valueOf(dbConfig.getDbType());
-        String connectionUrl = String.format(dbType.getConnectionUrlPattern(), dbConfig.getHost(), dbConfig.getPort(), dbConfig.getSchema(), dbConfig.getEncoding());
+    public static String getConnectionUrlWithSchema(DatabaseConfig dbConfig) throws ClassNotFoundException {
+		DbType dbType = DbType.valueOf(dbConfig.getDbType());
+		String connectionUrl = String.format(dbType.getConnectionUrlPattern(), dbConfig.getHost(), dbConfig.getPort(), dbConfig.getSchema(), dbConfig.getEncoding());
         _LOG.info("getConnectionUrlWithSchema, connection url: {}", connectionUrl);
         return connectionUrl;
     }
