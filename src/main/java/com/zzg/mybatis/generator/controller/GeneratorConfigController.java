@@ -53,8 +53,8 @@ public class GeneratorConfigController extends BaseFXController {
                         setText(null);
                         setGraphic(null);
                     } else {
-                        Button btn1 = new Button("Apply");
-                        Button btn2 = new Button("Delete");
+                        Button btn1 = new Button("应用");
+                        Button btn2 = new Button("删除");
                         HBox hBox = new HBox();
                         hBox.setSpacing(10);
                         hBox.getChildren().add(btn1);

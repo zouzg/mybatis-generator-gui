@@ -100,7 +100,7 @@ public class MainUIController extends BaseFXController {
         dbImage.setFitWidth(40);
         connectionLabel.setGraphic(dbImage);
         connectionLabel.setOnMouseClicked(event -> {
-            NewConnectionController controller = (NewConnectionController) loadFXMLPage("New Connection", FXMLPage.NEW_CONNECTION, false);
+            NewConnectionController controller = (NewConnectionController) loadFXMLPage("新建连接", FXMLPage.NEW_CONNECTION, false);
             controller.setMainUIController(this);
             controller.showDialogStage();
         });
@@ -109,7 +109,7 @@ public class MainUIController extends BaseFXController {
         configImage.setFitWidth(40);
         configsLabel.setGraphic(configImage);
         configsLabel.setOnMouseClicked(event -> {
-            GeneratorConfigController controller = (GeneratorConfigController) loadFXMLPage("Generator Config", FXMLPage.GENERATOR_CONFIG, false);
+            GeneratorConfigController controller = (GeneratorConfigController) loadFXMLPage("配置", FXMLPage.GENERATOR_CONFIG, false);
             controller.setMainUIController(this);
             controller.showDialogStage();
         });

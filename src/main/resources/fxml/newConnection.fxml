@@ -8,11 +8,12 @@
 <?import javafx.collections.*?>
 <?import com.zzg.mybatis.generator.model.*?>
 
-<AnchorPane prefHeight="454.0" prefWidth="576.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zzg.mybatis.generator.controller.NewConnectionController">
+<AnchorPane prefHeight="389.0" prefWidth="569.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zzg.mybatis.generator.controller.NewConnectionController">
    <children>
-      <GridPane alignment="CENTER_RIGHT" layoutX="49.0" layoutY="76.0" vgap="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+      <GridPane alignment="CENTER_RIGHT" layoutX="10.0" layoutY="30.0" vgap="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="187.0" />
+          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="218.0" />
+            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="31.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="402.0" minWidth="10.0" prefWidth="369.0" />
         </columnConstraints>
         <rowConstraints>
@@ -26,10 +27,10 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Connection Name:" />
-            <TextField fx:id="nameField" GridPane.columnIndex="1" />
-            <Label text="DB Type" GridPane.rowIndex="1" />
-            <ChoiceBox fx:id="dbTypeChoice" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label text="保存名称" />
+            <TextField fx:id="nameField" GridPane.columnIndex="2" />
+            <Label text="数据库类型" GridPane.rowIndex="1" />
+            <ChoiceBox fx:id="dbTypeChoice" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="MySQL" />
@@ -38,22 +39,22 @@
                     </FXCollections>
                 </items>
             </ChoiceBox>
-            <Label text="Host Name/IP Address:" GridPane.rowIndex="2" />
-            <TextField fx:id="hostField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label text="Port:" GridPane.rowIndex="3" />
-            <TextField fx:id="portField" maxWidth="-Infinity" prefHeight="27.0" prefWidth="103.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label text="User Name:" GridPane.rowIndex="4" />
-            <TextField fx:id="userNameField" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label text="Password:" GridPane.rowIndex="5" />
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <Label text="主机名或IP地址" GridPane.rowIndex="2" />
+            <TextField fx:id="hostField" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label text="端口号" GridPane.rowIndex="3" />
+            <TextField fx:id="portField" maxWidth="-Infinity" prefHeight="27.0" prefWidth="103.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label text="用户名" GridPane.rowIndex="4" />
+            <TextField fx:id="userNameField" minWidth="-Infinity" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label text="密码" GridPane.rowIndex="5" />
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
                <children>
                   <PasswordField fx:id="passwordField" />
                   <CheckBox fx:id="savePwdCheckBox" mnemonicParsing="false" text="Save password" visible="false" />
                </children>
             </HBox>
-            <Label text="Encoding:" GridPane.rowIndex="7" />
-            <TextField fx:id="schemaField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <ChoiceBox fx:id="encodingChoice" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7">
+            <Label text="编码" GridPane.rowIndex="7" />
+            <TextField fx:id="schemaField" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <ChoiceBox fx:id="encodingChoice" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="utf8" />
@@ -62,26 +63,27 @@
                     </FXCollections>
                 </items>
              </ChoiceBox>
-            <Label text="Database:" GridPane.rowIndex="6" />
+            <Label text="Schema/数据库" GridPane.rowIndex="6" />
          </children>
       </GridPane>
-      <AnchorPane layoutY="390.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane layoutY="340.0" prefHeight="0.0" prefWidth="570.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Button layoutX="27.0" layoutY="6.0" mnemonicParsing="false" onAction="#testConnection" text="Test Connection" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0">
+            <Button layoutX="27.0" layoutY="6.0" mnemonicParsing="false" onAction="#testConnection" text="测试连接" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0">
                <styleClass>
                   <String fx:value="btn" />
                   <String fx:value="btn-default" />
                </styleClass></Button>
-          <Button layoutX="467.0" layoutY="12.0" mnemonicParsing="false" onAction="#saveConnection" prefHeight="28.0" prefWidth="61.0" text="OK" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="10.0">
+          <Button layoutX="467.0" layoutY="12.0" mnemonicParsing="false" onAction="#saveConnection" prefHeight="28.0" prefWidth="61.0" text="保存" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="10.0">
                <styleClass>
                   <String fx:value="btn-success" />
                   <String fx:value="btn" />
                </styleClass></Button>
-            <Button layoutX="427.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" AnchorPane.bottomAnchor="5.0">
+            <Button layoutX="427.0" mnemonicParsing="false" onAction="#cancel" text="取消" AnchorPane.bottomAnchor="5.0">
                <styleClass>
                   <String fx:value="btn" />
                   <String fx:value="btn-default" />
-               </styleClass></Button>
+               </styleClass>
+            </Button>
          </children>
       </AnchorPane>
    </children>

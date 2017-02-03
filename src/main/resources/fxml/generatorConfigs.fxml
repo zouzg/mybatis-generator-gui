@@ -8,8 +8,8 @@
    <children>
       <TableView fx:id="configTable" layoutX="47.0" layoutY="53.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columns>
-          <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Config Name" />
-          <TableColumn fx:id="opsColumn" editable="false" prefWidth="75.0" sortable="false" text="Operations" />
+          <TableColumn fx:id="nameColumn" prefWidth="75.0" text="配置名称" />
+          <TableColumn fx:id="opsColumn" editable="false" prefWidth="75.0" sortable="false" text="操作" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
