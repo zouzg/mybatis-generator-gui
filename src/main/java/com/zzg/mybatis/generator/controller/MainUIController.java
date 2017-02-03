@@ -94,7 +94,7 @@ public class MainUIController extends BaseFXController {
         dbImage.setFitWidth(40);
         connectionLabel.setGraphic(dbImage);
         connectionLabel.setOnMouseClicked(event -> {
-            NewConnectionController controller = (NewConnectionController) loadFXMLPage("新建连接", FXMLPage.NEW_CONNECTION, false);
+            NewConnectionController controller = (NewConnectionController) loadFXMLPage("新建数据库连接", FXMLPage.NEW_CONNECTION, false);
             controller.setMainUIController(this);
             controller.showDialogStage();
         });
@@ -214,6 +214,11 @@ public class MainUIController extends BaseFXController {
             AlertUtil.showWarnAlert("请先在左侧选择数据库表");
             return;
         }
+        String result = validateConfig();
+		if (result != null) {
+			AlertUtil.showErrorAlert(result);
+			return;
+		}
         GeneratorConfig generatorConfig = getGeneratorConfigFromUI();
         if (!checkDirs(generatorConfig)) {
             return;
@@ -234,7 +239,22 @@ public class MainUIController extends BaseFXController {
         }
     }
 
-    @FXML
+	private String validateConfig() {
+		String projectFolder = projectFolderField.getText();
+		if (StringUtils.isEmpty(projectFolder))  {
+			return "项目目录不能为空";
+		}
+		if (StringUtils.isEmpty(domainObjectNameField.getText()))  {
+			return "类名不能为空";
+		}
+		if (StringUtils.isAnyEmpty(modelTargetPackage.getText(), mapperTargetPackage.getText(), daoTargetPackage.getText())) {
+			return "包名不能为空";
+		}
+
+		return null;
+	}
+
+	@FXML
     public void saveGeneratorConfig() {
         TextInputDialog dialog = new TextInputDialog("保存配置");
         dialog.setTitle("保存当前配置");
@@ -320,6 +340,7 @@ public class MainUIController extends BaseFXController {
      */
     private boolean checkDirs(GeneratorConfig config) {
 		List<String> dirs = new ArrayList<>();
+		dirs.add(config.getProjectFolder());
 		dirs.add(FilenameUtils.normalize(config.getProjectFolder().concat("/").concat(config.getModelPackageTargetFolder())));
 		dirs.add(FilenameUtils.normalize(config.getProjectFolder().concat("/").concat(config.getDaoTargetFolder())));
 		dirs.add(FilenameUtils.normalize(config.getProjectFolder().concat("/").concat(config.getMappingXMLTargetFolder())));
