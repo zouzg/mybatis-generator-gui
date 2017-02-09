@@ -12,6 +12,8 @@ import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.ShellCallback;
 import org.mybatis.generator.config.*;
 import org.mybatis.generator.internal.DefaultShellCallback;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -25,6 +27,8 @@ import java.util.Set;
  * Created by Owen on 6/30/16.
  */
 public class MybatisGeneratorBridge {
+
+	private static final Logger _LOG = LoggerFactory.getLogger(MybatisGeneratorBridge.class);
 
     private GeneratorConfig generatorConfig;
 
@@ -57,6 +61,7 @@ public class MybatisGeneratorBridge {
     public void generate() throws Exception {
         Configuration config = new Configuration();
         String connectorLibPath = ConfigHelper.findConnectorLibPath(selectedDatabaseConfig.getDbType());
+		_LOG.info("connectorLibPath: {}", connectorLibPath);
         config.addClasspathEntry(connectorLibPath);
         Context context = new Context(ModelType.CONDITIONAL);
         config.addContext(context);

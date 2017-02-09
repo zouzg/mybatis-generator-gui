@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.zzg.mybatis.generator.model.DatabaseConfig;
 import com.zzg.mybatis.generator.model.DbType;
 import com.zzg.mybatis.generator.model.GeneratorConfig;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -200,17 +201,18 @@ public class ConfigHelper {
     public static String findConnectorLibPath(String dbType) {
         DbType type = DbType.valueOf(dbType);
         String connectorJarFileName = type.getConnectorJarFile();
-        URL resource = Thread.currentThread().getContextClassLoader().getResource(connectorJarFileName);
+		URL resource = Thread.currentThread().getContextClassLoader().getResource("logback.xml");
+		_LOG.info("jar resource: {}", resource);
         if (resource != null) {
-            try {
-                return resource.toURI().getRawPath();
-            } catch (URISyntaxException e) {
-                // ignore
+			try {
+				File file = new File(resource.toURI().getRawPath() + "/../lib/" + type.getConnectorJarFile());
+				return file.getCanonicalPath();
+            } catch (Exception e) {
+                throw new RuntimeException("找不到驱动文件，请联系开发者");
             }
         } else {
-            throw new RuntimeException("connector can't find");
+            throw new RuntimeException("lib can't find");
         }
-        return null;
     }
 
 

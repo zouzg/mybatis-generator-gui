@@ -23,27 +23,23 @@ mybatis-generator-gui是基于[mybatis generator](http://www.mybatis.org/generat
     cd mybatis-generator-gui
     mvn jfx:jar
 ### 启动本软件
-* 方法一: 下载的zip包
 
-解压zip包，如果安装好了JRE或者JDK 8，直接cd至软件目录运行
-
-    java -jar mybatis-generator-gui.jar
-
-* 方法二: 自助构建
+* 方法一: 自助构建
 
 
+    mvn install:install-file -Dfile=./src/main/resources/connector/ojdbc14.jar -DgroupId=com.oracle -DartifactId=ojdbc14 -Dversion=10.2.0.3.0 -Dpackaging=jar -DgeneratePom=true
     cd target/jfx/app/
     java -jar mybatis-generator-gui.jar
     
 
-* 方法三: IDE中运行
+* 方法二: IDE中运行
 
-Eclipse or IntelliJ IDEA中启动, 找到MainUI类并运行就可以了
+Eclipse or IntelliJ IDEA中启动, 找到```com.zzg.mybatis.generator.MainUI```类并运行就可以了
 
 #### Oracle用户请注意
 由于Oracle的驱动在maven官方的repository中没有，Oracle的用户需要手动安装一下驱动，cd到项目目录下，执行：
 
-    mvn install:install-file -Dfile=./src/main/resources/connector/ojdbc14.jar -DgroupId=com.oracle -DartifactId=ojdbc14 -Dversion=10.2.0.3.0 -Dpackaging=jar -DgeneratePom=true
+
 
 
 ### 文档
