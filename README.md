@@ -27,7 +27,7 @@ mybatis-generator-gui是基于[mybatis generator](http://www.mybatis.org/generat
 * 方法一: 自助构建
 
 
-    mvn install:install-file -Dfile=./src/main/resources/connector/ojdbc14.jar -DgroupId=com.oracle -DartifactId=ojdbc14 -Dversion=10.2.0.3.0 -Dpackaging=jar -DgeneratePom=true
+    mvn install:install-file -Dfile=./src/main/resources/lib/ojdbc14.jar -DgroupId=com.oracle -DartifactId=ojdbc14 -Dversion=10.2.0.3.0 -Dpackaging=jar -DgeneratePom=true
     cd target/jfx/app/
     java -jar mybatis-generator-gui.jar
     
