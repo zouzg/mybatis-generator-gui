@@ -35,11 +35,6 @@ mybatis-generator-gui是基于[mybatis generator](http://www.mybatis.org/generat
 
 Eclipse or IntelliJ IDEA中启动, 找到```com.zzg.mybatis.generator.MainUI```类并运行就可以了
 
-#### Oracle用户请注意
-由于Oracle的驱动在maven官方的repository中没有，Oracle的用户需要手动安装一下驱动，cd到项目目录下，执行：
-
-
-
 
 ### 文档
 更多详细文档请参考本库的Wiki
