@@ -3,7 +3,7 @@ mybatis-generator-gui
 
 mybatis-generator-gui是基于[mybatis generator](http://www.mybatis.org/generator/index.html)开发一款界面工具, 本工具可以使你非常容易及快速生成Mybatis的Java POJO文件及数据库Mapping文件。
 
-![MainUI](https://cloud.githubusercontent.com/assets/3505708/17854987/ab4ed078-68a8-11e6-824e-ada64d0b4ad1.png)
+![MainUI](https://cloud.githubusercontent.com/assets/3505708/22870467/834ed1c2-f1e2-11e6-9ae5-650b88722a7c.png)
 
 ### 核心特性
 * 按照界面步骤轻松生成代码，省去XML繁琐的学习与配置过程
@@ -18,20 +18,19 @@ mybatis-generator-gui是基于[mybatis generator](http://www.mybatis.org/generat
 ### 下载
 你可以从本链接下载本工具: https://github.com/astarring/mybatis-generator-gui/releases
 
-### 自助构建
-    git clone https://github.com/astarring/mybatis-generator-gui
-    cd mybatis-generator-gui
-    mvn jfx:jar
 ### 启动本软件
 
 * 方法一: 自助构建
 
-
+```bash
+    git clone https://github.com/astarring/mybatis-generator-gui
+    cd mybatis-generator-gui
     mvn install:install-file -Dfile=./src/main/resources/lib/ojdbc14.jar -DgroupId=com.oracle -DartifactId=ojdbc14 -Dversion=10.2.0.3.0 -Dpackaging=jar -DgeneratePom=true
+    mvn jfx:jar
     cd target/jfx/app/
     java -jar mybatis-generator-gui.jar
+```
     
-
 * 方法二: IDE中运行
 
 Eclipse or IntelliJ IDEA中启动, 找到```com.zzg.mybatis.generator.MainUI```类并运行就可以了
