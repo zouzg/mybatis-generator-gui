@@ -102,8 +102,8 @@ public class NewConnectionController extends BaseFXController {
 		config.setPassword(password);
 		config.setSchema(schema);
 		config.setEncoding(encoding);
-		if (StringUtils.isAnyEmpty(name, host, port, userName, password, encoding, dbType, schema)) {
-			AlertUtil.showWarnAlert("所有字段都必填");
+		if (StringUtils.isAnyEmpty(name, host, port, userName, encoding, dbType, schema)) {
+			AlertUtil.showWarnAlert("密码以外其他字段必填");
 			return null;
 		}
 		return config;
