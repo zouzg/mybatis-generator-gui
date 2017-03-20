@@ -47,7 +47,8 @@ public class MybatisGeneratorBridge {
     private void init() {
         Configuration config = new Configuration();
         Context context = new Context(ModelType.CONDITIONAL);
-        config.addContext(context);
+	    context.addProperty("javaFileEncoding", "UTF-8");
+	    config.addContext(context);
     }
 
     public void setGeneratorConfig(GeneratorConfig generatorConfig) {
