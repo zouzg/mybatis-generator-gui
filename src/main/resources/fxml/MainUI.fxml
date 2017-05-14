@@ -178,9 +178,10 @@
                                           <CheckBox fx:id="commentCheckBox" mnemonicParsing="false" selected="true" text="数据库表注释所有POJO的注释" />
                                        </children>
                                     </HBox>
-                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                    <HBox prefHeight="100.0" prefWidth="200.0" spacing="18.0">
                                        <children>
                                           <CheckBox fx:id="annotationCheckBox" mnemonicParsing="false" selected="false" text="生成JPA注解" />
+                                          <CheckBox fx:id="useActualColumnNamesCheckbox" mnemonicParsing="false" selected="false" text="使用实际的列名" />
                                        </children>
                                     </HBox>
                                  </children>

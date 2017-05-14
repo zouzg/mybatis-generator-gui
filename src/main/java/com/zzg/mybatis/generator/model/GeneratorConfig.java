@@ -42,6 +42,8 @@ public class GeneratorConfig {
 
 	private boolean annotation;
 
+	private boolean useActualColumnNames;
+
 	private String generateKeys;
 
 	public String getName() {
@@ -154,6 +156,14 @@ public class GeneratorConfig {
 
 	public void setAnnotation(boolean annotation) {
 		this.annotation = annotation;
+	}
+
+	public boolean isUseActualColumnNames() {
+		return useActualColumnNames;
+	}
+
+	public void setUseActualColumnNames(boolean useActualColumnNames) {
+		this.useActualColumnNames = useActualColumnNames;
 	}
 
 	public String getMapperName() {

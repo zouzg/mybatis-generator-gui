@@ -89,6 +89,9 @@ public class MybatisGeneratorBridge {
                 tableConfig.addColumnOverride(columnOverride);
             });
         }
+        if (generatorConfig.isUseActualColumnNames()) {
+			tableConfig.addProperty("useActualColumnNames", "true");
+        }
         JDBCConnectionConfiguration jdbcConfig = new JDBCConnectionConfiguration();
         jdbcConfig.setDriverClass(DbType.valueOf(selectedDatabaseConfig.getDbType()).getDriverClass());
         jdbcConfig.setConnectionURL(DbUtil.getConnectionUrlWithSchema(selectedDatabaseConfig));

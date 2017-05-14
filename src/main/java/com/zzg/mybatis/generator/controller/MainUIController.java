@@ -75,6 +75,8 @@ public class MainUIController extends BaseFXController {
     @FXML
     private CheckBox annotationCheckBox;
     @FXML
+    private CheckBox useActualColumnNamesCheckbox;
+    @FXML
     private TreeView<String> leftDBTree;
     // Current selected databaseConfig
     private DatabaseConfig selectedDatabaseConfig;
@@ -289,6 +291,7 @@ public class MainUIController extends BaseFXController {
         generatorConfig.setOffsetLimit(offsetLimitCheckBox.isSelected());
         generatorConfig.setComment(commentCheckBox.isSelected());
         generatorConfig.setAnnotation(annotationCheckBox.isSelected());
+        generatorConfig.setUseActualColumnNames(useActualColumnNamesCheckbox.isSelected());
         return generatorConfig;
     }
 
