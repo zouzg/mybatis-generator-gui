@@ -1,6 +1,5 @@
 package com.zzg.mybatis.generator.controller;
 
-import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import com.zzg.mybatis.generator.bridge.MybatisGeneratorBridge;
 import com.zzg.mybatis.generator.model.DatabaseConfig;
 import com.zzg.mybatis.generator.model.GeneratorConfig;
@@ -30,6 +29,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.URL;
+import java.sql.SQLRecoverableException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -158,7 +158,7 @@ public class MainUIController extends BaseFXController {
                                     children.add(newTreeItem);
                                 }
                             }
-                        } catch (CommunicationsException e) {
+                        } catch (SQLRecoverableException e) {
                             _LOG.error(e.getMessage(), e);
                             AlertUtil.showErrorAlert("连接超时");
                         } catch (Exception e) {

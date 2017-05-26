@@ -1,32 +1,17 @@
 package com.zzg.mybatis.generator;
 
-import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.net.URL;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.zzg.mybatis.generator.controller.MainUIController;
-
-import com.zzg.mybatis.generator.model.GeneratorConfig;
 import com.zzg.mybatis.generator.util.ConfigHelper;
-import com.zzg.mybatis.generator.view.AlertUtil;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+import java.net.URL;
 
 /**
  * 这是本软件的主入口,要运行本软件请直接运行本类就可以了,不用传入任何参数

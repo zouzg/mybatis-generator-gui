@@ -12,6 +12,7 @@ import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.ShellCallback;
 import org.mybatis.generator.config.*;
 import org.mybatis.generator.internal.DefaultShellCallback;
+import org.mybatis.generator.internal.ObjectFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static org.mybatis.generator.internal.util.ClassloaderUtility.getCustomClassloader;
 
 /**
  * The bridge between GUI and the mybatis generator. All the operation to  mybatis generator should proceed through this
@@ -39,16 +42,18 @@ public class MybatisGeneratorBridge {
     private List<IgnoredColumn> ignoredColumns;
 
     private List<ColumnOverride> columnOverrides;
+	/**
+	 * The Context will share between all controller to be a the mybatis generator configuration collector
+	 */
+	private static Configuration configuration = new Configuration();
+	private static Context context = new Context(ModelType.CONDITIONAL);
+
+	static {
+		configuration.addContext(context);
+		context.addProperty("javaFileEncoding", "UTF-8");
+	}
 
     public MybatisGeneratorBridge() {
-        init();
-    }
-
-    private void init() {
-        Configuration config = new Configuration();
-        Context context = new Context(ModelType.CONDITIONAL);
-	    context.addProperty("javaFileEncoding", "UTF-8");
-	    config.addContext(context);
     }
 
     public void setGeneratorConfig(GeneratorConfig generatorConfig) {
@@ -60,13 +65,7 @@ public class MybatisGeneratorBridge {
     }
 
     public void generate() throws Exception {
-        Configuration config = new Configuration();
-        String connectorLibPath = ConfigHelper.findConnectorLibPath(selectedDatabaseConfig.getDbType());
-		_LOG.info("connectorLibPath: {}", connectorLibPath);
-        config.addClasspathEntry(connectorLibPath);
-        Context context = new Context(ModelType.CONDITIONAL);
-        config.addContext(context);
-        // Table config
+        // Table configuration
         TableConfiguration tableConfig = new TableConfiguration(context);
         tableConfig.setTableName(generatorConfig.getTableName());
         tableConfig.setDomainObjectName(generatorConfig.getDomainObjectName());
@@ -101,7 +100,7 @@ public class MybatisGeneratorBridge {
         JavaModelGeneratorConfiguration modelConfig = new JavaModelGeneratorConfiguration();
         modelConfig.setTargetPackage(generatorConfig.getModelPackage());
         modelConfig.setTargetProject(generatorConfig.getProjectFolder() + "/" + generatorConfig.getModelPackageTargetFolder());
-        // Mapper config
+        // Mapper configuration
         SqlMapGeneratorConfiguration mapperConfig = new SqlMapGeneratorConfiguration();
         mapperConfig.setTargetPackage(generatorConfig.getMappingXMLPackage());
         mapperConfig.setTargetProject(generatorConfig.getProjectFolder() + "/" + generatorConfig.getMappingXMLTargetFolder());
@@ -148,12 +147,15 @@ public class MybatisGeneratorBridge {
         Set<String> fullyqualifiedTables = new HashSet<>();
         Set<String> contexts = new HashSet<>();
         ShellCallback shellCallback = new DefaultShellCallback(true); // override=true
-        MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
+        MyBatisGenerator myBatisGenerator = new MyBatisGenerator(configuration, shellCallback, warnings);
         myBatisGenerator.generate(progressCallback, contexts, fullyqualifiedTables);
     }
 
+	public static Context getContext() {
+		return context;
+	}
 
-    public void setProgressCallback(ProgressCallback progressCallback) {
+	public void setProgressCallback(ProgressCallback progressCallback) {
         this.progressCallback = progressCallback;
     }
 

@@ -215,5 +215,25 @@ public class ConfigHelper {
         }
     }
 
+    public static List<String> getAllJDBCDriverJarPaths() {
+	    List<String> jarFilePathList = new ArrayList<>();
+	    URL resource = Thread.currentThread().getContextClassLoader().getResource("logback.xml");
+	    try {
+	        String path = resource.toURI().getRawPath();
+	        File file = new File(path.substring(0, path.lastIndexOf("/")) + "/lib");
+	        File[] jarFiles = file.listFiles();
+	        if (jarFiles != null && jarFiles.length > 0) {
+		        for (File jarFile : jarFiles) {
+		        	if (jarFile.isFile() && jarFile.getAbsolutePath().endsWith(".jar")) {
+				        jarFilePathList.add(jarFile.getAbsolutePath());
+			        }
+		        }
+	        }
+	    } catch (Exception e) {
+			throw new RuntimeException("找不到驱动文件，请联系开发者");
+		}
+		return jarFilePathList;
+    }
+
 
 }

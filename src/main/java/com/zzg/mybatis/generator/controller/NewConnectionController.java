@@ -64,8 +64,6 @@ public class NewConnectionController extends BaseFXController {
 			return;
 		}
 		try {
-			String url = DbUtil.getConnectionUrlWithSchema(config);
-			System.out.println(url);
 			DbUtil.getConnection(config);
 			AlertUtil.showInfoAlert("连接成功");
 		} catch (Exception e) {
