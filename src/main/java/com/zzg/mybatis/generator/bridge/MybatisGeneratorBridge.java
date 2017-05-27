@@ -65,6 +65,9 @@ public class MybatisGeneratorBridge {
     }
 
     public void generate() throws Exception {
+	    String connectorLibPath = ConfigHelper.findConnectorLibPath(selectedDatabaseConfig.getDbType());
+	    _LOG.info("connectorLibPath: {}", connectorLibPath);
+	    configuration.addClasspathEntry(connectorLibPath);
         // Table configuration
         TableConfiguration tableConfig = new TableConfiguration(context);
         tableConfig.setTableName(generatorConfig.getTableName());

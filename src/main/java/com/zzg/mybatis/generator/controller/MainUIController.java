@@ -237,6 +237,7 @@ public class MainUIController extends BaseFXController {
 		try {
             bridge.generate();
         } catch (Exception e) {
+			e.printStackTrace();
             AlertUtil.showErrorAlert(e.getMessage());
         }
     }

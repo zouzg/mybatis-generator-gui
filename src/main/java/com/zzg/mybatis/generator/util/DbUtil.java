@@ -60,7 +60,12 @@ public class DbUtil {
 	    Connection connection = getConnection(config);
 	    try {
 		    DatabaseMetaData md = connection.getMetaData();
-		    ResultSet rs = md.getTables(null, config.getUsername().toUpperCase(), null, null);
+		    ResultSet rs;
+		    if (DbType.valueOf(config.getDbType()) == DbType.SQL_Server) {
+			    rs = md.getTables(config.getSchema(), null, null, null);
+		    } else {
+			    rs = md.getTables(null, config.getUsername().toUpperCase(), null, new String[] {"TABLE"});
+		    }
 		    List<String> tables = new ArrayList<>();
 		    while (rs.next()) {
 			    tables.add(rs.getString(3));

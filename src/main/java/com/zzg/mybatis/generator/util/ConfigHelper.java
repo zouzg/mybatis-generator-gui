@@ -145,7 +145,7 @@ public class ConfigHelper {
             conn = ConnectionManager.getConnection();
             stat = conn.createStatement();
             String sql = String.format("SELECT * FROM generator_config where name='%s'", name);
-            _LOG.info("sql: ", sql);
+            _LOG.info("sql: {}", sql);
             rs = stat.executeQuery(sql);
             GeneratorConfig generatorConfig = null;
             if (rs.next()) {
@@ -168,7 +168,7 @@ public class ConfigHelper {
             conn = ConnectionManager.getConnection();
             stat = conn.createStatement();
             String sql = String.format("SELECT * FROM generator_config");
-            _LOG.info("sql: ", sql);
+            _LOG.info("sql: {}", sql);
             rs = stat.executeQuery(sql);
             List<GeneratorConfig> configs = new ArrayList<>();
             while (rs.next()) {
@@ -200,7 +200,6 @@ public class ConfigHelper {
 
     public static String findConnectorLibPath(String dbType) {
         DbType type = DbType.valueOf(dbType);
-        String connectorJarFileName = type.getConnectorJarFile();
 		URL resource = Thread.currentThread().getContextClassLoader().getResource("logback.xml");
 		_LOG.info("jar resource: {}", resource);
         if (resource != null) {
