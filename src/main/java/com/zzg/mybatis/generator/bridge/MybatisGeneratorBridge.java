@@ -140,8 +140,11 @@ public class MybatisGeneratorBridge {
         // limit/offset插件
         if (generatorConfig.isOffsetLimit()) {
             PluginConfiguration pluginConfiguration = new PluginConfiguration();
-            pluginConfiguration.addProperty("type", "com.zzg.mybatis.generator.plugins.MySQLLimitPlugin");
-            pluginConfiguration.setConfigurationType("com.zzg.mybatis.generator.plugins.MySQLLimitPlugin");
+            if (DbType.MySQL.name().equals(selectedDatabaseConfig.getDbType())
+		            || DbType.PostgreSQL.name().equals(selectedDatabaseConfig.getDbType())) {
+                pluginConfiguration.addProperty("type", "com.zzg.mybatis.generator.plugins.MySQLLimitPlugin");
+                pluginConfiguration.setConfigurationType("com.zzg.mybatis.generator.plugins.MySQLLimitPlugin");
+            }
             context.addPluginConfiguration(pluginConfiguration);
         }
         context.setTargetRuntime("MyBatis3");
