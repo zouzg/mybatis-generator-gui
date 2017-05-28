@@ -59,14 +59,19 @@ public class DbUtil {
         _LOG.info("getTableNames, connection url: {}", url);
 	    Connection connection = getConnection(config);
 	    try {
+		    List<String> tables = new ArrayList<>();
 		    DatabaseMetaData md = connection.getMetaData();
 		    ResultSet rs;
 		    if (DbType.valueOf(config.getDbType()) == DbType.SQL_Server) {
-			    rs = md.getTables(config.getSchema(), null, null, null);
+			    String sql = "select name from sysobjects  where xtype='u' or xtype='v' ";
+			    rs = connection.createStatement().executeQuery(sql);
+			    while (rs.next()) {
+				    tables.add(rs.getString("name"));
+			    }
+			    // rs = md.getTables(config.getSchema(), null, null, new String[] {"TABLE", "VIEW"});
 		    } else {
-			    rs = md.getTables(null, config.getUsername().toUpperCase(), null, new String[] {"TABLE"});
+			    rs = md.getTables(null, config.getUsername().toUpperCase(), null, new String[] {"TABLE", "VIEW"});
 		    }
-		    List<String> tables = new ArrayList<>();
 		    while (rs.next()) {
 			    tables.add(rs.getString(3));
 		    }
