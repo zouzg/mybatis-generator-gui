@@ -96,7 +96,7 @@ public class MainUIController extends BaseFXController {
         dbImage.setFitWidth(40);
         connectionLabel.setGraphic(dbImage);
         connectionLabel.setOnMouseClicked(event -> {
-            NewConnectionController controller = (NewConnectionController) loadFXMLPage("新建数据库连接", FXMLPage.NEW_CONNECTION, false);
+            DbConnectionController controller = (DbConnectionController) loadFXMLPage("新建数据库连接", FXMLPage.NEW_CONNECTION, false);
             controller.setMainUIController(this);
             controller.showDialogStage();
         });
@@ -122,11 +122,17 @@ public class MainUIController extends BaseFXController {
                 if (level == 1) {
                     final ContextMenu contextMenu = new ContextMenu();
                     MenuItem item1 = new MenuItem("关闭连接");
-                    item1.setOnAction(event1 -> {
-                        treeItem.getChildren().clear();
-                    });
-                    MenuItem item2 = new MenuItem("删除连接");
-                    item2.setOnAction(event1 -> {
+                    item1.setOnAction(event1 -> treeItem.getChildren().clear());
+	                MenuItem item2 = new MenuItem("编辑连接");
+	                item2.setOnAction(event1 -> {
+		                DatabaseConfig selectedConfig = (DatabaseConfig) treeItem.getGraphic().getUserData();
+		                DbConnectionController controller = (DbConnectionController) loadFXMLPage("编辑数据库连接", FXMLPage.NEW_CONNECTION, false);
+		                controller.setMainUIController(this);
+		                controller.setConfig(selectedConfig);
+		                controller.showDialogStage();
+	                });
+                    MenuItem item3 = new MenuItem("删除连接");
+                    item3.setOnAction(event1 -> {
                         DatabaseConfig selectedConfig = (DatabaseConfig) treeItem.getGraphic().getUserData();
                         try {
                             ConfigHelper.deleteDatabaseConfig(selectedConfig.getName());
@@ -135,7 +141,7 @@ public class MainUIController extends BaseFXController {
                             AlertUtil.showErrorAlert("Delete connection failed! Reason: " + e.getMessage());
                         }
                     });
-                    contextMenu.getItems().addAll(item1, item2);
+                    contextMenu.getItems().addAll(item1, item2, item3);
                     cell.setContextMenu(contextMenu);
                 }
                 if (event.getClickCount() == 2) {

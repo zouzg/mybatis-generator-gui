@@ -83,19 +83,27 @@ public class ConfigHelper {
         }
     }
 
-    public static void saveDatabaseConfig(String name, DatabaseConfig dbConfig) throws Exception {
+    public static void saveDatabaseConfig(boolean isUpdate, DatabaseConfig dbConfig) throws Exception {
+    	String configName = dbConfig.getName();
         Connection conn = null;
         Statement stat = null;
         ResultSet rs = null;
         try {
             conn = ConnectionManager.getConnection();
             stat = conn.createStatement();
-            ResultSet rs1 = stat.executeQuery("SELECT * from dbs where name = '" + name + "'");
-            if (rs1.next()) {
-                throw new RuntimeException("配置已经存在, 请使用其它名字");
+            if (!isUpdate) {
+	            ResultSet rs1 = stat.executeQuery("SELECT * from dbs where name = '" + configName + "'");
+	            if (rs1.next()) {
+	                throw new RuntimeException("配置已经存在, 请使用其它名字");
+	            }
             }
             String jsonStr = JSON.toJSONString(dbConfig);
-            String sql = String.format("INSERT INTO dbs values('%s', '%s')", name, jsonStr);
+            String sql;
+            if (isUpdate) {
+            	sql = String.format("UPDATE dbs SET value = '%s' where name = '%s'", jsonStr, configName);
+            } else {
+                sql = String.format("INSERT INTO dbs values('%s', '%s')", configName, jsonStr);
+            }
             stat.executeUpdate(sql);
         } finally {
             if (rs != null) rs.close();

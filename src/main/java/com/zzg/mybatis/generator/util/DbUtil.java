@@ -68,9 +68,10 @@ public class DbUtil {
 			    while (rs.next()) {
 				    tables.add(rs.getString("name"));
 			    }
-			    // rs = md.getTables(config.getSchema(), null, null, new String[] {"TABLE", "VIEW"});
-		    } else {
+		    } else if (DbType.valueOf(config.getDbType()) == DbType.Oracle){
 			    rs = md.getTables(null, config.getUsername().toUpperCase(), null, new String[] {"TABLE", "VIEW"});
+		    } else {
+			    rs = md.getTables(null, config.getUsername().toUpperCase(), null, null);
 		    }
 		    while (rs.next()) {
 			    tables.add(rs.getString(3));
