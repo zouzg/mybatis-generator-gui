@@ -5,6 +5,9 @@ mybatis-generator-gui是基于[mybatis generator](http://www.mybatis.org/generat
 
 ![MainUI](https://cloud.githubusercontent.com/assets/3505708/22870467/834ed1c2-f1e2-11e6-9ae5-650b88722a7c.png)
 
+### 注意事项
+* 0.8.3版本请删除版本之前版本config目录下的sqlite3.db文件，重新`mvn install`安装
+
 ### 核心特性
 * 按照界面步骤轻松生成代码，省去XML繁琐的学习与配置过程
 * 保存数据库连接与Generator配置，每次代码生成轻松搞定

@@ -3,16 +3,12 @@ package com.zzg.mybatis.generator.util;
 import com.zzg.mybatis.generator.model.DatabaseConfig;
 import com.zzg.mybatis.generator.model.DbType;
 import com.zzg.mybatis.generator.model.UITableColumnVO;
-import org.apache.commons.lang3.StringUtils;
-import org.mybatis.generator.config.JDBCConnectionConfiguration;
 import org.mybatis.generator.internal.util.ClassloaderUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.*;
-
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 /**
  * Created by Owen on 6/12/16.

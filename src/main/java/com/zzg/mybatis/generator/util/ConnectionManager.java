@@ -1,14 +1,7 @@
 package com.zzg.mybatis.generator.util;
 
-import com.alibaba.fastjson.JSON;
-import com.zzg.mybatis.generator.model.DatabaseConfig;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Owen on 8/21/16.

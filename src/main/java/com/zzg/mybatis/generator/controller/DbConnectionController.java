@@ -36,6 +36,7 @@ public class DbConnectionController extends BaseFXController {
 	private ChoiceBox<String> dbTypeChoice;
 	private MainUIController mainUIController;
 	private boolean isUpdate = false;
+	private Integer primayKey;
 
 
 	@Override
@@ -49,7 +50,7 @@ public class DbConnectionController extends BaseFXController {
 			return;
 		}
 		try {
-			ConfigHelper.saveDatabaseConfig(this.isUpdate, config);
+			ConfigHelper.saveDatabaseConfig(this.isUpdate, primayKey, config);
 			getDialogStage().close();
 			mainUIController.loadLeftDBTree();
 		} catch (Exception e) {
@@ -110,6 +111,7 @@ public class DbConnectionController extends BaseFXController {
 
 	public void setConfig(DatabaseConfig config) {
 		isUpdate = true;
+		primayKey = config.getId(); // save id for update config
 		nameField.setText(config.getName());
 		hostField.setText(config.getHost());
 		portField.setText(config.getPort());

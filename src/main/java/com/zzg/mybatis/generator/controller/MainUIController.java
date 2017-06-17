@@ -35,8 +35,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import static org.junit.Assert.assertNotNull;
-
 public class MainUIController extends BaseFXController {
 
     private static final Logger _LOG = LoggerFactory.getLogger(MainUIController.class);
@@ -135,7 +133,7 @@ public class MainUIController extends BaseFXController {
                     item3.setOnAction(event1 -> {
                         DatabaseConfig selectedConfig = (DatabaseConfig) treeItem.getGraphic().getUserData();
                         try {
-                            ConfigHelper.deleteDatabaseConfig(selectedConfig.getName());
+                            ConfigHelper.deleteDatabaseConfig(selectedConfig);
                             this.loadLeftDBTree();
                         } catch (Exception e) {
                             AlertUtil.showErrorAlert("Delete connection failed! Reason: " + e.getMessage());
@@ -188,9 +186,8 @@ public class MainUIController extends BaseFXController {
     void loadLeftDBTree() {
         TreeItem rootTreeItem = leftDBTree.getRoot();
         rootTreeItem.getChildren().clear();
-        List<DatabaseConfig> dbConfigs = null;
         try {
-            dbConfigs = ConfigHelper.loadDatabaseConfig();
+            List<DatabaseConfig> dbConfigs = ConfigHelper.loadDatabaseConfig();
             for (DatabaseConfig dbConfig : dbConfigs) {
                 TreeItem<String> treeItem = new TreeItem<>();
                 treeItem.setValue(dbConfig.getName());
@@ -265,12 +262,16 @@ public class MainUIController extends BaseFXController {
 
 	@FXML
     public void saveGeneratorConfig() {
-        TextInputDialog dialog = new TextInputDialog("保存配置");
+        TextInputDialog dialog = new TextInputDialog("");
         dialog.setTitle("保存当前配置");
         dialog.setContentText("请输入配置名称");
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
             String name = result.get();
+            if (StringUtils.isEmpty(name)) {
+                AlertUtil.showErrorAlert("名称不能为空");
+                return;
+            }
             _LOG.info("user choose name: {}", name);
             try {
                 GeneratorConfig generatorConfig = getGeneratorConfigFromUI();

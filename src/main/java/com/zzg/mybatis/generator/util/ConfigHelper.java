@@ -4,15 +4,15 @@ import com.alibaba.fastjson.JSON;
 import com.zzg.mybatis.generator.model.DatabaseConfig;
 import com.zzg.mybatis.generator.model.DbType;
 import com.zzg.mybatis.generator.model.GeneratorConfig;
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.net.URISyntaxException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -68,10 +68,10 @@ public class ConfigHelper {
 			rs = stat.executeQuery("SELECT * FROM dbs");
 			List<DatabaseConfig> configs = new ArrayList<>();
 			while (rs.next()) {
-				String name = rs.getString("name");
+				int id = rs.getInt("id");
 				String value = rs.getString("value");
 				DatabaseConfig databaseConfig = JSON.parseObject(value, DatabaseConfig.class);
-				databaseConfig.setName(name);
+				databaseConfig.setId(id);
 				configs.add(databaseConfig);
 			}
 
@@ -83,7 +83,7 @@ public class ConfigHelper {
 		}
 	}
 
-	public static void saveDatabaseConfig(boolean isUpdate, DatabaseConfig dbConfig) throws Exception {
+	public static void saveDatabaseConfig(boolean isUpdate, Integer primaryKey, DatabaseConfig dbConfig) throws Exception {
 		String configName = dbConfig.getName();
 		Connection conn = null;
 		Statement stat = null;
@@ -100,9 +100,9 @@ public class ConfigHelper {
 			String jsonStr = JSON.toJSONString(dbConfig);
 			String sql;
 			if (isUpdate) {
-				sql = String.format("UPDATE dbs SET value = '%s' where name = '%s'", jsonStr, configName);
+				sql = String.format("UPDATE dbs SET name = '%s', value = '%s' where id = %d", configName, jsonStr, primaryKey);
 			} else {
-				sql = String.format("INSERT INTO dbs values('%s', '%s')", configName, jsonStr);
+				sql = String.format("INSERT INTO dbs (name, value) values('%s', '%s')", configName, jsonStr);
 			}
 			stat.executeUpdate(sql);
 		} finally {
@@ -112,14 +112,14 @@ public class ConfigHelper {
 		}
 	}
 
-	public static void deleteDatabaseConfig(String name) throws Exception {
+	public static void deleteDatabaseConfig(DatabaseConfig databaseConfig) throws Exception {
 		Connection conn = null;
 		Statement stat = null;
 		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			stat = conn.createStatement();
-			String sql = String.format("delete from dbs where name='%s'", name);
+			String sql = String.format("delete from dbs where id=%d", databaseConfig.getId());
 			stat.executeUpdate(sql);
 		} finally {
 			if (rs != null) rs.close();

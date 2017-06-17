@@ -7,6 +7,11 @@ import java.util.Objects;
  */
 public class DatabaseConfig {
 
+	/**
+	 * The primary key in the sqlite db
+	 */
+	private Integer id;
+
 	private String dbType;
 	/**
 	 * The name of the config
@@ -24,6 +29,14 @@ public class DatabaseConfig {
 	private String password;
 
 	private String encoding;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;

@@ -87,7 +87,6 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
         topLevelClass.addJavaDocLine(" * @author ");
         topLevelClass.addJavaDocLine(" */");
         if(isAnnotations) {
-
             topLevelClass.addAnnotation("@Talbe(name=\"" + introspectedTable.getFullyQualifiedTableNameAtRuntime() + "\")");
         }
     }
