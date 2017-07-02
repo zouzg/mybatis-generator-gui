@@ -39,16 +39,6 @@ public class MybatisGeneratorBridge {
     private List<IgnoredColumn> ignoredColumns;
 
     private List<ColumnOverride> columnOverrides;
-	/**
-	 * The Context will share between all controller to be a the mybatis generator configuration collector
-	 */
-	private static Configuration configuration = new Configuration();
-	private static Context context = new Context(ModelType.CONDITIONAL);
-
-	static {
-		configuration.addContext(context);
-		context.addProperty("javaFileEncoding", "UTF-8");
-	}
 
     public MybatisGeneratorBridge() {
     }
@@ -62,6 +52,10 @@ public class MybatisGeneratorBridge {
     }
 
     public void generate() throws Exception {
+        Configuration configuration = new Configuration();
+        Context context = new Context(ModelType.CONDITIONAL);
+        configuration.addContext(context);
+        context.addProperty("javaFileEncoding", "UTF-8");
 	    String connectorLibPath = ConfigHelper.findConnectorLibPath(selectedDatabaseConfig.getDbType());
 	    _LOG.info("connectorLibPath: {}", connectorLibPath);
 	    configuration.addClasspathEntry(connectorLibPath);
@@ -153,10 +147,6 @@ public class MybatisGeneratorBridge {
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator(configuration, shellCallback, warnings);
         myBatisGenerator.generate(progressCallback, contexts, fullyqualifiedTables);
     }
-
-	public static Context getContext() {
-		return context;
-	}
 
 	public void setProgressCallback(ProgressCallback progressCallback) {
         this.progressCallback = progressCallback;
