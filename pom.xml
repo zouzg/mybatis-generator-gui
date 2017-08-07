@@ -77,7 +77,6 @@
                     <vendor>Owen Zou</vendor>
                     <verbose>false</verbose>
                     <jfxMainAppJarName>mybatis-generator-gui.jar</jfxMainAppJarName>
-                    <nativeReleaseVersion>0.1</nativeReleaseVersion>
                     <needShortcut>true</needShortcut>
                     <needMenu>true</needMenu>
                     <copyAdditionalAppResourcesToJar>true</copyAdditionalAppResourcesToJar>
