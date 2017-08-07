@@ -67,7 +67,8 @@ public class DbUtil {
 		    } else if (DbType.valueOf(config.getDbType()) == DbType.Oracle){
 			    rs = md.getTables(null, config.getUsername().toUpperCase(), null, new String[] {"TABLE", "VIEW"});
 		    } else {
-			    rs = md.getTables(null, config.getUsername().toUpperCase(), null, null);
+			    // rs = md.getTables(null, config.getUsername().toUpperCase(), null, null);
+				rs = md.getTables(null, "%", "%", new String[] {"TABLE", "VIEW"});			//针对 postgresql 的左侧数据表显示
 		    }
 		    while (rs.next()) {
 			    tables.add(rs.getString(3));
