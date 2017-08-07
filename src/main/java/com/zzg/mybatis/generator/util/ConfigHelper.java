@@ -231,7 +231,7 @@ public class ConfigHelper {
 			if (url.getPath().contains(".jar")) {
 				file = new File("lib/");
 			} else {
-				file = new File("src/main/lib");
+				file = new File("src/main/resources/lib");
 			}
 			System.out.println(file.getCanonicalPath());
 			File[] jarFiles = file.listFiles();
