@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.zzg</groupId>
     <artifactId>mybatis-generator-gui</artifactId>
-    <version>0.8.3</version>
+    <version>0.8.4</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
