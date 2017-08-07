@@ -133,7 +133,17 @@ public class MybatisGeneratorBridge {
         serializablePluginConfiguration.addProperty("type", "org.mybatis.generator.plugins.SerializablePlugin");
         serializablePluginConfiguration.setConfigurationType("org.mybatis.generator.plugins.SerializablePlugin");
         context.addPluginConfiguration(serializablePluginConfiguration);
-        
+        // toString, hashCode, equals插件
+        if (generatorConfig.isNeedToStringHashcodeEquals()) {
+            PluginConfiguration pluginConfiguration1 = new PluginConfiguration();
+            pluginConfiguration1.addProperty("type", "org.mybatis.generator.plugins.EqualsHashCodePlugin");
+            pluginConfiguration1.setConfigurationType("org.mybatis.generator.plugins.EqualsHashCodePlugin");
+            context.addPluginConfiguration(pluginConfiguration1);
+            PluginConfiguration pluginConfiguration2 = new PluginConfiguration();
+            pluginConfiguration2.addProperty("type", "org.mybatis.generator.plugins.ToStringPlugin");
+            pluginConfiguration2.setConfigurationType("org.mybatis.generator.plugins.ToStringPlugin");
+            context.addPluginConfiguration(pluginConfiguration2);
+        }
         // limit/offset插件
         if (generatorConfig.isOffsetLimit()) {
             if (DbType.MySQL.name().equals(selectedDatabaseConfig.getDbType())
