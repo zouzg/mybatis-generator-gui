@@ -26,7 +26,7 @@
             <Label text="保存名称" />
             <TextField fx:id="nameField" GridPane.columnIndex="2" />
             <Label text="数据库类型" GridPane.rowIndex="1" />
-            <ChoiceBox fx:id="dbTypeChoice" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <ChoiceBox value="MySQL" fx:id="dbTypeChoice" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="MySQL" />
@@ -37,21 +37,21 @@
                 </items>
             </ChoiceBox>
             <Label text="主机名或IP地址" GridPane.rowIndex="2" />
-            <TextField fx:id="hostField" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <TextField fx:id="hostField" text="127.0.0.1" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <Label text="端口号" GridPane.rowIndex="3" />
-            <TextField fx:id="portField" maxWidth="-Infinity" prefHeight="27.0" prefWidth="103.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <TextField fx:id="portField" text="3306" maxWidth="-Infinity" prefHeight="27.0" prefWidth="103.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             <Label text="用户名" GridPane.rowIndex="4" />
-            <TextField fx:id="userNameField" minWidth="-Infinity" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <TextField fx:id="userNameField" text="root" minWidth="-Infinity" GridPane.columnIndex="2" GridPane.rowIndex="4" />
             <Label text="密码" GridPane.rowIndex="5" />
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
                <children>
-                  <PasswordField fx:id="passwordField" />
+                  <PasswordField fx:id="passwordField" text="123456" />
                   <CheckBox fx:id="savePwdCheckBox" mnemonicParsing="false" text="Save password" visible="false" />
                </children>
             </HBox>
             <Label text="编码" GridPane.rowIndex="7" />
             <TextField fx:id="schemaField" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-            <ChoiceBox fx:id="encodingChoice" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7">
+            <ChoiceBox value="utf8" fx:id="encodingChoice" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="utf8" />

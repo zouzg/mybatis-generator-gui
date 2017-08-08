@@ -186,6 +186,7 @@
                                        <children>
                                           <CheckBox fx:id="annotationCheckBox" mnemonicParsing="false" selected="false" text="生成JPA注解" />
                                           <CheckBox fx:id="useActualColumnNamesCheckbox" mnemonicParsing="false" selected="false" text="使用实际的列名" />
+                                          <CheckBox fx:id="useTableNameAliasCheckbox" mnemonicParsing="false" selected="false" text="启用as别名查询" />
                                        </children>
                                     </HBox>
                                  </children>
