@@ -48,6 +48,8 @@ public class GeneratorConfig {
 
 	private String generateKeys;
 
+	private boolean useTableNameAlias;
+
 	public String getName() {
 		return name;
 	}
@@ -190,5 +192,17 @@ public class GeneratorConfig {
 
 	public void setGenerateKeys(String generateKeys) {
 		this.generateKeys = generateKeys;
+	}
+
+	public boolean getUseTableNameAlias() {
+		return useTableNameAlias;
+	}
+
+	public void setUseTableNameAlias(boolean useTableNameAlias) {
+		this.useTableNameAlias = useTableNameAlias;
+	}
+
+	public boolean isUseTableNameAlias() {
+		return useTableNameAlias;
 	}
 }
