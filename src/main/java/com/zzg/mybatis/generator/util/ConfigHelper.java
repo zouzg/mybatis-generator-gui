@@ -214,7 +214,7 @@ public class ConfigHelper {
 		if (resource != null) {
 			try {
 				File file = new File(resource.toURI().getRawPath() + "/../lib/" + type.getConnectorJarFile());
-				return file.getCanonicalPath();
+				return URLDecoder.decode(file.getCanonicalPath(), Charset.forName("UTF-8").displayName());
 			} catch (Exception e) {
 				throw new RuntimeException("找不到驱动文件，请联系开发者");
 			}
