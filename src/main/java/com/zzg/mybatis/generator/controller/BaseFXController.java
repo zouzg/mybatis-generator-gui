@@ -1,22 +1,20 @@
 package com.zzg.mybatis.generator.controller;
 
+import com.zzg.mybatis.generator.view.AlertUtil;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.zzg.mybatis.generator.view.AlertUtil;
-import javafx.scene.Scene;
-import javafx.stage.Modality;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
 public abstract class BaseFXController implements Initializable {
     private static final Logger _LOG = LoggerFactory.getLogger(BaseFXController.class);
