@@ -87,7 +87,8 @@ public class MainUIController extends BaseFXController {
 
     private List<ColumnOverride> columnOverrides;
 
-
+    @FXML
+    private ChoiceBox<String> encodingChoice;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -305,6 +306,7 @@ public class MainUIController extends BaseFXController {
         generatorConfig.setNeedToStringHashcodeEquals(needToStringHashcodeEquals.isSelected());
         generatorConfig.setAnnotation(annotationCheckBox.isSelected());
         generatorConfig.setUseActualColumnNames(useActualColumnNamesCheckbox.isSelected());
+        generatorConfig.setEncoding(encodingChoice.getValue());
         return generatorConfig;
     }
 

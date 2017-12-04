@@ -127,6 +127,8 @@ public class MybatisGeneratorBridge {
             commentConfig.addProperty("annotations", "true");
         }
         context.setCommentGeneratorConfiguration(commentConfig);
+        // set java file encoding
+        context.addProperty(PropertyRegistry.CONTEXT_JAVA_FILE_ENCODING, generatorConfig.getEncoding());
         
         //实体添加序列化
         PluginConfiguration serializablePluginConfiguration = new PluginConfiguration();

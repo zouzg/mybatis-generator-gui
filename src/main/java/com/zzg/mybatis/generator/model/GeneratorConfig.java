@@ -48,6 +48,8 @@ public class GeneratorConfig {
 
 	private String generateKeys;
 
+    private String encoding;
+
 	public String getName() {
 		return name;
 	}
@@ -191,4 +193,12 @@ public class GeneratorConfig {
 	public void setGenerateKeys(String generateKeys) {
 		this.generateKeys = generateKeys;
 	}
+
+    public String getEncoding() {
+        return encoding;
+    }
+
+    public void setEncoding(String encoding) {
+        this.encoding = encoding;
+    }
 }

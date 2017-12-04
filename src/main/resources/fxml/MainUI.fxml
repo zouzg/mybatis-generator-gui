@@ -64,8 +64,8 @@
                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="72.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
-                                      <RowConstraints maxHeight="114.0" minHeight="8.0" prefHeight="58.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="99.0" minHeight="11.0" prefHeight="95.0" />
+                                      <RowConstraints maxHeight="121.0" minHeight="8.0" prefHeight="121.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="99.0" minHeight="11.0" prefHeight="43.0" />
                                   </rowConstraints>
                                   <children>
                                       <Label text="表名" />
@@ -171,18 +171,24 @@
                                  </GridPane.margin></TextField>
                               <VBox prefHeight="53.0" prefWidth="536.0" spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="7">
                                  <children>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                           <Label text="生成文件的编码" />
+                                           <ChoiceBox fx:id="encodingChoice" prefHeight="23.0" prefWidth="71.0" />
+                                       </children>
+                                    </HBox>
                                     <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8">
                                        <children>
                                           <CheckBox fx:id="offsetLimitCheckBox" minWidth="100.0" mnemonicParsing="false" selected="true" text="分页" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                                           <CheckBox fx:id="commentCheckBox" mnemonicParsing="false" selected="true" text="生成实体域注释(来自表注释)" />
                                        </children>
                                     </HBox>
-                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                    <HBox>
                                        <children>
                                           <CheckBox fx:id="needToStringHashcodeEquals" mnemonicParsing="false" selected="true" text="生成toString/hashCode/equals方法" />
                                        </children>
                                     </HBox>
-                                    <HBox prefHeight="100.0" prefWidth="200.0" spacing="18.0">
+                                    <HBox spacing="18.0">
                                        <children>
                                           <CheckBox fx:id="annotationCheckBox" mnemonicParsing="false" selected="false" text="生成JPA注解" />
                                           <CheckBox fx:id="useActualColumnNamesCheckbox" mnemonicParsing="false" selected="false" text="使用实际的列名" />
