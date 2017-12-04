@@ -184,7 +184,7 @@ public class MainUIController extends BaseFXController {
             return cell;
         });
         loadLeftDBTree();
-        encodingChoice.setItems(FXCollections.observableArrayList("UTF-8","GBK"));
+        encodingChoice.setItems(FXCollections.observableArrayList("UTF-8"));
         encodingChoice.setValue("UTF-8");
     }
 
