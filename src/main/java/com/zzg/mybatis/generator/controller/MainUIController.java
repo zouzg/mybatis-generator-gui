@@ -183,6 +183,8 @@ public class MainUIController extends BaseFXController {
             return cell;
         });
         loadLeftDBTree();
+        encodingChoice.setItems(FXCollections.observableArrayList("UTF-8","GBK"));
+        encodingChoice.setValue("UTF-8");
     }
 
     void loadLeftDBTree() {
@@ -315,6 +317,7 @@ public class MainUIController extends BaseFXController {
         daoTargetProject.setText(generatorConfig.getDaoTargetFolder());
         mapperTargetPackage.setText(generatorConfig.getMappingXMLPackage());
         mappingTargetProject.setText(generatorConfig.getMappingXMLTargetFolder());
+        encodingChoice.setValue(generatorConfig.getEncoding());
     }
 
     @FXML
