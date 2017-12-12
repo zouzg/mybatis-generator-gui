@@ -50,7 +50,7 @@ public class GeneratorConfig {
 
 	private String generateKeys;
 
-    private String encoding;
+	private String encoding;
 
 	public boolean isUseExampe() {
 		return useExampe;
