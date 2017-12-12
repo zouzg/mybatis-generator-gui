@@ -77,6 +77,8 @@ public class MainUIController extends BaseFXController {
     @FXML
     private CheckBox useActualColumnNamesCheckbox;
     @FXML
+    private CheckBox useExample;
+    @FXML
     private TreeView<String> leftDBTree;
     // Current selected databaseConfig
     private DatabaseConfig selectedDatabaseConfig;
@@ -307,6 +309,7 @@ public class MainUIController extends BaseFXController {
         generatorConfig.setAnnotation(annotationCheckBox.isSelected());
         generatorConfig.setUseActualColumnNames(useActualColumnNamesCheckbox.isSelected());
         generatorConfig.setEncoding(encodingChoice.getValue());
+        generatorConfig.setUseExampe(useExample.isSelected());
         return generatorConfig;
     }
 

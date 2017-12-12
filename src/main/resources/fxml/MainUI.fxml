@@ -192,6 +192,7 @@
                                        <children>
                                           <CheckBox fx:id="annotationCheckBox" mnemonicParsing="false" selected="false" text="生成JPA注解" />
                                           <CheckBox fx:id="useActualColumnNamesCheckbox" mnemonicParsing="false" selected="false" text="使用实际的列名" />
+                                           <CheckBox fx:id="useExample" mnemonicParsing="false" selected="false" text="使用Example" />
                                        </children>
                                     </HBox>
                                  </children>

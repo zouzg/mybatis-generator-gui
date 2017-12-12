@@ -46,9 +46,19 @@ public class GeneratorConfig {
 
 	private boolean useActualColumnNames;
 
+	private boolean useExampe;
+
 	private String generateKeys;
 
     private String encoding;
+
+	public boolean isUseExampe() {
+		return useExampe;
+	}
+
+	public void setUseExampe(boolean useExampe) {
+		this.useExampe = useExampe;
+	}
 
 	public String getName() {
 		return name;
