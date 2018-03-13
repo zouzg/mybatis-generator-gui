@@ -51,7 +51,7 @@ Eclipse or IntelliJ IDEA中启动, 找到```com.zzg.mybatis.generator.MainUI```�
     * 如果有任何的错误截图会更好
     
 ### QQ群
-鉴于有的同学可能有一些特殊情况不能使用，我建了一个QQ群供大家交流。QQ群号：613911142
+鉴于有的同学可能有一些特殊情况不能使用，我建了一个QQ群供大家交流。QQ群号：613911142（已满），608454894
 
 - - -
 Licensed under the Apache 2.0 License
