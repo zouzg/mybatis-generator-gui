@@ -70,7 +70,11 @@ public class MybatisGeneratorBridge {
             tableConfig.setSelectByExampleStatementEnabled(false);
         }
 
-        tableConfig.setSchema(selectedDatabaseConfig.getSchema());
+	    if (DbType.MySQL.name().equals(selectedDatabaseConfig.getDbType())) {
+		    tableConfig.setSchema(selectedDatabaseConfig.getSchema());
+	    } else {
+            tableConfig.setCatalog(selectedDatabaseConfig.getSchema());
+	    }
 
         // 针对 postgresql 单独配置
         if (DbType.valueOf(selectedDatabaseConfig.getDbType()).getDriverClass() == "org.postgresql.Driver") {
@@ -100,6 +104,10 @@ public class MybatisGeneratorBridge {
 			tableConfig.addProperty("useActualColumnNames", "true");
         }
         JDBCConnectionConfiguration jdbcConfig = new JDBCConnectionConfiguration();
+        // http://www.mybatis.org/generator/usage/mysql.html
+        if (DbType.MySQL.name().equals(selectedDatabaseConfig.getDbType())) {
+	        jdbcConfig.addProperty("nullCatalogMeansCurrent", "true");
+        }
         jdbcConfig.setDriverClass(DbType.valueOf(selectedDatabaseConfig.getDbType()).getDriverClass());
         jdbcConfig.setConnectionURL(DbUtil.getConnectionUrlWithSchema(selectedDatabaseConfig));
         jdbcConfig.setUserId(selectedDatabaseConfig.getUsername());
