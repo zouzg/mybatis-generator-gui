@@ -5,9 +5,6 @@ mybatis-generator-gui是基于[mybatis generator](http://www.mybatis.org/generat
 
 ![MainUI](https://cloud.githubusercontent.com/assets/3505708/22870467/834ed1c2-f1e2-11e6-9ae5-650b88722a7c.png)
 
-### 注意事项
-* 0.8.3版本请删除版本之前版本config目录下的sqlite3.db文件，重新`mvn install`安装
-
 ### 核心特性
 * 按照界面步骤轻松生成代码，省去XML繁琐的学习与配置过程
 * 保存数据库连接与Generator配置，每次代码生成轻松搞定
@@ -16,7 +13,7 @@ mybatis-generator-gui是基于[mybatis generator](http://www.mybatis.org/generat
 * 目前已经支持Mysql、Oracle、PostgreSQL与SQL Server，暂不对其他非主流数据库提供支持。
 
 ### 要求
-本工具由于使用了Java 8的众多特性，所以要求JDK <strong>1.8.0.60</strong>以上版本，对于JDK版本还没有升级的童鞋表示歉意。
+本工具由于使用了Java 8的众多特性，所以要求JDK <strong>1.8.0.60</strong>以上版本，另外<strong>JDK 1.9</strong>暂时还不支持。
 
 ### 下载
 你可以从本链接下载本工具: https://github.com/astarring/mybatis-generator-gui/releases
