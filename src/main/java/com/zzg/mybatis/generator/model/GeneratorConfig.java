@@ -48,6 +48,16 @@ public class GeneratorConfig {
 
 	private boolean useExampe;
 
+    public boolean isUseSchemaPrefix() {
+        return useSchemaPrefix;
+    }
+
+    public void setUseSchemaPrefix(boolean useSchemaPrefix) {
+        this.useSchemaPrefix = useSchemaPrefix;
+    }
+
+    private boolean useSchemaPrefix;
+
 	private String generateKeys;
 
 	private String encoding;
