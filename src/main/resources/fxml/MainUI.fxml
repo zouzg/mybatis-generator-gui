@@ -183,15 +183,16 @@
                                           <CheckBox fx:id="commentCheckBox" mnemonicParsing="false" selected="true" text="生成实体域注释(来自表注释)" />
                                        </children>
                                     </HBox>
-                                    <HBox>
-                                       <children>
-                                          <CheckBox fx:id="needToStringHashcodeEquals" mnemonicParsing="false" selected="true" text="生成toString/hashCode/equals方法" />
-                                       </children>
-                                    </HBox>
                                     <HBox spacing="18.0">
                                        <children>
-                                          <CheckBox fx:id="annotationCheckBox" mnemonicParsing="false" selected="false" text="生成JPA注解" />
-                                          <CheckBox fx:id="useActualColumnNamesCheckbox" mnemonicParsing="false" selected="false" text="使用实际的列名" />
+                                          <CheckBox fx:id="needToStringHashcodeEquals" mnemonicParsing="false" selected="true" text="生成toString/hashCode/equals方法" />
+                                          <CheckBox fx:id="useSchemaPrefix" mnemonicParsing="false" selected="false" text="使用Schema前缀" />
+                                       </children>
+                                    </HBox>
+                                     <HBox spacing="18.0">
+                                        <children>
+                                           <CheckBox fx:id="annotationCheckBox" mnemonicParsing="false" selected="false" text="生成JPA注解" />
+                                           <CheckBox fx:id="useActualColumnNamesCheckbox" mnemonicParsing="false" selected="false" text="使用实际的列名" />
                                            <CheckBox fx:id="useExample" mnemonicParsing="false" selected="true" text="使用Example" />
                                        </children>
                                     </HBox>

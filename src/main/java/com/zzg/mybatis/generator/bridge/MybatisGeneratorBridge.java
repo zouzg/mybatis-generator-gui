@@ -69,6 +69,9 @@ public class MybatisGeneratorBridge {
             tableConfig.setDeleteByExampleStatementEnabled(false);
             tableConfig.setSelectByExampleStatementEnabled(false);
         }
+        if(generatorConfig.isUseSchemaPrefix()){
+            tableConfig.setCatalog(selectedDatabaseConfig.getSchema());
+        }
 
 	    if (DbType.MySQL.name().equals(selectedDatabaseConfig.getDbType())) {
 		    tableConfig.setSchema(selectedDatabaseConfig.getSchema());
@@ -104,10 +107,6 @@ public class MybatisGeneratorBridge {
 			tableConfig.addProperty("useActualColumnNames", "true");
         }
         JDBCConnectionConfiguration jdbcConfig = new JDBCConnectionConfiguration();
-        // http://www.mybatis.org/generator/usage/mysql.html
-        if (DbType.MySQL.name().equals(selectedDatabaseConfig.getDbType())) {
-	        jdbcConfig.addProperty("nullCatalogMeansCurrent", "true");
-        }
         jdbcConfig.setDriverClass(DbType.valueOf(selectedDatabaseConfig.getDbType()).getDriverClass());
         jdbcConfig.setConnectionURL(DbUtil.getConnectionUrlWithSchema(selectedDatabaseConfig));
         jdbcConfig.setUserId(selectedDatabaseConfig.getUsername());
