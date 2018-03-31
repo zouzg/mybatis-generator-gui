@@ -52,8 +52,7 @@ Eclipse or IntelliJ IDEA中启动, 找到```com.zzg.mybatis.generator.MainUI```�
 
 ### 赞助
 本工具纯属个人业余时间开发与维护，如果你觉得软件对你有用，欢迎赞助，金额随意 :)
-![image](https://user-images.githubusercontent.com/3505708/38161967-32a5c466-350b-11e8-8f32-a74da1b0e191.png)
-![image](https://user-images.githubusercontent.com/3505708/38161975-4d587358-350b-11e8-86da-5e6c719cbe72.png)
+<img src="https://user-images.githubusercontent.com/3505708/38161967-32a5c466-350b-11e8-8f32-a74da1b0e191.png" width="200"><img src="https://user-images.githubusercontent.com/3505708/38161975-4d587358-350b-11e8-86da-5e6c719cbe72.png" width="200">
 
 - - -
 Licensed under the Apache 2.0 License
