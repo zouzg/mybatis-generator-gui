@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.collections.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
@@ -7,6 +8,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
+<?import javafx.collections.FXCollections?>
 <?import java.lang.*?>
 
 <BorderPane prefHeight="613.0" prefWidth="918.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zzg.mybatis.generator.controller.MainUIController">
@@ -53,8 +55,7 @@
                                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="170.0" />
                                       <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="688.0" minWidth="74.0" prefWidth="76.0" />
                                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="166.0" />
-                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="129.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="95.0" />
+                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="129.0" />
                                   </columnConstraints>
                                   <rowConstraints>
                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -155,7 +156,7 @@
                                  <GridPane.margin>
                                     <Insets left="5.0" />
                                  </GridPane.margin></TextField>
-                                      <Label text="映射XML文件包名" GridPane.rowIndex="6" />
+                                      <Label text="Mapper XML文件包名" GridPane.rowIndex="6" />
                                         <TextField fx:id="mapperTargetPackage" prefHeight="27.0" prefWidth="248.0" promptText="com.example" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                             <HBox.margin>
                                                 <Insets right="5.0" />
@@ -174,7 +175,13 @@
                                     <HBox alignment="CENTER_LEFT">
                                        <children>
                                            <Label text="生成文件的编码" />
-                                           <ChoiceBox fx:id="encodingChoice" prefHeight="23.0" prefWidth="71.0" />
+                                           <ChoiceBox fx:id="encodingChoice" prefHeight="23.0" prefWidth="71.0">
+                                               <items>
+                                                   <FXCollections fx:factory="observableArrayList">
+                                                       <String fx:value="UTF-8" />
+                                                   </FXCollections>
+                                               </items>
+                                           </ChoiceBox>
                                        </children>
                                     </HBox>
                                     <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8">
@@ -192,6 +199,7 @@
                                        <children>
                                           <CheckBox fx:id="annotationCheckBox" mnemonicParsing="false" selected="false" text="生成JPA注解" />
                                           <CheckBox fx:id="useActualColumnNamesCheckbox" mnemonicParsing="false" selected="false" text="使用实际的列名" />
+				    	  <CheckBox fx:id="useTableNameAliasCheckbox" mnemonicParsing="false" selected="false" text="启用as别名查询" />
                                            <CheckBox fx:id="useExample" mnemonicParsing="false" selected="true" text="使用Example" />
                                        </children>
                                     </HBox>
@@ -214,15 +222,10 @@
                                        </styleClass></Button>
                                  </children>
                               </HBox>
-                              <Label text="自定义接口名称(选填)" GridPane.columnIndex="4" GridPane.rowIndex="5">
-                                 <padding>
-                                    <Insets left="5.0" />
-                                 </padding>
-                              </Label>
-                              <TextField fx:id="mapperName" prefHeight="27.0" prefWidth="138.0" promptText="PersonDAO" GridPane.columnIndex="5" GridPane.rowIndex="5">
+                              <CheckBox fx:id="overrideXML" mnemonicParsing="false" selected="true" text="覆盖原XML" GridPane.columnIndex="4" GridPane.rowIndex="6">
                                  <GridPane.margin>
-                                    <Insets left="5.0" />
-                                 </GridPane.margin></TextField>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin></CheckBox>
                                   </children>
                               </GridPane>
                      </children>

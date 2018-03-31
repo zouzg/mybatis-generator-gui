@@ -39,6 +39,8 @@ public class GeneratorConfig {
 	private boolean offsetLimit;
 
 	private boolean comment;
+	
+	private boolean overrideXML;
 
 	private boolean needToStringHashcodeEquals;
 
@@ -51,6 +53,8 @@ public class GeneratorConfig {
 	private String generateKeys;
 
 	private String encoding;
+	
+	private boolean useTableNameAlias;
 
 	public boolean isUseExampe() {
 		return useExampe;
@@ -188,14 +192,6 @@ public class GeneratorConfig {
 		this.useActualColumnNames = useActualColumnNames;
 	}
 
-	public String getMapperName() {
-		return mapperName;
-	}
-
-	public void setMapperName(String mapperName) {
-		this.mapperName = mapperName;
-	}
-
 	public String getGenerateKeys() {
 		return generateKeys;
 	}
@@ -211,4 +207,24 @@ public class GeneratorConfig {
     public void setEncoding(String encoding) {
         this.encoding = encoding;
     }
+	
+	public boolean getUseTableNameAlias() {
+		return useTableNameAlias;
+	}
+
+	public void setUseTableNameAlias(boolean useTableNameAlias) {
+		this.useTableNameAlias = useTableNameAlias;
+	}
+
+	public boolean isUseTableNameAlias() {
+		return useTableNameAlias;
+	}
+	
+	public boolean isOverrideXML() {
+		return overrideXML;
+	}
+
+	public void setOverrideXML(boolean overrideXML) {
+		this.overrideXML = overrideXML;
+	}
 }
