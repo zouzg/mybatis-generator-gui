@@ -193,7 +193,7 @@
                                     <HBox spacing="18.0">
                                        <children>
                                           <CheckBox fx:id="needToStringHashcodeEquals" mnemonicParsing="false" selected="true" text="生成toString/hashCode/equals方法" />
-                                           <CheckBox fx:id="useSchemaPrefix" mnemonicParsing="false" selected="false" text="使用Schema前缀" />
+                                           <CheckBox fx:id="useSchemaPrefix" mnemonicParsing="false" selected="true" text="使用Schema前缀" />
                                        </children>
                                     </HBox>
                                     <HBox spacing="18.0">

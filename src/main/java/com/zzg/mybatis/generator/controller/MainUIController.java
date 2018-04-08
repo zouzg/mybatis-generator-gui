@@ -191,6 +191,8 @@ public class MainUIController extends BaseFXController {
         });
         loadLeftDBTree();
 		setTooltip();
+		//默认选中第一个，否则如果忘记选择，没有对应错误提示
+        encodingChoice.getSelectionModel().selectFirst();
 	}
 	
 	private void setTooltip() {
