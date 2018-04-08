@@ -81,6 +81,8 @@ public class MainUIController extends BaseFXController {
     @FXML
     private CheckBox useExample;
     @FXML
+    private CheckBox useSchemaPrefix;
+    @FXML
     private TreeView<String> leftDBTree;
     // Current selected databaseConfig
     private DatabaseConfig selectedDatabaseConfig;
@@ -321,6 +323,7 @@ public class MainUIController extends BaseFXController {
         generatorConfig.setUseActualColumnNames(useActualColumnNamesCheckbox.isSelected());
         generatorConfig.setEncoding(encodingChoice.getValue());
         generatorConfig.setUseExampe(useExample.isSelected());
+        generatorConfig.setUseSchemaPrefix(useSchemaPrefix.isSelected());
         return generatorConfig;
     }
 

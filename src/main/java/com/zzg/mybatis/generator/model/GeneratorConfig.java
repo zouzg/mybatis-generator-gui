@@ -56,6 +56,16 @@ public class GeneratorConfig {
 	
 	private boolean useTableNameAlias;
 
+	private boolean useSchemaPrefix;
+
+	public boolean isUseSchemaPrefix() {
+		return useSchemaPrefix;
+	}
+
+	public void setUseSchemaPrefix(boolean useSchemaPrefix) {
+		this.useSchemaPrefix = useSchemaPrefix;
+	}
+
 	public boolean isUseExampe() {
 		return useExampe;
 	}
