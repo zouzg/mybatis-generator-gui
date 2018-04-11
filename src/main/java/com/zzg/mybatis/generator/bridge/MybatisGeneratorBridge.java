@@ -76,7 +76,16 @@ public class MybatisGeneratorBridge {
 	    } else {
             tableConfig.setCatalog(selectedDatabaseConfig.getSchema());
 	    }
-
+        if (generatorConfig.isUseSchemaPrefix()) {
+            if (DbType.MySQL.name().equals(selectedDatabaseConfig.getDbType())) {
+                tableConfig.setSchema(selectedDatabaseConfig.getSchema());
+            } else if (DbType.Oracle.name().equals(selectedDatabaseConfig.getDbType())) {
+                //Oracle的schema为用户名，如果连接用户拥有dba等高级权限，若不设schema，会导致把其他用户下同名的表也生成一遍导致mapper中代码重复
+                tableConfig.setSchema(selectedDatabaseConfig.getUsername());
+            } else {
+                tableConfig.setCatalog(selectedDatabaseConfig.getSchema());
+            }
+        }
         // 针对 postgresql 单独配置
         if (DbType.valueOf(selectedDatabaseConfig.getDbType()).getDriverClass() == "org.postgresql.Driver") {
             tableConfig.setDelimitIdentifiers(true);

@@ -81,6 +81,8 @@ public class MainUIController extends BaseFXController {
     @FXML
     private CheckBox useExample;
     @FXML
+    private CheckBox useSchemaPrefix;
+    @FXML
     private TreeView<String> leftDBTree;
     // Current selected databaseConfig
     private DatabaseConfig selectedDatabaseConfig;
@@ -189,6 +191,8 @@ public class MainUIController extends BaseFXController {
         });
         loadLeftDBTree();
 		setTooltip();
+		//默认选中第一个，否则如果忘记选择，没有对应错误提示
+        encodingChoice.getSelectionModel().selectFirst();
 	}
 	
 	private void setTooltip() {
@@ -321,6 +325,7 @@ public class MainUIController extends BaseFXController {
         generatorConfig.setUseActualColumnNames(useActualColumnNamesCheckbox.isSelected());
         generatorConfig.setEncoding(encodingChoice.getValue());
         generatorConfig.setUseExampe(useExample.isSelected());
+        generatorConfig.setUseSchemaPrefix(useSchemaPrefix.isSelected());
         return generatorConfig;
     }
 
