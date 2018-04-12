@@ -100,7 +100,7 @@
                               <Label text="主键(选填)" GridPane.rowIndex="2" />
                               <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                  <children>
-                                            <TextField fx:id="generateKeysField" prefHeight="27.0" prefWidth="154.0" promptText="primary key, such as id" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                            <TextField fx:id="generateKeysField" prefHeight="27.0" prefWidth="154.0" promptText="主键字段名，如果主键是自动生成的，insert的时候会返回插入的主键值" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                 <GridPane.margin>
                                                     <Insets left="5.0" right="5.0" />
                                                 </GridPane.margin>

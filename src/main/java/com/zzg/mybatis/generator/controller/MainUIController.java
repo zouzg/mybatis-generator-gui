@@ -202,6 +202,7 @@ public class MainUIController extends BaseFXController {
 		commentCheckBox.setTooltip(new Tooltip("使用数据库的列注释作为实体类字段名的Java注释 "));
 		useActualColumnNamesCheckbox.setTooltip(new Tooltip("是否使用数据库实际的列名作为实体类域的名称"));
 		useTableNameAliasCheckbox.setTooltip(new Tooltip("在Mapper XML文件中表名使用别名，并且列全部使用as查询"));
+		overrideXML.setTooltip(new Tooltip("重新生成时把原XML文件覆盖，否则是追加"));
 	}
 
     void loadLeftDBTree() {
