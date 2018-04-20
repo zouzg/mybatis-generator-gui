@@ -54,7 +54,7 @@ public class MybatisGeneratorBridge {
 
     public void generate() throws Exception {
         Configuration configuration = new Configuration();
-        Context context = new Context(ModelType.CONDITIONAL);
+        Context context = new Context(ModelType.FLAT);
         configuration.addContext(context);
         context.addProperty("javaFileEncoding", "UTF-8");
 	    String connectorLibPath = ConfigHelper.findConnectorLibPath(selectedDatabaseConfig.getDbType());
