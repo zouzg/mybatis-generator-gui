@@ -83,6 +83,8 @@ public class MainUIController extends BaseFXController {
     @FXML
     private CheckBox useSchemaPrefix;
     @FXML
+    private CheckBox jsr310Support;
+    @FXML
     private TreeView<String> leftDBTree;
     // Current selected databaseConfig
     private DatabaseConfig selectedDatabaseConfig;
@@ -327,6 +329,7 @@ public class MainUIController extends BaseFXController {
         generatorConfig.setEncoding(encodingChoice.getValue());
         generatorConfig.setUseExampe(useExample.isSelected());
         generatorConfig.setUseSchemaPrefix(useSchemaPrefix.isSelected());
+        generatorConfig.setJsr310Support(jsr310Support.isSelected());
         return generatorConfig;
     }
 

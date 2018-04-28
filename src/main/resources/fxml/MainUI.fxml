@@ -204,6 +204,11 @@
                                           <CheckBox fx:id="useExample" mnemonicParsing="false" selected="true" text="使用Example" />
                                        </children>
                                     </HBox>
+                                     <HBox prefHeight="100.0" prefWidth="200.0">
+                                         <children>
+                                             <CheckBox fx:id="jsr310Support" mnemonicParsing="false" text="JSR310: Date and Time API" />
+                                         </children>
+                                     </HBox>
                                  </children>
                                  <padding>
                                     <Insets left="5.0" />
