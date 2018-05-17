@@ -75,7 +75,9 @@ public class DbUtil {
 		    } 
 		    else {
 			    // rs = md.getTables(null, config.getUsername().toUpperCase(), null, null);
-				rs = md.getTables(null, "%", "%", new String[] {"TABLE", "VIEW"});			//针对 postgresql 的左侧数据表显示
+
+
+				rs = md.getTables(config.getSchema(), null, "%", new String[] {"TABLE", "VIEW"});			//针对 postgresql 的左侧数据表显示
 		    }
 		    while (rs.next()) {
 			    tables.add(rs.getString(3));

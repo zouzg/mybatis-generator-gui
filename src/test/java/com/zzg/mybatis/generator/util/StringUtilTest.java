@@ -22,8 +22,8 @@ public class StringUtilTest {
 
     @Test
     public void testDbStringToCamelStyle_case3() {
-        String result = MyStringUtils.dbStringToCamelStyle("person_DB_name");
-        Assert.assertEquals("PersonDBName", result);
+        String result = MyStringUtils.dbStringToCamelStyle("person_db_name");
+        Assert.assertEquals("PersonDbName", result);
     }
 
     @Test

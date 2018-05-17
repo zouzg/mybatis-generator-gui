@@ -55,7 +55,7 @@ public class MainUIController extends BaseFXController {
     @FXML
     private TextField domainObjectNameField;
     @FXML
-    private TextField generateKeysField;	//添加输入框
+    private TextField generateKeysField;	//主键ID
     @FXML
     private TextField modelTargetProject;
     @FXML
@@ -63,19 +63,25 @@ public class MainUIController extends BaseFXController {
     @FXML
     private TextField daoTargetProject;
     @FXML
-    private TextField mapperName;
-    @FXML
     private TextField projectFolderField;
     @FXML
     private CheckBox offsetLimitCheckBox;
     @FXML
     private CheckBox commentCheckBox;
     @FXML
+	private CheckBox overrideXML;
+    @FXML
     private CheckBox needToStringHashcodeEquals;
+    @FXML
+    private CheckBox useTableNameAliasCheckbox;
     @FXML
     private CheckBox annotationCheckBox;
     @FXML
     private CheckBox useActualColumnNamesCheckbox;
+    @FXML
+    private CheckBox useExample;
+    @FXML
+    private CheckBox useSchemaPrefix;
     @FXML
     private TreeView<String> leftDBTree;
     // Current selected databaseConfig
@@ -184,9 +190,20 @@ public class MainUIController extends BaseFXController {
             return cell;
         });
         loadLeftDBTree();
-        encodingChoice.setItems(FXCollections.observableArrayList("UTF-8"));
-        encodingChoice.setValue("UTF-8");
-    }
+		setTooltip();
+		//默认选中第一个，否则如果忘记选择，没有对应错误提示
+        encodingChoice.getSelectionModel().selectFirst();
+	}
+	
+	private void setTooltip() {
+		encodingChoice.setTooltip(new Tooltip("生成文件的编码，必选"));
+		generateKeysField.setTooltip(new Tooltip("insert时可以返回主键ID"));
+		offsetLimitCheckBox.setTooltip(new Tooltip("是否要生成分页查询代码"));
+		commentCheckBox.setTooltip(new Tooltip("使用数据库的列注释作为实体类字段名的Java注释 "));
+		useActualColumnNamesCheckbox.setTooltip(new Tooltip("是否使用数据库实际的列名作为实体类域的名称"));
+		useTableNameAliasCheckbox.setTooltip(new Tooltip("在Mapper XML文件中表名使用别名，并且列全部使用as查询"));
+		overrideXML.setTooltip(new Tooltip("重新生成时把原XML文件覆盖，否则是追加"));
+	}
 
     void loadLeftDBTree() {
         TreeItem rootTreeItem = leftDBTree.getRoot();
@@ -296,17 +313,20 @@ public class MainUIController extends BaseFXController {
         generatorConfig.setModelPackageTargetFolder(modelTargetProject.getText());
         generatorConfig.setDaoPackage(daoTargetPackage.getText());
         generatorConfig.setDaoTargetFolder(daoTargetProject.getText());
-        generatorConfig.setMapperName(mapperName.getText());
         generatorConfig.setMappingXMLPackage(mapperTargetPackage.getText());
         generatorConfig.setMappingXMLTargetFolder(mappingTargetProject.getText());
         generatorConfig.setTableName(tableNameField.getText());
         generatorConfig.setDomainObjectName(domainObjectNameField.getText());
         generatorConfig.setOffsetLimit(offsetLimitCheckBox.isSelected());
         generatorConfig.setComment(commentCheckBox.isSelected());
+        generatorConfig.setOverrideXML(overrideXML.isSelected());
         generatorConfig.setNeedToStringHashcodeEquals(needToStringHashcodeEquals.isSelected());
+        generatorConfig.setUseTableNameAlias(useTableNameAliasCheckbox.isSelected());
         generatorConfig.setAnnotation(annotationCheckBox.isSelected());
         generatorConfig.setUseActualColumnNames(useActualColumnNamesCheckbox.isSelected());
         generatorConfig.setEncoding(encodingChoice.getValue());
+        generatorConfig.setUseExampe(useExample.isSelected());
+        generatorConfig.setUseSchemaPrefix(useSchemaPrefix.isSelected());
         return generatorConfig;
     }
 

@@ -15,6 +15,7 @@ import org.mybatis.generator.internal.DefaultShellCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -63,7 +64,28 @@ public class MybatisGeneratorBridge {
         TableConfiguration tableConfig = new TableConfiguration(context);
         tableConfig.setTableName(generatorConfig.getTableName());
         tableConfig.setDomainObjectName(generatorConfig.getDomainObjectName());
+        if(!generatorConfig.isUseExampe()) {
+            tableConfig.setUpdateByExampleStatementEnabled(false);
+            tableConfig.setCountByExampleStatementEnabled(false);
+            tableConfig.setDeleteByExampleStatementEnabled(false);
+            tableConfig.setSelectByExampleStatementEnabled(false);
+        }
 
+	    if (DbType.MySQL.name().equals(selectedDatabaseConfig.getDbType())) {
+		    tableConfig.setSchema(selectedDatabaseConfig.getSchema());
+	    } else {
+            tableConfig.setCatalog(selectedDatabaseConfig.getSchema());
+	    }
+        if (generatorConfig.isUseSchemaPrefix()) {
+            if (DbType.MySQL.name().equals(selectedDatabaseConfig.getDbType())) {
+                tableConfig.setSchema(selectedDatabaseConfig.getSchema());
+            } else if (DbType.Oracle.name().equals(selectedDatabaseConfig.getDbType())) {
+                //Oracle的schema为用户名，如果连接用户拥有dba等高级权限，若不设schema，会导致把其他用户下同名的表也生成一遍导致mapper中代码重复
+                tableConfig.setSchema(selectedDatabaseConfig.getUsername());
+            } else {
+                tableConfig.setCatalog(selectedDatabaseConfig.getSchema());
+            }
+        }
         // 针对 postgresql 单独配置
         if (DbType.valueOf(selectedDatabaseConfig.getDbType()).getDriverClass() == "org.postgresql.Driver") {
             tableConfig.setDelimitIdentifiers(true);
@@ -74,9 +96,6 @@ public class MybatisGeneratorBridge {
 			tableConfig.setGeneratedKey(new GeneratedKey(generatorConfig.getGenerateKeys(), selectedDatabaseConfig.getDbType(), true, null));
 		}
 
-        if (generatorConfig.getMapperName() != null) {
-            tableConfig.setMapperName(generatorConfig.getMapperName());
-        }
         // add ignore columns
         if (ignoredColumns != null) {
             ignoredColumns.stream().forEach(ignoredColumn -> {
@@ -91,7 +110,16 @@ public class MybatisGeneratorBridge {
         if (generatorConfig.isUseActualColumnNames()) {
 			tableConfig.addProperty("useActualColumnNames", "true");
         }
+		
+		if(generatorConfig.isUseTableNameAlias()){
+            tableConfig.setAlias(generatorConfig.getTableName());
+        }
+		
         JDBCConnectionConfiguration jdbcConfig = new JDBCConnectionConfiguration();
+        // http://www.mybatis.org/generator/usage/mysql.html
+        if (DbType.MySQL.name().equals(selectedDatabaseConfig.getDbType())) {
+	        jdbcConfig.addProperty("nullCatalogMeansCurrent", "true");
+        }
         jdbcConfig.setDriverClass(DbType.valueOf(selectedDatabaseConfig.getDbType()).getDriverClass());
         jdbcConfig.setConnectionURL(DbUtil.getConnectionUrlWithSchema(selectedDatabaseConfig));
         jdbcConfig.setUserId(selectedDatabaseConfig.getUsername());
@@ -109,6 +137,7 @@ public class MybatisGeneratorBridge {
         daoConfig.setConfigurationType("XMLMAPPER");
         daoConfig.setTargetPackage(generatorConfig.getDaoPackage());
         daoConfig.setTargetProject(generatorConfig.getProjectFolder() + "/" + generatorConfig.getDaoTargetFolder());
+
 
         context.setId("myid");
         context.addTableConfiguration(tableConfig);
@@ -163,8 +192,29 @@ public class MybatisGeneratorBridge {
         Set<String> contexts = new HashSet<>();
         ShellCallback shellCallback = new DefaultShellCallback(true); // override=true
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator(configuration, shellCallback, warnings);
+        // if overrideXML selected, delete oldXML ang generate new one
+		if (generatorConfig.isOverrideXML()) {
+			String mappingXMLFilePath = getMappingXMLFilePath(generatorConfig);
+			File mappingXMLFile = new File(mappingXMLFilePath);
+			if (mappingXMLFile.exists()) {
+				mappingXMLFile.delete();
+			}
+		}
+        
         myBatisGenerator.generate(progressCallback, contexts, fullyqualifiedTables);
     }
+    
+    private String getMappingXMLFilePath(GeneratorConfig generatorConfig) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(generatorConfig.getProjectFolder()).append("/");
+		sb.append(generatorConfig.getMappingXMLTargetFolder()).append("/");
+		String mappingXMLPackage = generatorConfig.getMappingXMLPackage();
+		if (StringUtils.isNotEmpty(mappingXMLPackage)) {
+			sb.append(mappingXMLPackage.replace(".", "/")).append("/");
+		}
+		sb.append(generatorConfig.getDomainObjectName()).append("Mapper.xml");
+		return sb.toString();
+	}
 
 	public void setProgressCallback(ProgressCallback progressCallback) {
         this.progressCallback = progressCallback;
