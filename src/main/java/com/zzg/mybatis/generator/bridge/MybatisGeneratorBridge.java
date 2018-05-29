@@ -185,6 +185,12 @@ public class MybatisGeneratorBridge {
                 context.addPluginConfiguration(pluginConfiguration);
             }
         }
+        //for JSR310
+        if (generatorConfig.isJsr310Support()) {
+            JavaTypeResolverConfiguration javaTypeResolverConfiguration = new JavaTypeResolverConfiguration();
+            javaTypeResolverConfiguration.setConfigurationType("com.zzg.mybatis.generator.plugins.JavaTypeResolverJsr310Impl");
+            context.setJavaTypeResolverConfiguration(javaTypeResolverConfiguration);
+        }
         context.setTargetRuntime("MyBatis3");
 
         List<String> warnings = new ArrayList<>();

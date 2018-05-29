@@ -58,6 +58,16 @@ public class GeneratorConfig {
 
 	private boolean useSchemaPrefix;
 
+	private boolean jsr310Support;
+
+	public boolean isJsr310Support() {
+		return jsr310Support;
+	}
+
+	public void setJsr310Support(boolean jsr310Support) {
+		this.jsr310Support = jsr310Support;
+	}
+
 	public boolean isUseSchemaPrefix() {
 		return useSchemaPrefix;
 	}
