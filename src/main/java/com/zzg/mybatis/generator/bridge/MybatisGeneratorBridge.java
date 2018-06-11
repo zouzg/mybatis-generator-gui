@@ -57,6 +57,11 @@ public class MybatisGeneratorBridge {
         Configuration configuration = new Configuration();
         Context context = new Context(ModelType.CONDITIONAL);
         configuration.addContext(context);
+	    
+	context.addProperty("autoDelimitKeywords", "true");
+        context.addProperty("beginningDelimiter", "`");
+        context.addProperty("endingDelimiter", "`");
+	    
         context.addProperty("javaFileEncoding", "UTF-8");
 	    String connectorLibPath = ConfigHelper.findConnectorLibPath(selectedDatabaseConfig.getDbType());
 	    _LOG.info("connectorLibPath: {}", connectorLibPath);
