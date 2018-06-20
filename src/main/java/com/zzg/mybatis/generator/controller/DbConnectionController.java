@@ -1,5 +1,6 @@
 package com.zzg.mybatis.generator.controller;
 
+import com.zzg.mybatis.generator.exception.DbDriverLoadingException;
 import com.zzg.mybatis.generator.model.DatabaseConfig;
 import com.zzg.mybatis.generator.util.ConfigHelper;
 import com.zzg.mybatis.generator.util.DbUtil;
@@ -68,6 +69,9 @@ public class DbConnectionController extends BaseFXController {
 		try {
 			DbUtil.getConnection(config);
 			AlertUtil.showInfoAlert("连接成功");
+		} catch (DbDriverLoadingException e){
+			_LOG.error("{}", e);
+			AlertUtil.showWarnAlert("连接失败, "+e.getMessage());
 		} catch (Exception e) {
 			_LOG.error(e.getMessage(), e);
 			AlertUtil.showWarnAlert("连接失败");
