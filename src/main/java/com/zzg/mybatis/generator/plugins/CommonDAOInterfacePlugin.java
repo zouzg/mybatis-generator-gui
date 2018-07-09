@@ -25,9 +25,6 @@ public class CommonDAOInterfacePlugin extends PluginAdapter {
 
     private List<Method> methods = new ArrayList<>();
 
-    // 扩展
-    private String expandDaoSuperClass;
-
     private ShellCallback shellCallback = null;
 
     public CommonDAOInterfacePlugin() {
@@ -36,14 +33,13 @@ public class CommonDAOInterfacePlugin extends PluginAdapter {
 
     @Override
     public List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles(IntrospectedTable introspectedTable) {
-
+        boolean hasPk = introspectedTable.hasPrimaryKeyColumns();
         JavaFormatter javaFormatter = context.getJavaFormatter();
         String daoTargetDir = context.getJavaClientGeneratorConfiguration().getTargetProject();
         String daoTargetPackage = context.getJavaClientGeneratorConfiguration().getTargetPackage();
-        List<GeneratedJavaFile> mapperJavaFiles = new ArrayList<GeneratedJavaFile>();
+        List<GeneratedJavaFile> mapperJavaFiles = new ArrayList<>();
         String javaFileEncoding = context.getProperty("javaFileEncoding");
         Interface mapperInterface = new Interface(daoTargetPackage + DEFAULT_DAO_SUPER_CLASS);
-        GeneratedJavaFile mapperJavafile = null;
 
         if (stringHasValue(daoTargetPackage)) {
             mapperInterface.addImportedType(PARAM_ANNOTATION_TYPE);
@@ -53,8 +49,8 @@ public class CommonDAOInterfacePlugin extends PluginAdapter {
             mapperInterface.setVisibility(JavaVisibility.PUBLIC);
             mapperInterface.addJavaDocLine("/**");
             mapperInterface.addJavaDocLine(" * " + "DAO公共基类，由MybatisGenerator自动生成请勿修改");
-            mapperInterface.addJavaDocLine(" * " + "@param <Model> The Model Class");
-            mapperInterface.addJavaDocLine(" * " + "@param <PK> The Primary Key Class");
+            mapperInterface.addJavaDocLine(" * " + "@param <Model> The Model Class 这里是泛型不是Model类");
+            mapperInterface.addJavaDocLine(" * " + "@param <PK> The Primary Key Class 如果是无主键，则可以用Model来跳过，如果是多主键则是Key类");
             mapperInterface.addJavaDocLine(" * " + "@param <E> The Example Class");
             mapperInterface.addJavaDocLine(" */");
 
@@ -64,11 +60,9 @@ public class CommonDAOInterfacePlugin extends PluginAdapter {
             daoBaseInterfaceJavaType.addTypeArgument(new FullyQualifiedJavaType("E"));
 
             if (!this.methods.isEmpty()) {
-
                 for (Method method : methods) {
                     mapperInterface.addMethod(method);
                 }
-
             }
 
             List<GeneratedJavaFile> generatedJavaFiles = introspectedTable.getGeneratedJavaFiles();
@@ -79,7 +73,7 @@ public class CommonDAOInterfacePlugin extends PluginAdapter {
                 if (modelName.endsWith("DAO")) {
                 }
             }
-            mapperJavafile = new GeneratedJavaFile(mapperInterface, daoTargetDir, javaFileEncoding, javaFormatter);
+            GeneratedJavaFile mapperJavafile = new GeneratedJavaFile(mapperInterface, daoTargetDir, javaFileEncoding, javaFormatter);
             try {
                 File mapperDir = shellCallback.getDirectory(daoTargetDir, daoTargetPackage);
                 File mapperFile = new File(mapperDir, mapperJavafile.getFileName());
@@ -111,7 +105,14 @@ public class CommonDAOInterfacePlugin extends PluginAdapter {
         FullyQualifiedJavaType baseModelJavaType = new FullyQualifiedJavaType(targetPackage + "." + domainObjectName);
         daoSuperType.addTypeArgument(baseModelJavaType);
 
-        FullyQualifiedJavaType primaryKeyTypeJavaType = introspectedTable.getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType();
+        FullyQualifiedJavaType primaryKeyTypeJavaType = null;
+        if (introspectedTable.getPrimaryKeyColumns().size() > 1) {
+            primaryKeyTypeJavaType = new FullyQualifiedJavaType(targetPackage + "." + domainObjectName + "Key");
+        }else if(introspectedTable.hasPrimaryKeyColumns()){
+            primaryKeyTypeJavaType = introspectedTable.getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType();
+        }else {
+            primaryKeyTypeJavaType = baseModelJavaType;
+        }
         daoSuperType.addTypeArgument(primaryKeyTypeJavaType);
 
         String exampleType = introspectedTable.getExampleType();
