@@ -71,6 +71,10 @@ public class DbUtil {
 		    while (rs.next()) {
 			    tables.add(rs.getString(3));
 		    }
+
+		    if (tables.size()>1) {
+		    	Collections.sort(tables);
+			}
 		    return tables;
 	    } finally {
 	    	connection.close();
