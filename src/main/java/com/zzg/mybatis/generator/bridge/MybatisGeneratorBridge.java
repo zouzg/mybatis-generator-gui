@@ -3,7 +3,6 @@ package com.zzg.mybatis.generator.bridge;
 import com.zzg.mybatis.generator.model.DatabaseConfig;
 import com.zzg.mybatis.generator.model.DbType;
 import com.zzg.mybatis.generator.model.GeneratorConfig;
-import com.zzg.mybatis.generator.plugins.CommonDAOInterfacePlugin;
 import com.zzg.mybatis.generator.plugins.DbRemarksCommentGenerator;
 import com.zzg.mybatis.generator.util.ConfigHelper;
 import com.zzg.mybatis.generator.util.DbUtil;
@@ -235,7 +234,8 @@ public class MybatisGeneratorBridge {
             if (DbType.MySQL.name().equals(selectedDatabaseConfig.getDbType())
                     || DbType.PostgreSQL.name().equals(selectedDatabaseConfig.getDbType())) {
                 PluginConfiguration pluginConfiguration = new PluginConfiguration();
-                pluginConfiguration.addProperty("type", "com.zzg.mybatis.generator.plugins.CommonDAOInterfacePlugin");
+				pluginConfiguration.addProperty("useExample", String.valueOf(generatorConfig.isUseExample()));
+				pluginConfiguration.addProperty("type", "com.zzg.mybatis.generator.plugins.CommonDAOInterfacePlugin");
                 pluginConfiguration.setConfigurationType("com.zzg.mybatis.generator.plugins.CommonDAOInterfacePlugin");
                 context.addPluginConfiguration(pluginConfiguration);
             }
