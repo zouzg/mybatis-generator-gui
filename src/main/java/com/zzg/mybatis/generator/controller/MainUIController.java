@@ -365,6 +365,7 @@ public class MainUIController extends BaseFXController {
         mapperTargetPackage.setText(generatorConfig.getMappingXMLPackage());
         mappingTargetProject.setText(generatorConfig.getMappingXMLTargetFolder());
         encodingChoice.setValue(generatorConfig.getEncoding());
+        useExample.setSelected(generatorConfig.isUseExample());
     }
 
     @FXML

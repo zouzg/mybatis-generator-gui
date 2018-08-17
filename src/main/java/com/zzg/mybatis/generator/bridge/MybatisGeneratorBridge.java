@@ -57,12 +57,13 @@ public class MybatisGeneratorBridge {
         Context context = new Context(ModelType.CONDITIONAL);
         configuration.addContext(context);
 	    
-	context.addProperty("autoDelimitKeywords", "true");
+		context.addProperty("autoDelimitKeywords", "true");
         context.addProperty("beginningDelimiter", "`");
         context.addProperty("endingDelimiter", "`");
 	    
         context.addProperty("javaFileEncoding", "UTF-8");
-	    String connectorLibPath = ConfigHelper.findConnectorLibPath(selectedDatabaseConfig.getDbType());
+		String dbType = selectedDatabaseConfig.getDbType();
+		String connectorLibPath = ConfigHelper.findConnectorLibPath(dbType);
 	    _LOG.info("connectorLibPath: {}", connectorLibPath);
 	    configuration.addClasspathEntry(connectorLibPath);
         // Table configuration
@@ -76,15 +77,15 @@ public class MybatisGeneratorBridge {
             tableConfig.setSelectByExampleStatementEnabled(false);
         }
 
-	    if (DbType.MySQL.name().equals(selectedDatabaseConfig.getDbType())) {
-		    tableConfig.setSchema(selectedDatabaseConfig.getSchema());
-	    } else {
+		if (DbType.MySQL.name().equals(dbType) || DbType.MySQL_8.name().equals(dbType)) {
+			tableConfig.setSchema(selectedDatabaseConfig.getSchema());
+        } else {
             tableConfig.setCatalog(selectedDatabaseConfig.getSchema());
 	    }
         if (generatorConfig.isUseSchemaPrefix()) {
-            if (DbType.MySQL.name().equals(selectedDatabaseConfig.getDbType())) {
+            if (DbType.MySQL.name().equals(dbType) || DbType.MySQL_8.name().equals(dbType)) {
                 tableConfig.setSchema(selectedDatabaseConfig.getSchema());
-            } else if (DbType.Oracle.name().equals(selectedDatabaseConfig.getDbType())) {
+            } else if (DbType.Oracle.name().equals(dbType)) {
                 //Oracle的schema为用户名，如果连接用户拥有dba等高级权限，若不设schema，会导致把其他用户下同名的表也生成一遍导致mapper中代码重复
                 tableConfig.setSchema(selectedDatabaseConfig.getUsername());
             } else {
@@ -92,15 +93,15 @@ public class MybatisGeneratorBridge {
             }
         }
         // 针对 postgresql 单独配置
-        if (DbType.valueOf(selectedDatabaseConfig.getDbType()).getDriverClass() == "org.postgresql.Driver") {
+		if (DbType.PostgreSQL.name().equals(dbType)) {
             tableConfig.setDelimitIdentifiers(true);
         }
 
         //添加GeneratedKey主键生成
-		if (StringUtils.isNoneEmpty(generatorConfig.getGenerateKeys())) {
-            String dbType = selectedDatabaseConfig.getDbType();
-            if (DbType.MySQL.name().equals(dbType)) {
-                dbType = "JDBC";
+		if (StringUtils.isNotEmpty(generatorConfig.getGenerateKeys())) {
+            String dbType2 = dbType;
+            if (DbType.MySQL.name().equals(dbType2) || DbType.MySQL_8.name().equals(dbType)) {
+                dbType2 = "JDBC";
                 //dbType为JDBC，且配置中开启useGeneratedKeys时，Mybatis会使用Jdbc3KeyGenerator,
                 //使用该KeyGenerator的好处就是直接在一次INSERT 语句内，通过resultSet获取得到 生成的主键值，
                 //并很好的支持设置了读写分离代理的数据库
@@ -109,7 +110,7 @@ public class MybatisGeneratorBridge {
                 //当使用SelectKey时，Mybatis会使用SelectKeyGenerator，INSERT之后，多发送一次查询语句，获得主键值
                 //在上述读写分离被代理的情况下，会得不到正确的主键
             }
-			tableConfig.setGeneratedKey(new GeneratedKey(generatorConfig.getGenerateKeys(), dbType, true, null));
+			tableConfig.setGeneratedKey(new GeneratedKey(generatorConfig.getGenerateKeys(), dbType2, true, null));
 		}
 
         if (generatorConfig.getMapperName() != null) {
@@ -136,10 +137,10 @@ public class MybatisGeneratorBridge {
 
         JDBCConnectionConfiguration jdbcConfig = new JDBCConnectionConfiguration();
         // http://www.mybatis.org/generator/usage/mysql.html
-        if (DbType.MySQL.name().equals(selectedDatabaseConfig.getDbType())) {
+        if (DbType.MySQL.name().equals(dbType) || DbType.MySQL_8.name().equals(dbType)) {
 	        jdbcConfig.addProperty("nullCatalogMeansCurrent", "true");
         }
-        jdbcConfig.setDriverClass(DbType.valueOf(selectedDatabaseConfig.getDbType()).getDriverClass());
+        jdbcConfig.setDriverClass(DbType.valueOf(dbType).getDriverClass());
         jdbcConfig.setConnectionURL(DbUtil.getConnectionUrlWithSchema(selectedDatabaseConfig));
         jdbcConfig.setUserId(selectedDatabaseConfig.getUsername());
         jdbcConfig.setPassword(selectedDatabaseConfig.getPassword());
@@ -196,8 +197,8 @@ public class MybatisGeneratorBridge {
         }
         // limit/offset插件
         if (generatorConfig.isOffsetLimit()) {
-            if (DbType.MySQL.name().equals(selectedDatabaseConfig.getDbType())
-		            || DbType.PostgreSQL.name().equals(selectedDatabaseConfig.getDbType())) {
+            if (DbType.MySQL.name().equals(dbType)
+		            || DbType.PostgreSQL.name().equals(dbType)) {
                 PluginConfiguration pluginConfiguration = new PluginConfiguration();
                 pluginConfiguration.addProperty("type", "com.zzg.mybatis.generator.plugins.MySQLLimitPlugin");
                 pluginConfiguration.setConfigurationType("com.zzg.mybatis.generator.plugins.MySQLLimitPlugin");
@@ -212,8 +213,8 @@ public class MybatisGeneratorBridge {
         }
         //forUpdate 插件
         if(generatorConfig.isNeedForUpdate()) {
-            if (DbType.MySQL.name().equals(selectedDatabaseConfig.getDbType())
-                    || DbType.PostgreSQL.name().equals(selectedDatabaseConfig.getDbType())) {
+            if (DbType.MySQL.name().equals(dbType)
+                    || DbType.PostgreSQL.name().equals(dbType)) {
                 PluginConfiguration pluginConfiguration = new PluginConfiguration();
                 pluginConfiguration.addProperty("type", "com.zzg.mybatis.generator.plugins.MySQLForUpdatePlugin");
                 pluginConfiguration.setConfigurationType("com.zzg.mybatis.generator.plugins.MySQLForUpdatePlugin");
@@ -222,8 +223,8 @@ public class MybatisGeneratorBridge {
         }
         //repository 插件
         if(generatorConfig.isAnnotationDAO()) {
-            if (DbType.MySQL.name().equals(selectedDatabaseConfig.getDbType())
-                    || DbType.PostgreSQL.name().equals(selectedDatabaseConfig.getDbType())) {
+            if (DbType.MySQL.name().equals(dbType) || DbType.MySQL_8.name().equals(dbType)
+                    || DbType.PostgreSQL.name().equals(dbType)) {
                 PluginConfiguration pluginConfiguration = new PluginConfiguration();
                 pluginConfiguration.addProperty("type", "com.zzg.mybatis.generator.plugins.RepositoryPlugin");
                 pluginConfiguration.setConfigurationType("com.zzg.mybatis.generator.plugins.RepositoryPlugin");
@@ -231,8 +232,8 @@ public class MybatisGeneratorBridge {
             }
         }
         if (generatorConfig.isUseDAOExtendStyle()) {
-            if (DbType.MySQL.name().equals(selectedDatabaseConfig.getDbType())
-                    || DbType.PostgreSQL.name().equals(selectedDatabaseConfig.getDbType())) {
+            if (DbType.MySQL.name().equals(dbType) || DbType.MySQL_8.name().equals(dbType)
+                    || DbType.PostgreSQL.name().equals(dbType)) {
                 PluginConfiguration pluginConfiguration = new PluginConfiguration();
 				pluginConfiguration.addProperty("useExample", String.valueOf(generatorConfig.isUseExample()));
 				pluginConfiguration.addProperty("type", "com.zzg.mybatis.generator.plugins.CommonDAOInterfacePlugin");

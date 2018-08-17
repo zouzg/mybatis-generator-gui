@@ -30,6 +30,7 @@
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="MySQL" />
+                        <String fx:value="MySQL_8" />
                         <String fx:value="Oracle" />
                         <String fx:value="PostgreSQL" />
                         <String fx:value="SQL_Server" />
