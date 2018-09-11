@@ -162,7 +162,6 @@ public class MybatisGeneratorBridge {
         context.setId("myid");
         context.addTableConfiguration(tableConfig);
         context.setJdbcConnectionConfiguration(jdbcConfig);
-        context.setJdbcConnectionConfiguration(jdbcConfig);
         context.setJavaModelGeneratorConfiguration(modelConfig);
         context.setSqlMapGeneratorConfiguration(mapperConfig);
         context.setJavaClientGeneratorConfiguration(daoConfig);
