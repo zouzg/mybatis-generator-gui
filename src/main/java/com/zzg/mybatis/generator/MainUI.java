@@ -15,6 +15,7 @@ import java.net.URL;
 
 /**
  * 这是本软件的主入口,要运行本软件请直接运行本类就可以了,不用传入任何参数
+ * 本软件要求jkd版本大于1.8.0.40
  */
 public class MainUI extends Application {
 
@@ -35,21 +36,7 @@ public class MainUI extends Application {
 	}
 
 	public static void main(String[] args) {
-		String version = System.getProperty("java.version");
-		if (Integer.parseInt(version.substring(0,1)) == 1 && Integer.parseInt(version.substring(2, 3)) >= 8 && Integer.parseInt(version.substring(6)) >= 60 || Integer.parseInt(version.substring(0,1))>=9) {
-			launch(args);
-		}else {
-			JFrame jFrame = new JFrame("版本错误");
-			jFrame.setSize(500, 100);
-			jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			JPanel jPanel = new JPanel();
-			JLabel jLabel = new JLabel("JDK的版本不能低于1.8.0.60，请升级至最近的JDK 1.8再运行此软件，当前版本:" + version);
-			jPanel.add(jLabel);
-			jFrame.add(jPanel);
-			jFrame.setLocationRelativeTo(null);
-			jFrame.setVisible(true);
-
-		}
+		launch(args);
 	}
 
 }
