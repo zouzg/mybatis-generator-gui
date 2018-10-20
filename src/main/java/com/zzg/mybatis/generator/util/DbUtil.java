@@ -69,8 +69,9 @@ public class DbUtil {
 				rs = md.getTables(config.getSchema(), null, "%", new String[] {"TABLE", "VIEW"});			//针对 postgresql 的左侧数据表显示
 		    }
 		    while (rs.next()) {
-			    tables.add(rs.getString(3));
-		    }
+				String schema = rs.getString(2) == null ? "" : rs.getString(2) + "."; //postgresql显示表时带上模式名，避免同一个数据库不同模式下的同一个表名左侧数据表显示时无法区分
+				tables.add(schema + rs.getString(3));
+			}
 		    return tables;
 	    } finally {
 	    	connection.close();
