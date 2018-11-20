@@ -159,6 +159,10 @@ public class MybatisGeneratorBridge {
                 context.addPluginConfiguration(pluginConfiguration);
             }
         }
+        // 设置property，当字段有关键词的时候，就会自动加上分隔符
+        context.addProperty("autoDelimitKeywords","true");
+        context.addProperty("beginningDelimiter","`");
+        context.addProperty("endingDelimiter","`");
         context.setTargetRuntime("MyBatis3");
 
         List<String> warnings = new ArrayList<>();
