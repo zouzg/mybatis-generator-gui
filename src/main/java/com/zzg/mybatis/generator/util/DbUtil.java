@@ -83,7 +83,7 @@ public class DbUtil {
 		Connection conn = getConnection(dbConfig);
 		try {
 			DatabaseMetaData md = conn.getMetaData();
-			ResultSet rs = md.getColumns(null, null, tableName, null);
+			ResultSet rs = md.getColumns(dbConfig.getSchema(), null, tableName, null);
 			List<UITableColumnVO> columns = new ArrayList<>();
 			while (rs.next()) {
 				UITableColumnVO columnVO = new UITableColumnVO();
