@@ -196,7 +196,7 @@ public class MybatisGeneratorBridge {
         }
         // limit/offset插件
         if (generatorConfig.isOffsetLimit()) {
-            if (DbType.MySQL.name().equals(dbType)
+            if (DbType.MySQL.name().equals(dbType) || DbType.MySQL_8.name().equals(dbType)
 		            || DbType.PostgreSQL.name().equals(dbType)) {
                 PluginConfiguration pluginConfiguration = new PluginConfiguration();
                 pluginConfiguration.addProperty("type", "com.zzg.mybatis.generator.plugins.MySQLLimitPlugin");

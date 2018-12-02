@@ -130,6 +130,13 @@ public class MainUIController extends BaseFXController {
             controller.setMainUIController(this);
             controller.showDialogStage();
         });
+		useExample.setOnMouseClicked(event -> {
+			if (useExample.isSelected()) {
+				offsetLimitCheckBox.setDisable(false);
+			} else {
+				offsetLimitCheckBox.setDisable(true);
+			}
+		});
 
         leftDBTree.setShowRoot(false);
         leftDBTree.setRoot(new TreeItem<>());
