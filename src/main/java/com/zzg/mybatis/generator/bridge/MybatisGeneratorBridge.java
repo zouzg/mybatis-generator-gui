@@ -136,7 +136,6 @@ public class MybatisGeneratorBridge {
         }
 
         JDBCConnectionConfiguration jdbcConfig = new JDBCConnectionConfiguration();
-        // http://www.mybatis.org/generator/usage/mysql.html
         if (DbType.MySQL.name().equals(dbType) || DbType.MySQL_8.name().equals(dbType)) {
 	        jdbcConfig.addProperty("nullCatalogMeansCurrent", "true");
         }
@@ -144,6 +143,9 @@ public class MybatisGeneratorBridge {
         jdbcConfig.setConnectionURL(DbUtil.getConnectionUrlWithSchema(selectedDatabaseConfig));
         jdbcConfig.setUserId(selectedDatabaseConfig.getUsername());
         jdbcConfig.setPassword(selectedDatabaseConfig.getPassword());
+        if(DbType.Oracle.name().equals(dbType)){
+            jdbcConfig.getProperties().setProperty("remarksReporting", "true");
+        }
         // java model
         JavaModelGeneratorConfiguration modelConfig = new JavaModelGeneratorConfiguration();
         modelConfig.setTargetPackage(generatorConfig.getModelPackage());
