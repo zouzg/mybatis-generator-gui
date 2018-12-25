@@ -48,7 +48,7 @@ public class DbUtil {
 		    DatabaseMetaData md = connection.getMetaData();
 		    ResultSet rs;
 		    if (DbType.valueOf(config.getDbType()) == DbType.SQL_Server) {
-			    String sql = "select name from sysobjects  where xtype='u' or xtype='v' ";
+			    String sql = "select name from sysobjects  where xtype='u' or xtype='v' order by name";
 			    rs = connection.createStatement().executeQuery(sql);
 			    while (rs.next()) {
 				    tables.add(rs.getString("name"));
