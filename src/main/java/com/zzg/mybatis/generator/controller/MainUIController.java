@@ -325,9 +325,10 @@ public class MainUIController extends BaseFXController {
             try {
                 GeneratorConfig generatorConfig = getGeneratorConfigFromUI();
                 generatorConfig.setName(name);
+                ConfigHelper.deleteGeneratorConfig(name);
                 ConfigHelper.saveGeneratorConfig(generatorConfig);
             } catch (Exception e) {
-                AlertUtil.showErrorAlert("删除配置失败");
+                AlertUtil.showErrorAlert("保存配置失败");
             }
         }
     }
@@ -368,11 +369,27 @@ public class MainUIController extends BaseFXController {
         generateKeysField.setText(generatorConfig.getGenerateKeys());
         modelTargetProject.setText(generatorConfig.getModelPackageTargetFolder());
         daoTargetPackage.setText(generatorConfig.getDaoPackage());
-        daoTargetProject.setText(generatorConfig.getDaoTargetFolder());
-        mapperTargetPackage.setText(generatorConfig.getMappingXMLPackage());
+		daoTargetProject.setText(generatorConfig.getMapperName());
+		mapperName.setText(generatorConfig.getMapperName());
+		mapperTargetPackage.setText(generatorConfig.getMappingXMLPackage());
         mappingTargetProject.setText(generatorConfig.getMappingXMLTargetFolder());
+        tableNameField.setText(generatorConfig.getTableName());
+        domainObjectNameField.setText(generatorConfig.getDomainObjectName());
+        offsetLimitCheckBox.setSelected(generatorConfig.isOffsetLimit());
+        commentCheckBox.setSelected(generatorConfig.isComment());
+        overrideXML.setSelected(generatorConfig.isOverrideXML());
+        needToStringHashcodeEquals.setSelected(generatorConfig.isNeedToStringHashcodeEquals());
+        useTableNameAliasCheckbox.setSelected(generatorConfig.getUseTableNameAlias());
+        forUpdateCheckBox.setSelected(generatorConfig.isNeedForUpdate());
+        annotationDAOCheckBox.setSelected(generatorConfig.isAnnotationDAO());
+        annotationCheckBox.setSelected(generatorConfig.isAnnotation());
+        useActualColumnNamesCheckbox.setSelected(generatorConfig.isUseActualColumnNames());
         encodingChoice.setValue(generatorConfig.getEncoding());
         useExample.setSelected(generatorConfig.isUseExample());
+        useDAOExtendStyle.setSelected(generatorConfig.isUseDAOExtendStyle());
+        useSchemaPrefix.setSelected(generatorConfig.isUseSchemaPrefix());
+        jsr310Support.setSelected(generatorConfig.isJsr310Support());
+        
     }
 
     @FXML

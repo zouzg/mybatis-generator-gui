@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Text?>
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zzg.mybatis.generator.controller.SelectTableColumnController">
    <children>
       <TableView fx:id="columnListView" editable="true" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
@@ -20,7 +21,7 @@
       </TableView>
       <Button focusTraversable="false" layoutX="642.0" layoutY="453.0" mnemonicParsing="false" onAction="#ok" prefHeight="27.0" prefWidth="59.0" text="确认" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="29.0" />
       <Button focusTraversable="false" layoutX="556.0" layoutY="486.0" mnemonicParsing="false" onAction="#cancel" text="取消" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="113.0" />
-      <Text layoutX="12.0" layoutY="64.0" lineSpacing="5.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. 如果要定制列的Java数据类型, 字段名或者自动类型转换双击对应的地方编辑即可" wrappingWidth="706.0" />
-      <Text layoutX="14.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. 如果要忽略请取消列的选择" />
+      <Text layoutX="12.0" layoutY="62.0" lineSpacing="5.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. 如果要定制列的Java数据类型, 编辑Java Type和Property Name或者你自己的Type Handler, 注意要按Enter键保存，然后再点击确认方可生效。" wrappingWidth="706.0" />
+      <Text layoutX="14.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. 如果不想生成某列请取消勾选对应的列" />
    </children>
 </AnchorPane>
