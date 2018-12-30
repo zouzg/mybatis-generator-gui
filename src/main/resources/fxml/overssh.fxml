@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zzg.mybatis.generator.controller.OverSshController">
+   <children>
+      <GridPane alignment="CENTER_RIGHT" maxHeight="200.0" maxWidth="600.0" minHeight="200.0" minWidth="600.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="600.0" AnchorPane.topAnchor="60.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="255.0" minWidth="42.0" prefWidth="184.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="213.0" minWidth="0.0" prefWidth="22.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="451.0" minWidth="243.0" prefWidth="394.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="56.0" minHeight="3.0" prefHeight="56.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="45.0" minHeight="2.0" prefHeight="45.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="目标端口" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="SSH主机名" GridPane.halignment="RIGHT" />
+            <Label alignment="CENTER_RIGHT" text="SSH端口" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+            <Label text="本机端口" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+            <TextField fx:id="hostField" maxWidth="200.0" GridPane.columnIndex="2" />
+            <TextField fx:id="sshdPortField" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="lportField" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <TextField fx:id="rportField" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label text="SSH用户名" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+            <Label text="SSH密码" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+            <TextField fx:id="sshUserField"  maxWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <PasswordField fx:id="sshPasswordField" maxWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+         </children>
+      </GridPane>
+      <AnchorPane prefHeight="100.0" prefWidth="600.0" AnchorPane.topAnchor="300.0">
+         <children>
+            <Button layoutX="107.0" layoutY="6.0" mnemonicParsing="false" onAction="#testSSH" text="测试连接" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0"><styleClass>
+              <String fx:value="btn" />
+              <String fx:value="btn-default" />
+            </styleClass></Button>
+           <Button layoutX="107.0" layoutY="6.0" mnemonicParsing="false" onAction="#reset" text="重置" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="120.0"><styleClass>
+             <String fx:value="btn" />
+             <String fx:value="btn-default" />
+           </styleClass></Button>
+            <Button layoutX="107.0" layoutY="6.0" mnemonicParsing="false" onAction="#saveConfig" text="保存" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="30.0"><styleClass>
+              <String fx:value="btn" />
+              <String fx:value="btn-success" />
+            </styleClass></Button>
+
+         </children></AnchorPane>
+   </children>
+</AnchorPane>
