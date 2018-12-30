@@ -1,5 +1,6 @@
 package com.zzg.mybatis.generator.controller;
 
+import com.jcraft.jsch.Session;
 import com.zzg.mybatis.generator.bridge.MybatisGeneratorBridge;
 import com.zzg.mybatis.generator.model.DatabaseConfig;
 import com.zzg.mybatis.generator.model.GeneratorConfig;
@@ -11,6 +12,7 @@ import com.zzg.mybatis.generator.view.AlertUtil;
 import com.zzg.mybatis.generator.view.UIProgressCallback;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
@@ -117,7 +119,7 @@ public class MainUIController extends BaseFXController {
         dbImage.setFitWidth(40);
         connectionLabel.setGraphic(dbImage);
         connectionLabel.setOnMouseClicked(event -> {
-            DbConnectionController controller = (DbConnectionController) loadFXMLPage("新建数据库连接", FXMLPage.NEW_CONNECTION, false);
+            TabPaneController controller = (TabPaneController) loadFXMLPage("新建数据库连接", FXMLPage.NEW_CONNECTION, false);
             controller.setMainUIController(this);
             controller.showDialogStage();
         });
@@ -154,7 +156,7 @@ public class MainUIController extends BaseFXController {
 	                MenuItem item2 = new MenuItem("编辑连接");
 	                item2.setOnAction(event1 -> {
 		                DatabaseConfig selectedConfig = (DatabaseConfig) treeItem.getGraphic().getUserData();
-		                DbConnectionController controller = (DbConnectionController) loadFXMLPage("编辑数据库连接", FXMLPage.NEW_CONNECTION, false);
+                        TabPaneController controller = (TabPaneController) loadFXMLPage("编辑数据库连接", FXMLPage.NEW_CONNECTION, false);
 		                controller.setMainUIController(this);
 		                controller.setConfig(selectedConfig);
 		                controller.showDialogStage();
@@ -178,7 +180,6 @@ public class MainUIController extends BaseFXController {
                     }
                     treeItem.setExpanded(true);
                     if (level == 1) {
-                        System.out.println("index: " + leftDBTree.getSelectionModel().getSelectedIndex());
                         DatabaseConfig selectedConfig = (DatabaseConfig) treeItem.getGraphic().getUserData();
                         try {
                             List<String> tables = DbUtil.getTableNames(selectedConfig);
@@ -287,7 +288,32 @@ public class MainUIController extends BaseFXController {
 		bridge.setProgressCallback(alert);
 		alert.show();
 		try {
+            //Engage PortForwarding
+            Session sshSession = DbUtil.getSSHSession(selectedDatabaseConfig);
+            DbUtil.engagePortForwarding(sshSession, selectedDatabaseConfig);
+            PictureProcessStateController pictureProcessStateController = null;
+            if (sshSession != null) {
+                pictureProcessStateController = new PictureProcessStateController();
+                pictureProcessStateController.setDialogStage(getDialogStage());
+                pictureProcessStateController.startPlay();
+            }
+
             bridge.generate();
+
+            if (pictureProcessStateController != null) {
+                Task task = new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        Thread.sleep(3000);
+                        return null;
+                    }
+                };
+                PictureProcessStateController finalPictureProcessStateController = pictureProcessStateController;
+                task.setOnSucceeded(event -> {
+                    finalPictureProcessStateController.close();
+                });
+                new Thread(task).start();
+            }
         } catch (Exception e) {
 			e.printStackTrace();
             AlertUtil.showErrorAlert(e.getMessage());
