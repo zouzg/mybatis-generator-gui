@@ -7,8 +7,10 @@ import com.zzg.mybatis.generator.util.DbUtil;
 import com.zzg.mybatis.generator.view.AlertUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Paint;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +38,8 @@ public class OverSshController extends BaseFXController {
     private TextField lportField;
     @FXML
     private TextField rportField;
+    @FXML
+    private Label note;
 
     private DbConnectionController dbConnectionController;
 
@@ -50,6 +54,9 @@ public class OverSshController extends BaseFXController {
     }
 
     public void setDbConnectionConfig(DatabaseConfig extractConfigForUI) {
+        if (extractConfigForUI == null) {
+            return;
+        }
         this.databaseConfig = extractConfigForUI;
         this.sshdPortField.setText(this.databaseConfig.getSshPort());
         this.hostField.setText(this.databaseConfig.getSshHost());
@@ -63,6 +70,23 @@ public class OverSshController extends BaseFXController {
         }
         if (StringUtils.isBlank(this.rportField.getText())) {
             this.rportField.setText(this.databaseConfig.getPort());
+        }
+        checkInput();
+    }
+
+    @FXML
+    public void checkInput() {
+        DatabaseConfig databaseConfig = extractConfigFromUi();
+        if (StringUtils.isBlank(databaseConfig.getSshHost())
+                || StringUtils.isBlank(databaseConfig.getSshPort())
+                || StringUtils.isBlank(databaseConfig.getSshUser())
+                || StringUtils.isBlank(databaseConfig.getSshPassword())
+        ) {
+            note.setText("当前输入不完整，默认不生效");
+            note.setTextFill(Paint.valueOf("#ff666f"));
+        }else {
+            note.setText("当前配置生效");
+            note.setTextFill(Paint.valueOf("#5da355"));
         }
     }
 
@@ -85,6 +109,17 @@ public class OverSshController extends BaseFXController {
         databaseConfig.setRport(this.rportField.getText());
         databaseConfig.setSshUser(this.sshUserField.getText());
         databaseConfig.setSshPassword(this.sshPasswordField.getText());
+        if (StringUtils.isAnyEmpty(
+                databaseConfig.getName(),
+                databaseConfig.getHost(),
+                databaseConfig.getPort(),
+                databaseConfig.getUsername(),
+                databaseConfig.getEncoding(),
+                databaseConfig.getDbType(),
+                databaseConfig.getSchema())) {
+            getDialogStage().close();
+            return;
+        }
         this.dbConnectionController.saveConnection();
     }
 

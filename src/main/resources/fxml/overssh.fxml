@@ -42,11 +42,11 @@
             <TextField fx:id="rportField" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             <Label text="SSH用户名" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
             <Label text="SSH密码" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
-            <TextField fx:id="sshUserField"  maxWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <TextField fx:id="sshUserField" maxWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
             <PasswordField fx:id="sshPasswordField" maxWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
          </children>
       </GridPane>
-      <AnchorPane prefHeight="100.0" prefWidth="600.0" AnchorPane.topAnchor="300.0">
+      <AnchorPane layoutY="321.0" prefHeight="79.0" prefWidth="600.0" onMouseEntered="#checkInput" AnchorPane.topAnchor="321.0">
          <children>
             <Button layoutX="107.0" layoutY="6.0" mnemonicParsing="false" onAction="#testSSH" text="测试连接" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0"><styleClass>
               <String fx:value="btn" />
@@ -62,5 +62,10 @@
             </styleClass></Button>
 
          </children></AnchorPane>
+      <AnchorPane layoutY="271.0" minHeight="10.0" minWidth="600.0" prefHeight="50.0" prefWidth="200.0" AnchorPane.topAnchor="271.0">
+         <children>
+            <Label fx:id="note" alignment="CENTER" contentDisplay="CENTER" layoutX="191.0" layoutY="2.0" prefHeight="44.0" prefWidth="229.0" textAlignment="CENTER" textFill="#ff666f" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

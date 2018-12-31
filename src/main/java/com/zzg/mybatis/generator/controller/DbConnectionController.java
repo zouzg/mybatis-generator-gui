@@ -39,8 +39,14 @@ public class DbConnectionController extends BaseFXController {
     private MainUIController mainUIController;
     private boolean isUpdate = false;
     private Integer primayKey;
-    private DatabaseConfig databaseConfig;
+    private SharedConfig shared;
 
+    private class SharedConfig {
+        private final DatabaseConfig databaseConfig;
+        private SharedConfig(DatabaseConfig databaseConfig) {
+            this.databaseConfig = databaseConfig == null ? new DatabaseConfig() : databaseConfig;
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -52,6 +58,12 @@ public class DbConnectionController extends BaseFXController {
         if (config == null) {
             return;
         }
+        config.setSshUser(this.shared.databaseConfig.getSshUser());
+        config.setSshPassword(this.shared.databaseConfig.getSshPassword());
+        config.setLport(this.shared.databaseConfig.getLport());
+        config.setRport(this.shared.databaseConfig.getRport());
+        config.setSshHost(this.shared.databaseConfig.getSshHost());
+        config.setSshPort(this.shared.databaseConfig.getSshPort());
         try {
             ConfigHelper.saveDatabaseConfig(this.isUpdate, primayKey, config);
             getDialogStage().close();
@@ -110,14 +122,6 @@ public class DbConnectionController extends BaseFXController {
         config.setPassword(password);
         config.setSchema(schema);
         config.setEncoding(encoding);
-        if (this.databaseConfig != null) {
-            config.setSshUser(this.databaseConfig.getSshUser());
-            config.setSshPassword(this.databaseConfig.getSshPassword());
-            config.setLport(this.databaseConfig.getLport());
-            config.setRport(this.databaseConfig.getRport());
-            config.setSshHost(this.databaseConfig.getSshHost());
-            config.setSshPort(this.databaseConfig.getSshPort());
-        }
         if (StringUtils.isAnyEmpty(name, host, port, userName, encoding, dbType, schema)) {
             AlertUtil.showWarnAlert("密码以外其他字段必填");
             return null;
@@ -136,12 +140,15 @@ public class DbConnectionController extends BaseFXController {
         encodingChoice.setValue(config.getEncoding());
         dbTypeChoice.setValue(config.getDbType());
         schemaField.setText(config.getSchema());
-        this.databaseConfig = config;
+        this.shared = new SharedConfig(config);
     }
 
     public void overSSH(ActionEvent actionEvent) {
         OverSshController overSshController = (OverSshController) loadFXMLPage("OverSSH设置", FXMLPage.OVERSSH_CONFIG, false);
         overSshController.setDbConnectionController(this);
-        overSshController.setDbConnectionConfig(databaseConfig);
+        if (this.shared == null) {
+            this.shared = new SharedConfig(null);
+        }
+        overSshController.setDbConnectionConfig(this.shared.databaseConfig);
     }
 }
