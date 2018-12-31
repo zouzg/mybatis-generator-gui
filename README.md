@@ -30,7 +30,7 @@ mybatis-generator-gui是基于[mybatis generator](http://www.mybatis.org/generat
 * 方法二: 自助构建
 
 ```bash
-    git clone https://github.com/astarring/mybatis-generator-gui
+    git clone https://github.com/zouzg/mybatis-generator-gui
     cd mybatis-generator-gui
     mvn jfx:jar
     cd target/jfx/app/
