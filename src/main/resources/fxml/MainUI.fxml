@@ -210,19 +210,17 @@
                                           <CheckBox fx:id="offsetLimitCheckBox" disable="true" minWidth="100.0" mnemonicParsing="false" selected="true" text="分页插件(暂时只支持MySQL和PostgreSQL)" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                                        </children>
                                     </HBox>
-                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                    <HBox prefHeight="100.0" prefWidth="200.0" spacing="18.0">
                                        <children>
                                           <CheckBox fx:id="commentCheckBox" mnemonicParsing="false" selected="true" text="生成实体域注释(来自表注释)" />
                                           <CheckBox fx:id="overrideXML" mnemonicParsing="false" selected="true" text="覆盖原XML" />
                                        </children>
                                     </HBox>
-                                    <HBox>
+                                    <HBox spacing="18.0">
                                        <children>
-                                          <CheckBox fx:id="needToStringHashcodeEquals" mnemonicParsing="false" selected="true" text="生成toString/hashCode/equals方法">
-                                             <HBox.margin>
-                                                <Insets right="10.0" />
-                                             </HBox.margin></CheckBox>
-                                           <CheckBox fx:id="useSchemaPrefix" mnemonicParsing="false" text="使用Schema前缀" />
+                                          <CheckBox fx:id="useLombokPlugin" mnemonicParsing="false" text="LombokPlugin" />
+                                          <CheckBox fx:id="needToStringHashcodeEquals" mnemonicParsing="false" selected="true" text="生成toString/hashCode/equals方法" />
+                                          <CheckBox fx:id="useSchemaPrefix" mnemonicParsing="false" text="使用Schema前缀" />
                                        </children>
                                     </HBox>
                                      <HBox prefHeight="100.0" prefWidth="200.0" spacing="18.0">

@@ -56,11 +56,11 @@ public class MybatisGeneratorBridge {
         Configuration configuration = new Configuration();
         Context context = new Context(ModelType.CONDITIONAL);
         configuration.addContext(context);
-	    
+
 		context.addProperty("autoDelimitKeywords", "true");
         context.addProperty("beginningDelimiter", "`");
         context.addProperty("endingDelimiter", "`");
-	    
+
         context.addProperty("javaFileEncoding", "UTF-8");
 		String dbType = selectedDatabaseConfig.getDbType();
 		String connectorLibPath = ConfigHelper.findConnectorLibPath(dbType);
@@ -185,8 +185,16 @@ public class MybatisGeneratorBridge {
         serializablePluginConfiguration.addProperty("type", "org.mybatis.generator.plugins.SerializablePlugin");
         serializablePluginConfiguration.setConfigurationType("org.mybatis.generator.plugins.SerializablePlugin");
         context.addPluginConfiguration(serializablePluginConfiguration);
+
+        // Lombok 插件
+        if (generatorConfig.isUseLombokPlugin()) {
+            PluginConfiguration pluginConfiguration = new PluginConfiguration();
+            pluginConfiguration.addProperty("type", "com.softwareloop.mybatis.generator.plugins.LombokPlugin");
+            pluginConfiguration.setConfigurationType("com.softwareloop.mybatis.generator.plugins.LombokPlugin");
+            context.addPluginConfiguration(pluginConfiguration);
+        }
         // toString, hashCode, equals插件
-        if (generatorConfig.isNeedToStringHashcodeEquals()) {
+        else if (generatorConfig.isNeedToStringHashcodeEquals()) {
             PluginConfiguration pluginConfiguration1 = new PluginConfiguration();
             pluginConfiguration1.addProperty("type", "org.mybatis.generator.plugins.EqualsHashCodePlugin");
             pluginConfiguration1.setConfigurationType("org.mybatis.generator.plugins.EqualsHashCodePlugin");
