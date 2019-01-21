@@ -56,12 +56,9 @@ public class MybatisGeneratorBridge {
         Configuration configuration = new Configuration();
         Context context = new Context(ModelType.CONDITIONAL);
         configuration.addContext(context);
-	    
-		context.addProperty("autoDelimitKeywords", "true");
-        context.addProperty("beginningDelimiter", "`");
-        context.addProperty("endingDelimiter", "`");
-	    
+		
         context.addProperty("javaFileEncoding", "UTF-8");
+        
 		String dbType = selectedDatabaseConfig.getDbType();
 		String connectorLibPath = ConfigHelper.findConnectorLibPath(dbType);
 	    _LOG.info("connectorLibPath: {}", connectorLibPath);
@@ -77,9 +74,13 @@ public class MybatisGeneratorBridge {
             tableConfig.setSelectByExampleStatementEnabled(false);
         }
 
+		context.addProperty("autoDelimitKeywords", "true");
 		if (DbType.MySQL.name().equals(dbType) || DbType.MySQL_8.name().equals(dbType)) {
 			tableConfig.setSchema(selectedDatabaseConfig.getSchema());
-        } else {
+			// 由于beginningDelimiter和endingDelimiter的默认值为双引号(")，在Mysql中不能这么写，所以还要将这两个默认值改为`
+			context.addProperty("beginningDelimiter", "`");
+			context.addProperty("endingDelimiter", "`");
+		} else {
             tableConfig.setCatalog(selectedDatabaseConfig.getSchema());
 	    }
         if (generatorConfig.isUseSchemaPrefix()) {
