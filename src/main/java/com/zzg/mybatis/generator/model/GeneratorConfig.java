@@ -60,6 +60,8 @@ public class GeneratorConfig {
 
 	private boolean useTableNameAlias;
 
+	private boolean useLombokAnnotation;
+
 	private boolean useDAOExtendStyle;
 
     private boolean useSchemaPrefix;
@@ -268,6 +270,14 @@ public class GeneratorConfig {
 
 	public boolean isUseTableNameAlias() {
 		return useTableNameAlias;
+	}
+
+	public boolean isUseLombokAnnotation() {
+		return useLombokAnnotation;
+	}
+
+	public void setUseLombokAnnotation(boolean useLombokAnnotation) {
+		this.useLombokAnnotation = useLombokAnnotation;
 	}
 
 	public boolean isOverrideXML() {

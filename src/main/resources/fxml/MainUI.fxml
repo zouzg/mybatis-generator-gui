@@ -177,7 +177,7 @@
                                     <Insets left="5.0" />
                                  </GridPane.margin></TextField>
                                       <Label prefHeight="27.0" prefWidth="99.0" text="映射XML文件包名" GridPane.rowIndex="7" />
-                                        <TextField fx:id="mapperTargetPackage" prefHeight="27.0" prefWidth="248.0" promptText="com.example" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                        <TextField fx:id="mapperTargetPackage" prefHeight="27.0" prefWidth="248.0" promptText="mappers" text="mappers" GridPane.columnIndex="1" GridPane.rowIndex="7">
                                             <HBox.margin>
                                                 <Insets right="5.0" />
                                             </HBox.margin>
@@ -218,7 +218,7 @@
                                     </HBox>
                                     <HBox>
                                        <children>
-                                          <CheckBox fx:id="needToStringHashcodeEquals" mnemonicParsing="false" selected="true" text="生成toString/hashCode/equals方法">
+                                          <CheckBox fx:id="needToStringHashcodeEquals" mnemonicParsing="false" selected="false" text="生成toString/hashCode/equals方法">
                                              <HBox.margin>
                                                 <Insets right="10.0" />
                                              </HBox.margin></CheckBox>
@@ -228,16 +228,16 @@
                                      <HBox prefHeight="100.0" prefWidth="200.0" spacing="18.0">
                                          <children>
                                              <CheckBox fx:id="forUpdateCheckBox" mnemonicParsing="false" selected="false" text="select 增加ForUpdate" />
-                                             <CheckBox fx:id="annotationDAOCheckBox" mnemonicParsing="false" selected="true" text="DAO使用 @Repository 注解" />
+                                             <CheckBox fx:id="annotationDAOCheckBox" mnemonicParsing="false" selected="false" text="DAO使用 @Repository 注解" />
                                          </children>
                                      </HBox>
                                      <HBox prefHeight="100.0" prefWidth="200.0">
                                          <children>
-                                             <CheckBox fx:id="useDAOExtendStyle" mnemonicParsing="false" selected="true" text="DAO方法抽出到公共父接口">
+                                             <CheckBox fx:id="useDAOExtendStyle" mnemonicParsing="false" selected="false" text="DAO方法抽出到公共父接口">
                                              <HBox.margin>
                                                 <Insets right="10.0" />
                                              </HBox.margin></CheckBox>
-                                             <CheckBox fx:id="jsr310Support" mnemonicParsing="false" prefHeight="16.0" prefWidth="252.0" text="JSR310: Date and Time API" />
+                                             <CheckBox fx:id="jsr310Support" mnemonicParsing="false" selected="true" prefHeight="16.0" prefWidth="252.0" text="JSR310: Date and Time API" />
                                          </children>
                                      </HBox>
                                     <HBox spacing="18.0">
@@ -245,6 +245,7 @@
                                           <CheckBox fx:id="annotationCheckBox" mnemonicParsing="false" selected="false" text="生成JPA注解" />
                                           <CheckBox fx:id="useActualColumnNamesCheckbox" mnemonicParsing="false" selected="false" text="使用实际的列名" />
                                            <CheckBox fx:id="useTableNameAliasCheckbox" mnemonicParsing="false" selected="false" text="启用as别名查询" />
+                                           <CheckBox fx:id="useLombokAnnotationCheckbox" mnemonicParsing="false" selected="true" text="启用 lombok 注解" />
                                        </children>
                                     </HBox>
                                      <HBox prefHeight="100.0" prefWidth="200.0" />

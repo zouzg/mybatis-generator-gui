@@ -233,6 +233,15 @@ public class MybatisGeneratorBridge {
                 context.addPluginConfiguration(pluginConfiguration);
             }
         }
+
+        // lombok 插件
+        if(generatorConfig.isUseLombokAnnotation()) {
+            PluginConfiguration pluginConfiguration = new PluginConfiguration();
+            pluginConfiguration.addProperty("type", "com.zzg.mybatis.generator.plugins.LombokPlugin");
+            pluginConfiguration.setConfigurationType("com.zzg.mybatis.generator.plugins.LombokPlugin");
+            context.addPluginConfiguration(pluginConfiguration);
+        }
+
         if (generatorConfig.isUseDAOExtendStyle()) {
             if (DbType.MySQL.name().equals(dbType) || DbType.MySQL_8.name().equals(dbType)
                     || DbType.PostgreSQL.name().equals(dbType)) {
