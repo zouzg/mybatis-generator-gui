@@ -369,7 +369,7 @@ public class MainUIController extends BaseFXController {
         generateKeysField.setText(generatorConfig.getGenerateKeys());
         modelTargetProject.setText(generatorConfig.getModelPackageTargetFolder());
         daoTargetPackage.setText(generatorConfig.getDaoPackage());
-		daoTargetProject.setText(generatorConfig.getMapperName());
+		daoTargetProject.setText(generatorConfig.getDaoTargetFolder());
 		mapperName.setText(generatorConfig.getMapperName());
 		mapperTargetPackage.setText(generatorConfig.getMappingXMLPackage());
         mappingTargetProject.setText(generatorConfig.getMappingXMLTargetFolder());
