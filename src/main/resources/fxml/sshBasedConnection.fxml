@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zzg.mybatis.generator.controller.OverSshController">
+  <children>
+    <GridPane alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.topAnchor="15.0">
+      <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="19.0" prefWidth="194.0" />
+        <ColumnConstraints maxWidth="302.0" minWidth="29.0" prefWidth="36.0" />
+        <ColumnConstraints maxWidth="577.0" minWidth="128.0" prefWidth="406.0" />
+        <ColumnConstraints maxWidth="446.0" minWidth="113.0" prefWidth="133.0" />
+            <ColumnConstraints />
+            <ColumnConstraints />
+      </columnConstraints>
+      <rowConstraints>
+        <RowConstraints maxHeight="41.0" minHeight="28.0" prefHeight="33.0" />
+        <RowConstraints maxHeight="48.0" minHeight="10.0" prefHeight="40.0" />
+        <RowConstraints maxHeight="58.0" minHeight="2.0" prefHeight="37.0" />
+        <RowConstraints maxHeight="48.0" minHeight="0.0" prefHeight="36.0" />
+        <RowConstraints maxHeight="58.0" minHeight="0.0" prefHeight="41.0" />
+        <RowConstraints maxHeight="95.0" minHeight="12.0" prefHeight="38.0" />
+        <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="44.0" />
+        <RowConstraints maxHeight="89.0" minHeight="28.0" prefHeight="42.0" />
+        <RowConstraints maxHeight="92.0" minHeight="29.0" prefHeight="41.0" />
+        <RowConstraints maxHeight="97.0" minHeight="29.0" prefHeight="44.0" />
+        <RowConstraints maxHeight="94.0" minHeight="28.0" prefHeight="39.0" />
+        <RowConstraints maxHeight="107.0" minHeight="30.0" prefHeight="43.0" />
+        <RowConstraints maxHeight="134.0" minHeight="28.0" prefHeight="39.0" />
+        <RowConstraints maxHeight="172.0" minHeight="26.0" prefHeight="39.0" />
+        <RowConstraints maxHeight="172.0" minHeight="19.0" prefHeight="35.0" />
+            <RowConstraints maxHeight="172.0" minHeight="19.0" prefHeight="31.0" />
+        <RowConstraints />
+        <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+        <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+        <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+      </rowConstraints>
+      <children>
+        <Label text="保存名称" GridPane.halignment="RIGHT" GridPane.rowIndex="0" />
+        <TextField fx:id="nameField" prefHeight="23.0" prefWidth="373.0" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+
+        <Label text="数据库类型" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+        <ChoiceBox fx:id="dbTypeChoice" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+          <items>
+            <FXCollections fx:factory="observableArrayList">
+              <String fx:value="MySQL" />
+              <String fx:value="MySQL_8" />
+              <String fx:value="Oracle" />
+              <String fx:value="PostgreSQL" />
+              <String fx:value="SQL_Server" />
+              <String fx:value="Sqlite" />
+            </FXCollections>
+          </items>
+        </ChoiceBox>
+        <Label text="主机名或IP地址" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+        <TextField fx:id="hostField" prefHeight="25.0" prefWidth="376.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+        <Label text="端口号" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+        <TextField fx:id="portField" maxWidth="-Infinity" prefHeight="18.0" prefWidth="50.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+        <Label text="用户名" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+        <TextField fx:id="userNameField" minWidth="-Infinity" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+        <Label text="密码" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+          <children>
+            <PasswordField fx:id="passwordField" />
+            <CheckBox fx:id="savePwdCheckBox" mnemonicParsing="false" text="Save password" visible="false" />
+          </children>
+        </HBox>
+
+        <Label text="Schema/数据库" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+        <TextField fx:id="schemaField" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+
+        <Label text="编码" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
+        <ChoiceBox fx:id="encodingChoice" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7">
+          <items>
+            <FXCollections fx:factory="observableArrayList">
+              <String fx:value="utf8" />
+              <String fx:value="gb2312" />
+              <String fx:value="gbk" />
+            </FXCollections>
+          </items>
+        </ChoiceBox>
+
+        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="SSH主机名" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
+        <TextField fx:id="sshHostField" maxWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+
+        <Label alignment="CENTER_RIGHT" text="SSH端口" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="9" />
+        <TextField fx:id="sshdPortField" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+
+        <Label text="本机端口" GridPane.halignment="RIGHT" GridPane.rowIndex="10" />
+        <TextField fx:id="lportField" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+
+        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="目标端口" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="11" />
+        <TextField fx:id="rportField" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" GridPane.columnIndex="2" GridPane.rowIndex="11" />
+
+        <Label text="SSH用户名" GridPane.halignment="RIGHT" GridPane.rowIndex="12" />
+        <TextField fx:id="sshUserField" maxWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="12" />
+
+        <Label text="SSH密码" GridPane.halignment="RIGHT" GridPane.rowIndex="13" />
+        <PasswordField fx:id="sshPasswordField" maxWidth="200.0" prefHeight="15.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="13" />
+        <AnchorPane prefHeight="51.0" prefWidth="539.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="14">
+          <children>
+            <Button layoutY="2.0" mnemonicParsing="false" onAction="#testSSH" text="测试SSH连接">
+              <styleClass>
+                <String fx:value="btn" />
+                <String fx:value="btn-default" />
+              </styleClass>
+            </Button>
+            <Button layoutX="122.0" layoutY="2.0" mnemonicParsing="false" onAction="#reset" text="重置SSH设置">
+              <styleClass>
+                <String fx:value="btn" />
+                <String fx:value="btn-default" />
+              </styleClass>
+            </Button>
+          </children>
+        </AnchorPane>
+            <Label fx:id="lPortLabel" text="注意不要填写被其他程序占用的端口" textFill="#31b3b5" GridPane.columnIndex="2" GridPane.rowIndex="10">
+               <GridPane.margin>
+                  <Insets left="100.0" />
+               </GridPane.margin>
+            </Label>
+            <Label text="目标端口可以和数据库的端口一致" textFill="#1daeae" GridPane.columnIndex="2" GridPane.rowIndex="11">
+               <GridPane.margin>
+                  <Insets left="100.0" />
+               </GridPane.margin>
+            </Label>
+            <Label prefHeight="15.0" prefWidth="121.0" text="SSH端口默认是22" textFill="#31b3b5" GridPane.columnIndex="2" GridPane.rowIndex="9">
+               <GridPane.margin>
+                  <Insets left="100.0" />
+               </GridPane.margin>
+            </Label>
+      <Label fx:id="note" alignment="CENTER" contentDisplay="CENTER" onMouseEntered="#checkInput" prefHeight="46.0" prefWidth="769.0" textAlignment="CENTER" textFill="#ff666f" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="15" />
+      </children>
+    </GridPane>
+  </children>
+</AnchorPane>
