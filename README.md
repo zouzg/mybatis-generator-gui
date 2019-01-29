@@ -6,10 +6,10 @@ mybatis-generator-gui是基于[mybatis generator](http://www.mybatis.org/generat
 ![image](https://user-images.githubusercontent.com/3505708/49334784-1a42c980-f619-11e8-914d-9ea85db9cec3.png)
 
 
-![basic](https://raw.githubusercontent.com/slankka/mybatis-generator-gui/a60652d8c50c39801c25f39b05015fc99008365c/screenshots/EditBasicConnection.png)
+![basic](https://user-images.githubusercontent.com/3505708/51911610-45754980-240d-11e9-85ad-643e55cafab2.png)
 
 
-![overSSH](https://raw.githubusercontent.com/slankka/mybatis-generator-gui/a60652d8c50c39801c25f39b05015fc99008365c/screenshots/EditConnectionOverSSH.png)
+![overSSH](https://user-images.githubusercontent.com/3505708/51911646-5920b000-240d-11e9-9048-738306a56d14.png)
 
 ### 核心特性
 * 按照界面步骤轻松生成代码，省去XML繁琐的学习与配置过程
