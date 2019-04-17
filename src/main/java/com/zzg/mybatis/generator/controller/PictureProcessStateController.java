@@ -106,6 +106,9 @@ public class PictureProcessStateController {
         if (showButton) {
             showCloseButton();
         }
+        if (!dialogStage.isShowing()) {
+            dialogStage.show();
+        }
     }
 
     private void showCloseButton() {
