@@ -284,14 +284,15 @@ public class MainUIController extends BaseFXController {
         bridge.setDatabaseConfig(selectedDatabaseConfig);
         bridge.setIgnoredColumns(ignoredColumns);
         bridge.setColumnOverrides(columnOverrides);
-		UIProgressCallback alert = new UIProgressCallback(Alert.AlertType.INFORMATION);
-		bridge.setProgressCallback(alert);
-		alert.show();
-		try {
+        UIProgressCallback alert = new UIProgressCallback(Alert.AlertType.INFORMATION);
+        bridge.setProgressCallback(alert);
+        alert.show();
+        PictureProcessStateController pictureProcessStateController = null;
+        try {
             //Engage PortForwarding
             Session sshSession = DbUtil.getSSHSession(selectedDatabaseConfig);
             DbUtil.engagePortForwarding(sshSession, selectedDatabaseConfig);
-            PictureProcessStateController pictureProcessStateController = null;
+
             if (sshSession != null) {
                 pictureProcessStateController = new PictureProcessStateController();
                 pictureProcessStateController.setDialogStage(getDialogStage());
@@ -312,11 +313,18 @@ public class MainUIController extends BaseFXController {
                 task.setOnSucceeded(event -> {
                     finalPictureProcessStateController.close();
                 });
+                task.setOnFailed(event -> {
+                    finalPictureProcessStateController.close();
+                });
                 new Thread(task).start();
             }
         } catch (Exception e) {
-			e.printStackTrace();
+            e.printStackTrace();
             AlertUtil.showErrorAlert(e.getMessage());
+            if (pictureProcessStateController != null) {
+                pictureProcessStateController.close();
+                pictureProcessStateController.playFailState(e.getMessage(), true);
+            }
         }
     }
 
@@ -354,6 +362,7 @@ public class MainUIController extends BaseFXController {
                 ConfigHelper.deleteGeneratorConfig(name);
                 ConfigHelper.saveGeneratorConfig(generatorConfig);
             } catch (Exception e) {
+                _LOG.error("保存配置失败", e);
                 AlertUtil.showErrorAlert("保存配置失败");
             }
         }
@@ -415,7 +424,7 @@ public class MainUIController extends BaseFXController {
         useDAOExtendStyle.setSelected(generatorConfig.isUseDAOExtendStyle());
         useSchemaPrefix.setSelected(generatorConfig.isUseSchemaPrefix());
         jsr310Support.setSelected(generatorConfig.isJsr310Support());
-        
+
     }
 
     @FXML
