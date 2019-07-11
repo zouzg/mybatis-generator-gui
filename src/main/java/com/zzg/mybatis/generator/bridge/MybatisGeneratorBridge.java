@@ -288,6 +288,11 @@ public class MybatisGeneratorBridge {
         BatchDeletePlugin.addProperty("type", "com.zzg.mybatis.generator.plugins.BatchDeletePlugin");
         BatchDeletePlugin.setConfigurationType("com.zzg.mybatis.generator.plugins.BatchDeletePlugin");
         context.addPluginConfiguration(BatchDeletePlugin);
+        //Set方法增强  扩展set方法,返回this实例;方便链式调用
+        PluginConfiguration ExtendEntitySetter = new PluginConfiguration();
+        ExtendEntitySetter.addProperty("type", "mybatis.generator.plugins.ExtendEntitySetter");
+        ExtendEntitySetter.setConfigurationType("mybatis.generator.plugins.ExtendEntitySetter");
+        context.addPluginConfiguration(ExtendEntitySetter);
 
 
 
