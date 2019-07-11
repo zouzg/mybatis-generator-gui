@@ -19,7 +19,7 @@ mybatis-generator-gui是基于[mybatis generator](http://www.mybatis.org/generat
 * 把数据库中表列的注释生成为Java实体的注释，生成的实体清晰明了
 * 可选的去除掉对版本管理不友好的注释，这样新增或删除字段重新生成的文件比较过来清楚
 * 目前已经支持Mysql、Mysql8、Oracle、PostgreSQL与SQL Server，暂不对其他非主流数据库提供支持。(MySQL支持的比较好，其他数据库有什么问题可以在issue中反馈)
-
+* 已支持oracle分页，批量 增、删、改 操作
 ### 要求
 本工具由于使用了Java 8的众多特性，所以要求JDK <strong>1.8.0.60</strong>以上版本，另外<strong>JDK 1.9</strong>暂时还不支持。
 
