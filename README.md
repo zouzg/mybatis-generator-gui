@@ -29,12 +29,10 @@ mybatis-generator-gui是基于[mybatis generator](http://www.mybatis.org/generat
 
 ### 启动本软件
 
-* 方法一：下载
-```bash
-    cd /your_download_folder
-    java -jar mybatis-generator-gui.jar
-```
+* 方法一：关注微信公众号“搬砖头也要有态度”，回复“GUI”获取下载链接
+![image](https://user-images.githubusercontent.com/3505708/61359642-562c5580-a8af-11e9-9fa0-0159f8dcbe37.png)
 * 方法二: 自助构建
+```bash
 
 ```bash
     git clone https://github.com/zouzg/mybatis-generator-gui
