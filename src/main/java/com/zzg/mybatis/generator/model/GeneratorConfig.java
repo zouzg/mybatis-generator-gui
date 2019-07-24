@@ -44,6 +44,8 @@ public class GeneratorConfig {
 
 	private boolean needToStringHashcodeEquals;
 
+	private boolean useLombokPlugin;
+
 	private boolean needForUpdate;
 
 	private boolean annotationDAO;
@@ -201,6 +203,14 @@ public class GeneratorConfig {
     public void setNeedToStringHashcodeEquals(boolean needToStringHashcodeEquals) {
         this.needToStringHashcodeEquals = needToStringHashcodeEquals;
     }
+
+	public boolean isUseLombokPlugin() {
+		return useLombokPlugin;
+	}
+
+	public void setUseLombokPlugin(boolean useLombokPlugin) {
+		this.useLombokPlugin = useLombokPlugin;
+	}
 
 	public boolean isNeedForUpdate() {
 		return needForUpdate;
