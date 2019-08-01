@@ -24,17 +24,15 @@ mybatis-generator-gui是基于[mybatis generator](http://www.mybatis.org/generat
 本工具由于使用了Java 8的众多特性，所以要求JDK <strong>1.8.0.60</strong>以上版本，另外<strong>JDK 1.9</strong>暂时还不支持。
 
 ### 下载
-你可以从本链接下载本工具: http://tools.mingzhi.ink
+你可以加入QQ群下载二进制安装版，目前支持Windows和MacOS，注意你的JDK不是是1.8，并且版本大于1.8.0.60
 
 
 ### 启动本软件
 
-* 方法一：下载
-```bash
-    cd /your_download_folder
-    java -jar mybatis-generator-gui.jar
-```
+* 方法一：关注微信公众号“搬砖头也要有态度”，回复“GUI”获取下载链接
+![image](https://user-images.githubusercontent.com/3505708/61360019-2893dc00-a8b0-11e9-8dc9-a020e997ab87.png)
 * 方法二: 自助构建
+```bash
 
 ```bash
     git clone https://github.com/zouzg/mybatis-generator-gui
@@ -58,7 +56,7 @@ Eclipse or IntelliJ IDEA中启动, 找到```com.zzg.mybatis.generator.MainUI```�
 	mvn jfx:native
 ```
 
-​	另外需要注意，windows系统打包成exe的话需要安装WiXToolset3+的环境；由于打包后会把jre打入安装包，两个平台均100M左右，体积较大请自行打包；打包后的安装包在target/jfx/native目录下
+	另外需要注意，windows系统打包成exe的话需要安装WiXToolset3+的环境；由于打包后会把jre打入安装包，两个平台均100M左右，体积较大请自行打包；打包后的安装包在target/jfx/native目录下
 
 ### 注意事项
 * 本自动生成代码工具只适合生成单表的增删改查，对于需要做数据库联合查询的，请自行写新的XML与Mapper；
@@ -80,12 +78,8 @@ Eclipse or IntelliJ IDEA中启动, 找到```com.zzg.mybatis.generator.MainUI```�
     * 如果你是一些常见的数据库连接、软件启动不了等问题，请先仔细阅读上面的文档，再解决不了在下面的QQ群中问（问问题的时候尽量把各种信息都提供好，否则只是几行文字是没有人愿意为你解答的）。
     
 ### QQ群
-鉴于有的同学可能有一些特殊情况不能使用，我建了一个QQ群供大家交流，QQ群号：613911142（已满），608454894
+鉴于有的同学可能有一些特殊情况不能使用，我建了一个QQ群供大家交流，QQ群号：613911142（已满），608454894（已满）, 677521221
 
-### 赞助
-本工具纯属个人业余时间开发与维护，如果你觉得软件对你有用，欢迎赞助，金额随意 :)
-
-<img src="https://user-images.githubusercontent.com/3505708/38162358-423d2d18-3512-11e8-9b52-c188bf37671d.png" width="200"> <img src="https://user-images.githubusercontent.com/3505708/38162365-56f8f55c-3512-11e8-8fd8-b8ae4f0ad3c8.png" width="200">
 - - -
 Licensed under the Apache 2.0 License
 
