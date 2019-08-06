@@ -24,39 +24,40 @@ mybatis-generator-gui是基于[mybatis generator](http://www.mybatis.org/generat
 本工具由于使用了Java 8的众多特性，所以要求JDK <strong>1.8.0.60</strong>以上版本，另外<strong>JDK 1.9</strong>暂时还不支持。
 
 ### 下载
-你可以加入QQ群下载二进制安装版，目前支持Windows和MacOS，注意你的JDK不是是1.8，并且版本大于1.8.0.60
+你可以加入QQ群下载二进制安装版，目前支持Windows和MacOS，注意你的JDK是不是1.8，并且版本大于1.8.0.60
 
 
 ### 启动本软件
 
 * 方法一：关注微信公众号“搬砖头也要有态度”，回复“GUI”获取下载链接
-![image](https://user-images.githubusercontent.com/3505708/61360019-2893dc00-a8b0-11e9-8dc9-a020e997ab87.png)
-* 方法二: 自助构建
-```bash
+    
+  ![image](https://user-images.githubusercontent.com/3505708/61360019-2893dc00-a8b0-11e9-8dc9-a020e997ab87.png)
 
-```bash
-    git clone https://github.com/zouzg/mybatis-generator-gui
-    cd mybatis-generator-gui
-    mvn jfx:jar
-    cd target/jfx/app/
-    java -jar mybatis-generator-gui.jar
-```
+* 方法二: 自助构建
+
+  ```bash
+  git clone https://github.com/zouzg/mybatis-generator-gui
+  cd mybatis-generator-gui
+  mvn jfx:jar
+  cd target/jfx/app/
+  java -jar mybatis-generator-gui.jar
+  ```
 
 * 方法三: IDE中运行
 
-Eclipse or IntelliJ IDEA中启动, 找到```com.zzg.mybatis.generator.MainUI```类并运行就可以了（主要你的IED运行的jdk版本是否符合要求）
+  Eclipse or IntelliJ IDEA中启动, 找到`com.zzg.mybatis.generator.MainUI`类并运行就可以了（主要你的IED运行的jdk版本是否符合要求）
 
-- 方法三：打包为本地原生应用，双击快捷方式即可启动，方便快捷
+* 方法四：打包为本地原生应用，双击快捷方式即可启动，方便快捷
 
   如果不想打包后的安装包logo为Java的灰色的茶杯，需要在pom文件里将对应操作系统平台的图标注释放开
 
-```bash
-	#<icon>${project.basedir}/package/windows/mybatis-generator-gui.ico</icon>为windows
-	#<icon>${project.basedir}/package/macosx/mybatis-generator-gui.icns</icon>为mac
-	mvn jfx:native
-```
+  ```bash
+  #<icon>${project.basedir}/package/windows/mybatis-generator-gui.ico</icon>为windows
+  #<icon>${project.basedir}/package/macosx/mybatis-generator-gui.icns</icon>为mac
+  mvn jfx:native
+  ```
 
-	另外需要注意，windows系统打包成exe的话需要安装WiXToolset3+的环境；由于打包后会把jre打入安装包，两个平台均100M左右，体积较大请自行打包；打包后的安装包在target/jfx/native目录下
+  另外需要注意，windows系统打包成exe的话需要安装WiXToolset3+的环境；由于打包后会把jre打入安装包，两个平台均100M左右，体积较大请自行打包；打包后的安装包在target/jfx/native目录下
 
 ### 注意事项
 * 本自动生成代码工具只适合生成单表的增删改查，对于需要做数据库联合查询的，请自行写新的XML与Mapper；
