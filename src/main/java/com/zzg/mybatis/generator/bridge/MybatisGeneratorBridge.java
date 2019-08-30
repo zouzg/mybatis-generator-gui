@@ -198,7 +198,9 @@ public class MybatisGeneratorBridge {
             context.addPluginConfiguration(pluginConfiguration2);
         }
         // limit/offset插件
+
         if (generatorConfig.isOffsetLimit()) {
+
             if (DbType.MySQL.name().equals(dbType) || DbType.MySQL_8.name().equals(dbType)
                     || DbType.PostgreSQL.name().equals(dbType)) {
                 PluginConfiguration pluginConfiguration = new PluginConfiguration();
@@ -206,6 +208,11 @@ public class MybatisGeneratorBridge {
                 pluginConfiguration.addProperty("type", "com.zzg.mybatis.generator.plugins.MySQLLimitPlugin");
                 pluginConfiguration.setConfigurationType("com.zzg.mybatis.generator.plugins.MySQLLimitPlugin");
                 context.addPluginConfiguration(pluginConfiguration);
+                //selectByPage
+                PluginConfiguration pluginConfiguration1 = new PluginConfiguration();
+                pluginConfiguration1.addProperty("type", "com.zzg.mybatis.generator.plugins.PagePlugin");
+                pluginConfiguration1.setConfigurationType("com.zzg.mybatis.generator.plugins.PagePlugin");
+                context.addPluginConfiguration(pluginConfiguration1);
             }else if (DbType.Oracle.name().equals(dbType)) {
                 //oracle 分页 -- panda
                 PluginConfiguration pluginConfiguration = new PluginConfiguration();
