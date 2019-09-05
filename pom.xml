@@ -68,6 +68,12 @@
             <artifactId>jsch</artifactId>
             <version>0.1.54</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.misterchangray.mybatis.generator.plugins/myBatisGeneratorPlugins -->
+        <dependency>
+            <groupId>com.github.misterchangray.mybatis.generator.plugins</groupId>
+            <artifactId>myBatisGeneratorPlugins</artifactId>
+            <version>1.2</version>
+        </dependency>
     </dependencies>
 
     <build>
