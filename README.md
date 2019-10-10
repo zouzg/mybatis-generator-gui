@@ -45,7 +45,7 @@ mybatis-generator-gui是基于[mybatis generator](http://www.mybatis.org/generat
 
 * 方法三: IDE中运行
 
-  Eclipse or IntelliJ IDEA中启动, 找到`com.zzg.mybatis.generator.MainUI`类并运行就可以了（主要你的IED运行的jdk版本是否符合要求）
+  Eclipse or IntelliJ IDEA中启动, 找到`com.zzg.mybatis.generator.MainUI`类并运行就可以了（主要你的IDE运行的jdk版本是否符合要求）
 
 * 方法四：打包为本地原生应用，双击快捷方式即可启动，方便快捷
 
