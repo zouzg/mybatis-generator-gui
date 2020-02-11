@@ -141,6 +141,8 @@ public class MybatisGeneratorBridge {
         JDBCConnectionConfiguration jdbcConfig = new JDBCConnectionConfiguration();
         if (DbType.MySQL.name().equals(dbType) || DbType.MySQL_8.name().equals(dbType)) {
 	        jdbcConfig.addProperty("nullCatalogMeansCurrent", "true");
+	        // useInformationSchema可以拿到表注释，从而生成类注释可以使用表的注释
+	        jdbcConfig.addProperty("useInformationSchema", "true");
         }
         jdbcConfig.setDriverClass(DbType.valueOf(dbType).getDriverClass());
         jdbcConfig.setConnectionURL(DbUtil.getConnectionUrlWithSchema(selectedDatabaseConfig));
