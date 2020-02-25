@@ -8,14 +8,18 @@ import com.zzg.mybatis.generator.util.DbUtil;
 import com.zzg.mybatis.generator.view.AlertUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
+import javafx.stage.FileChooser;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.*;
@@ -26,12 +30,19 @@ import java.util.concurrent.*;
  * @author slankka on 2018/12/30.
  */
 public class OverSshController extends DbConnectionController {
+
     private Logger logger = LoggerFactory.getLogger(OverSshController.class);
 
+    @FXML
+    public HBox pubkeyBox;
     @FXML
     public Label lPortLabel;
     @FXML
     public TextField sshUserField;
+    @FXML
+    public ChoiceBox<String> authTypeChoice;
+    @FXML
+    public Label sshPasswordLabel;
     @FXML
     public PasswordField sshPasswordField;
     @FXML
@@ -44,9 +55,45 @@ public class OverSshController extends DbConnectionController {
     private TextField rportField;
     @FXML
     private Label note;
+    @FXML
+    private Label pubkeyBoxLabel;
+    @FXML
+    private TextField sshPubKeyField;
+    @FXML
+    public PasswordField sshPubkeyPasswordField;
+    @FXML
+    public Label sshPubkeyPasswordLabel;
+    @FXML
+    public Label sshPubkeyPasswordNote;
 
+    private FileChooser fileChooser = new FileChooser();
+
+    private File privateKey;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        fileChooser.setTitle("选择SSH秘钥文件");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        authTypeChoice.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if ("PubKey".equals(newValue)) {
+                //公钥认证
+                sshPasswordField.setVisible(false);
+                sshPasswordLabel.setVisible(false);
+                pubkeyBox.setVisible(true);
+                pubkeyBoxLabel.setVisible(true);
+                sshPubkeyPasswordField.setVisible(true);
+                sshPubkeyPasswordLabel.setVisible(true);
+                sshPubkeyPasswordNote.setVisible(true);
+            }else {
+                //密码认证
+                pubkeyBox.setVisible(false);
+                pubkeyBoxLabel.setVisible(false);
+                sshPubkeyPasswordField.setVisible(false);
+                sshPubkeyPasswordLabel.setVisible(false);
+                sshPubkeyPasswordNote.setVisible(false);
+                sshPasswordLabel.setVisible(true);
+                sshPasswordField.setVisible(true);
+            }
+        });
     }
 
     public void setDbConnectionConfig(DatabaseConfig databaseConfig) {
@@ -68,16 +115,29 @@ public class OverSshController extends DbConnectionController {
         if (StringUtils.isBlank(this.rportField.getText())) {
             this.rportField.setText(databaseConfig.getPort());
         }
+        if (StringUtils.isNotBlank(databaseConfig.getPrivateKey())) {
+            this.sshPubKeyField.setText(databaseConfig.getPrivateKey());
+            this.sshPubkeyPasswordField.setText(databaseConfig.getPrivateKeyPassword());
+            authTypeChoice.getSelectionModel().select("PubKey");
+        }
         checkInput();
     }
 
     @FXML
     public void checkInput() {
         DatabaseConfig databaseConfig = extractConfigFromUi();
-        if (StringUtils.isBlank(databaseConfig.getSshHost())
+        if (authTypeChoice.getValue().equals("Password") && (
+            StringUtils.isBlank(databaseConfig.getSshHost())
                 || StringUtils.isBlank(databaseConfig.getSshPort())
                 || StringUtils.isBlank(databaseConfig.getSshUser())
                 || StringUtils.isBlank(databaseConfig.getSshPassword())
+        )
+            || authTypeChoice.getValue().equals("PubKey") && (
+            StringUtils.isBlank(databaseConfig.getSshHost())
+                || StringUtils.isBlank(databaseConfig.getSshPort())
+                || StringUtils.isBlank(databaseConfig.getSshUser())
+                || StringUtils.isBlank(databaseConfig.getPrivateKey())
+        )
         ) {
             note.setText("当前SSH配置输入不完整，OVER SSH不生效");
             note.setTextFill(Paint.valueOf("#ff666f"));
@@ -104,6 +164,7 @@ public class OverSshController extends DbConnectionController {
         String encoding = encodingChoice.getValue();
         String dbType = dbTypeChoice.getValue();
         String schema = schemaField.getText();
+        String authType = authTypeChoice.getValue();
         DatabaseConfig config = new DatabaseConfig();
         config.setName(name);
         config.setDbType(dbType);
@@ -119,6 +180,10 @@ public class OverSshController extends DbConnectionController {
         config.setRport(this.rportField.getText());
         config.setSshUser(this.sshUserField.getText());
         config.setSshPassword(this.sshPasswordField.getText());
+        if ("PubKey".equals(authType)) {
+            config.setPrivateKey(this.privateKey.getAbsolutePath());
+            config.setPrivateKeyPassword(this.sshPubkeyPasswordField.getText());
+        }
         return config;
     }
 
@@ -149,7 +214,7 @@ public class OverSshController extends DbConnectionController {
     public void testSSH() {
         Session session = DbUtil.getSSHSession(extractConfigFromUi());
         if (session == null) {
-            AlertUtil.showErrorAlert("请检查主机，端口，用户名，以及密码是否填写正确");
+            AlertUtil.showErrorAlert("请检查主机，端口，用户名，以及密码/秘钥是否填写正确");
             return;
         }
         ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -171,7 +236,7 @@ public class OverSshController extends DbConnectionController {
             AlertUtil.showInfoAlert("连接SSH服务器成功，恭喜你可以使用OverSSH功能");
             recoverNotice();
         } catch (Exception e) {
-            AlertUtil.showErrorAlert("请检查主机，端口，用户名，以及密码是否填写正确: " + e.getMessage());
+            AlertUtil.showErrorAlert("请检查主机，端口，用户名，以及密码/秘钥是否填写正确: " + e.getMessage());
         } finally {
             DbUtil.shutdownPortForwarding(session);
         }
@@ -185,6 +250,12 @@ public class OverSshController extends DbConnectionController {
         this.sshHostField.clear();
         this.lportField.clear();
         this.rportField.clear();
+        this.sshPubKeyField.clear();
         recoverNotice();
+    }
+
+    public void choosePubKey(ActionEvent actionEvent) {
+        this.privateKey = fileChooser.showOpenDialog(getDialogStage());
+        sshPubKeyField.setText(this.privateKey.getAbsolutePath());
     }
 }
