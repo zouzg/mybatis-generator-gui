@@ -19,8 +19,6 @@ import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 public class CommonDAOInterfacePlugin extends PluginAdapter {
 
     private static final String DEFAULT_DAO_SUPER_CLASS = ".MyBatisBaseDao";
-    private static final FullyQualifiedJavaType PARAM_ANNOTATION_TYPE = new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param");
-    private static final FullyQualifiedJavaType LIST_TYPE = FullyQualifiedJavaType.getNewListInstance();
     private static final FullyQualifiedJavaType SERIALIZEBLE_TYPE = new FullyQualifiedJavaType("java.io.Serializable");
 
     private List<Method> methods = new ArrayList<>();
@@ -46,8 +44,6 @@ public class CommonDAOInterfacePlugin extends PluginAdapter {
         Interface mapperInterface = new Interface(daoTargetPackage + DEFAULT_DAO_SUPER_CLASS);
 
         if (stringHasValue(daoTargetPackage)) {
-            mapperInterface.addImportedType(PARAM_ANNOTATION_TYPE);
-            mapperInterface.addImportedType(LIST_TYPE);
             mapperInterface.addImportedType(SERIALIZEBLE_TYPE);
 
             mapperInterface.setVisibility(JavaVisibility.PUBLIC);
