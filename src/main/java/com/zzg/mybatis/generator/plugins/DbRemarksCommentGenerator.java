@@ -148,7 +148,7 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
         field.addJavaDocLine("@ApiModelProperty(value=\""+introspectedColumn.getRemarks()+"\")");
 
         if (isAnnotations) {
-            boolean isId = false;
+//            boolean isId = false;
 //            for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
 //                if (introspectedColumn == column) {
 ////                    isId = true;
@@ -157,9 +157,9 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
 //                    break;
 //                }
 //            }
-            if (!introspectedColumn.isNullable() && !isId){
-                field.addAnnotation("@NotEmpty");
-            }
+//            if (!introspectedColumn.isNullable() && !isId){
+//                field.addAnnotation("@NotEmpty");
+//            }
             if (introspectedColumn.isIdentity()) {
                 if (introspectedTable.getTableConfiguration().getGeneratedKey().getRuntimeSqlStatement().equals("JDBC")) {
                     field.addAnnotation("@GeneratedValue(generator = \"JDBC\")");
