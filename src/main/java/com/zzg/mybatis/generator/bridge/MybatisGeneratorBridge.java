@@ -196,6 +196,8 @@ public class MybatisGeneratorBridge {
             pluginConfiguration.setConfigurationType("com.softwareloop.mybatis.generator.plugins.LombokPlugin");
             context.addPluginConfiguration(pluginConfiguration);
         }
+
+
         // toString, hashCode, equals插件
         else if (generatorConfig.isNeedToStringHashcodeEquals()) {
             PluginConfiguration pluginConfiguration1 = new PluginConfiguration();
