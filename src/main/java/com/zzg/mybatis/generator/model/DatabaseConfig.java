@@ -42,6 +42,10 @@ public class DatabaseConfig {
 
     private String sshPassword;
 
+    private String privateKeyPassword;
+
+    private String privateKey;
+
 	public Integer getId() {
 		return id;
 	}
@@ -162,31 +166,49 @@ public class DatabaseConfig {
 		this.sshPassword = sshPassword;
 	}
 
+	public String getPrivateKeyPassword() {
+		return privateKeyPassword;
+	}
+
+	public void setPrivateKeyPassword(String privateKeyPassword) {
+		this.privateKeyPassword = privateKeyPassword;
+	}
+
+	public String getPrivateKey() {
+		return privateKey;
+	}
+
+	public void setPrivateKey(String privateKey) {
+		this.privateKey = privateKey;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		DatabaseConfig that = (DatabaseConfig) o;
 		return Objects.equals(id, that.id) &&
-				Objects.equals(dbType, that.dbType) &&
-				Objects.equals(name, that.name) &&
-				Objects.equals(host, that.host) &&
-				Objects.equals(port, that.port) &&
-				Objects.equals(schema, that.schema) &&
-				Objects.equals(username, that.username) &&
-				Objects.equals(password, that.password) &&
-				Objects.equals(encoding, that.encoding) &&
-				Objects.equals(lport, that.lport) &&
-				Objects.equals(rport, that.rport) &&
-				Objects.equals(sshPort, that.sshPort) &&
-				Objects.equals(sshHost, that.sshHost) &&
-				Objects.equals(sshUser, that.sshUser) &&
-				Objects.equals(sshPassword, that.sshPassword);
+			Objects.equals(dbType, that.dbType) &&
+			Objects.equals(name, that.name) &&
+			Objects.equals(host, that.host) &&
+			Objects.equals(port, that.port) &&
+			Objects.equals(schema, that.schema) &&
+			Objects.equals(username, that.username) &&
+			Objects.equals(password, that.password) &&
+			Objects.equals(encoding, that.encoding) &&
+			Objects.equals(lport, that.lport) &&
+			Objects.equals(rport, that.rport) &&
+			Objects.equals(sshPort, that.sshPort) &&
+			Objects.equals(sshHost, that.sshHost) &&
+			Objects.equals(sshUser, that.sshUser) &&
+			Objects.equals(sshPassword, that.sshPassword) &&
+			Objects.equals(privateKeyPassword, that.privateKeyPassword) &&
+			Objects.equals(privateKey, that.privateKey);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, dbType, name, host, port, schema, username, password, encoding, lport, rport, sshPort, sshHost, sshUser, sshPassword);
+		return Objects.hash(id, dbType, name, host, port, schema, username, password, encoding, lport, rport, sshPort, sshHost, sshUser, sshPassword, privateKeyPassword, privateKey);
 	}
 
 	@Override

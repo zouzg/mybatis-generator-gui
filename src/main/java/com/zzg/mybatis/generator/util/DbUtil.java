@@ -38,10 +38,11 @@ public class DbUtil {
 		if (StringUtils.isBlank(databaseConfig.getSshHost())
 				|| StringUtils.isBlank(databaseConfig.getSshPort())
 				|| StringUtils.isBlank(databaseConfig.getSshUser())
-				|| StringUtils.isBlank(databaseConfig.getSshPassword())
+				|| (StringUtils.isBlank(databaseConfig.getPrivateKey()) && StringUtils.isBlank(databaseConfig.getSshPassword()))
 		) {
 			return null;
 		}
+
 		Session session = null;
 		try {
 			//Set StrictHostKeyChecking property to no to avoid UnknownHostKey issue
@@ -51,7 +52,12 @@ public class DbUtil {
 			Integer sshPort = NumberUtils.createInteger(databaseConfig.getSshPort());
 			int port = sshPort == null ? 22 : sshPort;
 			session = jsch.getSession(databaseConfig.getSshUser(), databaseConfig.getSshHost(), port);
-			session.setPassword(databaseConfig.getSshPassword());
+			if (StringUtils.isNotBlank(databaseConfig.getPrivateKey())) {
+				//使用秘钥方式认证
+				jsch.addIdentity(databaseConfig.getPrivateKey(), StringUtils.defaultIfBlank(databaseConfig.getPrivateKeyPassword(), null));
+			}else {
+				session.setPassword(databaseConfig.getSshPassword());
+			}
 			session.setConfig(config);
 		}catch (JSchException e) {
 			//Ignore
