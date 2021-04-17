@@ -140,47 +140,44 @@ public class DbUtil {
         return connection;
     }
 
-    public static List<String> getTableNames(DatabaseConfig config) throws Exception {
+    public static List<String> getTableNames(DatabaseConfig config, String filter) throws Exception {
 		Session sshSession = getSSHSession(config);
 		engagePortForwarding(sshSession, config);
-		Connection connection = getConnection(config);
-	    try {
-		    List<String> tables = new ArrayList<>();
-		    DatabaseMetaData md = connection.getMetaData();
-		    ResultSet rs;
-		    if (DbType.valueOf(config.getDbType()) == DbType.SQL_Server) {
-			    String sql = "select name from sysobjects  where xtype='u' or xtype='v' order by name";
-			    rs = connection.createStatement().executeQuery(sql);
-			    while (rs.next()) {
-				    tables.add(rs.getString("name"));
-			    }
-		    } else if (DbType.valueOf(config.getDbType()) == DbType.Oracle){
-			    rs = md.getTables(null, config.getUsername().toUpperCase(), null, new String[] {"TABLE", "VIEW"});
-		    } else if (DbType.valueOf(config.getDbType())==DbType.Sqlite){
-		    	String sql = "Select name from sqlite_master;";
-			    rs = connection.createStatement().executeQuery(sql);
-			    while (rs.next()) {
-				    tables.add(rs.getString("name"));
-			    }
-		    } 
-		    else {
-			    // rs = md.getTables(null, config.getUsername().toUpperCase(), null, null);
-
-
-				rs = md.getTables(config.getSchema(), null, "%", new String[] {"TABLE", "VIEW"});			//针对 postgresql 的左侧数据表显示
-		    }
-		    while (rs.next()) {
-			    tables.add(rs.getString(3));
-		    }
-
-		    if (tables.size()>1) {
-		    	Collections.sort(tables);
+		try (Connection connection = getConnection(config)) {
+			List<String> tables = new ArrayList<>();
+			DatabaseMetaData md = connection.getMetaData();
+			ResultSet rs;
+			if (DbType.valueOf(config.getDbType()) == DbType.SQL_Server) {
+				String sql = "select name from sysobjects  where xtype='u' or xtype='v' order by name";
+				rs = connection.createStatement().executeQuery(sql);
+				while (rs.next()) {
+					tables.add(rs.getString("name"));
+				}
+			} else if (DbType.valueOf(config.getDbType()) == DbType.Oracle) {
+				rs = md.getTables(null, config.getUsername().toUpperCase(), null, new String[]{"TABLE", "VIEW"});
+			} else if (DbType.valueOf(config.getDbType()) == DbType.Sqlite) {
+				String sql = "Select name from sqlite_master;";
+				rs = connection.createStatement().executeQuery(sql);
+				while (rs.next()) {
+					tables.add(rs.getString("name"));
+				}
+			} else {
+				// rs = md.getTables(null, config.getUsername().toUpperCase(), null, null);
+				rs = md.getTables(config.getSchema(), null, "%", new String[]{"TABLE", "VIEW"});//针对 postgresql 的左侧数据表显示
 			}
-		    return tables;
-	    } finally {
-	    	connection.close();
+			while (rs.next()) {
+				tables.add(rs.getString(3));
+			}
+			if (StringUtils.isNotBlank(filter)) {
+				tables.removeIf(x -> !x.contains(filter) && !(x.replaceAll("_", "").contains(filter)));;
+			}
+			if (tables.size() > 1) {
+				Collections.sort(tables);
+			}
+			return tables;
+		} finally {
 			shutdownPortForwarding(sshSession);
-	    }
+		}
 	}
 
     public static List<UITableColumnVO> getTableColumns(DatabaseConfig dbConfig, String tableName) throws Exception {
