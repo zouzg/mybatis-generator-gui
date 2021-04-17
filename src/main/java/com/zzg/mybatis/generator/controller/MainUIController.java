@@ -20,7 +20,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldTreeCell;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.DirectoryChooser;
 import javafx.util.Callback;
 import org.apache.commons.io.FileUtils;
@@ -102,6 +104,8 @@ public class MainUIController extends BaseFXController {
     private CheckBox jsr310Support;
     @FXML
     private TreeView<String> leftDBTree;
+    @FXML
+    public TextField filterTreeBox;
     // Current selected databaseConfig
     private DatabaseConfig selectedDatabaseConfig;
     // Current selected tableName
@@ -149,8 +153,16 @@ public class MainUIController extends BaseFXController {
         leftDBTree.setShowRoot(false);
         leftDBTree.setRoot(new TreeItem<>());
         Callback<TreeView<String>, TreeCell<String>> defaultCellFactory = TextFieldTreeCell.forTreeView();
+        filterTreeBox.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
+            if (ev.getCode() == KeyCode.ENTER) {
+                ObservableList<TreeItem<String>> schemas = leftDBTree.getRoot().getChildren();
+                schemas.filtered(TreeItem::isExpanded).forEach(this::displayTables);
+                ev.consume();
+            }
+        });
         leftDBTree.setCellFactory((TreeView<String> tv) -> {
             TreeCell<String> cell = defaultCellFactory.call(tv);
+
             cell.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 int level = leftDBTree.getTreeItemLevel(cell.getTreeItem());
                 TreeCell<String> treeCell = (TreeCell<String>) event.getSource();
@@ -186,29 +198,7 @@ public class MainUIController extends BaseFXController {
                     }
                     treeItem.setExpanded(true);
                     if (level == 1) {
-                        DatabaseConfig selectedConfig = (DatabaseConfig) treeItem.getGraphic().getUserData();
-                        try {
-                            List<String> tables = DbUtil.getTableNames(selectedConfig);
-                            if (tables != null && tables.size() > 0) {
-                                ObservableList<TreeItem<String>> children = cell.getTreeItem().getChildren();
-                                children.clear();
-                                for (String tableName : tables) {
-                                    TreeItem<String> newTreeItem = new TreeItem<>();
-                                    ImageView imageView = new ImageView("icons/table.png");
-                                    imageView.setFitHeight(16);
-                                    imageView.setFitWidth(16);
-                                    newTreeItem.setGraphic(imageView);
-                                    newTreeItem.setValue(tableName);
-                                    children.add(newTreeItem);
-                                }
-                            }
-                        } catch (SQLRecoverableException e) {
-                            _LOG.error(e.getMessage(), e);
-                            AlertUtil.showErrorAlert("连接超时");
-                        } catch (Exception e) {
-                            _LOG.error(e.getMessage(), e);
-                            AlertUtil.showErrorAlert(e.getMessage());
-                        }
+                        displayTables(treeItem);
                     } else if (level == 2) { // left DB tree level3
                         String tableName = treeCell.getTreeItem().getValue();
                         selectedDatabaseConfig = (DatabaseConfig) treeItem.getParent().getGraphic().getUserData();
@@ -226,6 +216,54 @@ public class MainUIController extends BaseFXController {
 		//默认选中第一个，否则如果忘记选择，没有对应错误提示
         encodingChoice.getSelectionModel().selectFirst();
 	}
+
+	private void displayTables(TreeItem<String> treeItem) {
+        if(treeItem == null) {
+            return ;
+        }
+        if (!treeItem.isExpanded()) {
+            return;
+        }
+        DatabaseConfig selectedConfig = (DatabaseConfig) treeItem.getGraphic().getUserData();
+        try {
+            String filter = filterTreeBox.getText();
+            List<String> tables = DbUtil.getTableNames(selectedConfig, filter);
+            if (tables.size() > 0) {
+                ObservableList<TreeItem<String>> children = treeItem.getChildren();
+                children.clear();
+                for (String tableName : tables) {
+                    TreeItem<String> newTreeItem = new TreeItem<>();
+                    ImageView imageView = new ImageView("icons/table.png");
+                    imageView.setFitHeight(16);
+                    imageView.setFitWidth(16);
+                    newTreeItem.setGraphic(imageView);
+                    newTreeItem.setValue(tableName);
+                    children.add(newTreeItem);
+                }
+            }else if (StringUtils.isNotBlank(filter)){
+                treeItem.getChildren().clear();
+            }
+            if (StringUtils.isNotBlank(filter)) {
+                ImageView imageView = new ImageView("icons/filter.png");
+                imageView.setFitHeight(16);
+                imageView.setFitWidth(16);
+                imageView.setUserData(treeItem.getGraphic().getUserData());
+                treeItem.setGraphic(imageView);
+            }else {
+                ImageView dbImage = new ImageView("icons/computer.png");
+                dbImage.setFitHeight(16);
+                dbImage.setFitWidth(16);
+                dbImage.setUserData(treeItem.getGraphic().getUserData());
+                treeItem.setGraphic(dbImage);
+            }
+        } catch (SQLRecoverableException e) {
+            _LOG.error(e.getMessage(), e);
+            AlertUtil.showErrorAlert("连接超时");
+        } catch (Exception e) {
+            _LOG.error(e.getMessage(), e);
+            AlertUtil.showErrorAlert(e.getMessage());
+        }
+    }
 
 	private void setTooltip() {
 		encodingChoice.setTooltip(new Tooltip("生成文件的编码，必选"));
@@ -256,7 +294,7 @@ public class MainUIController extends BaseFXController {
                 rootTreeItem.getChildren().add(treeItem);
             }
         } catch (Exception e) {
-            _LOG.error("connect db failed, reason: {}", e);
+            _LOG.error("connect db failed, reason", e);
             AlertUtil.showErrorAlert(e.getMessage() + "\n" + ExceptionUtils.getStackTrace(e));
         }
     }
