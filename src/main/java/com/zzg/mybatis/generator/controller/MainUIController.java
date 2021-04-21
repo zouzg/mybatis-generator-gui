@@ -40,6 +40,7 @@ import java.net.URL;
 import java.sql.SQLRecoverableException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -390,7 +391,11 @@ public class MainUIController extends BaseFXController {
 
 	@FXML
     public void saveGeneratorConfig() {
-        TextInputDialog dialog = new TextInputDialog("");
+        String defaultName = "";
+        if (Objects.nonNull(selectedDatabaseConfig)) {
+            defaultName = String.format("%s.%s", selectedDatabaseConfig.getSchema(), tableNameField.getText());
+        }
+        TextInputDialog dialog = new TextInputDialog(defaultName);
         dialog.setTitle("保存当前配置");
         dialog.setContentText("请输入配置名称");
         Optional<String> result = dialog.showAndWait();
