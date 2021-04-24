@@ -11,6 +11,9 @@ mybatis-generator-gui是基于 [mybatis generator](http://www.mybatis.org/genera
 
 ![overSSH](https://user-images.githubusercontent.com/3505708/51911646-5920b000-240d-11e9-9048-738306a56d14.png)
 
+![SearchSupport](https://user-images.githubusercontent.com/8142133/115959972-881d2200-a541-11eb-8ad4-052f379b91f1.png)
+
+
 ### 核心特性
 * 按照界面步骤轻松生成代码，省去XML繁琐的学习与配置过程
 * 保存数据库连接与Generator配置，每次代码生成轻松搞定
