@@ -451,11 +451,13 @@ public class MainUIController extends BaseFXController {
         modelTargetProject.setText(generatorConfig.getModelPackageTargetFolder());
         daoTargetPackage.setText(generatorConfig.getDaoPackage());
 		daoTargetProject.setText(generatorConfig.getDaoTargetFolder());
-		mapperName.setText(generatorConfig.getMapperName());
 		mapperTargetPackage.setText(generatorConfig.getMappingXMLPackage());
         mappingTargetProject.setText(generatorConfig.getMappingXMLTargetFolder());
-        tableNameField.setText(generatorConfig.getTableName());
-        domainObjectNameField.setText(generatorConfig.getDomainObjectName());
+        if (StringUtils.isBlank(tableNameField.getText())) {
+            tableNameField.setText(generatorConfig.getTableName());
+            mapperName.setText(generatorConfig.getMapperName());
+            domainObjectNameField.setText(generatorConfig.getDomainObjectName());
+        }
         offsetLimitCheckBox.setSelected(generatorConfig.isOffsetLimit());
         commentCheckBox.setSelected(generatorConfig.isComment());
         overrideXML.setSelected(generatorConfig.isOverrideXML());
@@ -471,7 +473,6 @@ public class MainUIController extends BaseFXController {
         useDAOExtendStyle.setSelected(generatorConfig.isUseDAOExtendStyle());
         useSchemaPrefix.setSelected(generatorConfig.isUseSchemaPrefix());
         jsr310Support.setSelected(generatorConfig.isJsr310Support());
-
     }
 
     @FXML
