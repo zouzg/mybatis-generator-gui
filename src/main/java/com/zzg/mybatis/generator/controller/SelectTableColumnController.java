@@ -50,6 +50,11 @@ public class SelectTableColumnController extends BaseFXController {
         typeHandlerColumn.setCellValueFactory(new PropertyValueFactory<>("typeHandler"));
         // Cell Factory that customize how the cell should render
         checkedColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkedColumn));
+        jdbcTypeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        // handle commit event to save the user input data
+        jdbcTypeColumn.setOnEditCommit(event -> {
+            event.getTableView().getItems().get(event.getTablePosition().getRow()).setJdbcType(event.getNewValue());
+        });
         javaTypeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         // handle commit event to save the user input data
         javaTypeColumn.setOnEditCommit(event -> {
@@ -78,6 +83,7 @@ public class SelectTableColumnController extends BaseFXController {
                 } else if (item.getTypeHandle() != null || item.getJavaType() != null || item.getPropertyName() != null) { // unchecked and have typeHandler value
                     ColumnOverride columnOverride = new ColumnOverride(item.getColumnName());
                     columnOverride.setTypeHandler(item.getTypeHandle());
+                    columnOverride.setJdbcType(item.getJdbcType());
                     columnOverride.setJavaProperty(item.getPropertyName());
                     columnOverride.setJavaType(item.getJavaType());
                     columnOverrides.add(columnOverride);

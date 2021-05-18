@@ -121,14 +121,10 @@ public class MybatisGeneratorBridge {
         }
         // add ignore columns
         if (ignoredColumns != null) {
-            ignoredColumns.stream().forEach(ignoredColumn -> {
-                tableConfig.addIgnoredColumn(ignoredColumn);
-            });
+            ignoredColumns.forEach(tableConfig::addIgnoredColumn);
         }
         if (columnOverrides != null) {
-            columnOverrides.stream().forEach(columnOverride -> {
-                tableConfig.addColumnOverride(columnOverride);
-            });
+            columnOverrides.forEach(tableConfig::addColumnOverride);
         }
         if (generatorConfig.isUseActualColumnNames()) {
 			tableConfig.addProperty("useActualColumnNames", "true");
