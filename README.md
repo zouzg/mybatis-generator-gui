@@ -25,8 +25,8 @@ mybatis-generator-gui是基于 [mybatis generator](http://www.mybatis.org/genera
 
 ### 运行要求（重要！！！）
 本工具仅支持Java的2个最新的LTS版本，jdk8和jdk11
-* 默认支持<strong>1.8.0.60</strong>以上版本，使用master分支即可
-* 如果需要使用Java 11，请切换至<strong>jdk11</strong>的分支，
+* jdk1.8要求版本在<strong>1.8.0.60</strong>以上版本
+* Java 11无版本要求
 
 ### 直接运行（非必须）
 推荐使用IDE直接运行，如果需要二进制安装包，可以关注公众号获取二进制安装版，目前支持Windows和MacOS，注意你的JDK是不是1.8，并且版本大于1.8.0.60
