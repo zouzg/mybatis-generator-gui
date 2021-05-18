@@ -11,6 +11,9 @@ mybatis-generator-gui是基于 [mybatis generator](http://www.mybatis.org/genera
 
 ![overSSH](https://user-images.githubusercontent.com/3505708/51911646-5920b000-240d-11e9-9048-738306a56d14.png)
 
+![SearchSupport](https://user-images.githubusercontent.com/8142133/115959972-881d2200-a541-11eb-8ad4-052f379b91f1.png)
+
+
 ### 核心特性
 * 按照界面步骤轻松生成代码，省去XML繁琐的学习与配置过程
 * 保存数据库连接与Generator配置，每次代码生成轻松搞定
@@ -81,7 +84,7 @@ mybatis-generator-gui是基于 [mybatis generator](http://www.mybatis.org/genera
     * 如果你是一些常见的数据库连接、软件启动不了等问题，请先仔细阅读上面的文档，再解决不了在下面的QQ群中问（问问题的时候尽量把各种信息都提供好，否则只是几行文字是没有人愿意为你解答的）。
     
 ### QQ群
-鉴于有的同学可能有一些特殊情况不能使用，我建了一个QQ群供大家交流，QQ群号：613911142（已满），608454894（已满）, 677521221
+鉴于有的同学可能有一些特殊情况不能使用，我建了一个钉钉群供大家交流，钉钉群号：35412531 （原QQ群已不再提供，QQ不方便打开）
 
 - - -
 Licensed under the Apache 2.0 License
