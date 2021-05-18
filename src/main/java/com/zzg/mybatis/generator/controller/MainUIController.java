@@ -26,7 +26,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.DirectoryChooser;
 import javafx.util.Callback;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.mybatis.generator.config.ColumnOverride;
@@ -513,9 +512,9 @@ public class MainUIController extends BaseFXController {
     private boolean checkDirs(GeneratorConfig config) {
 		List<String> dirs = new ArrayList<>();
 		dirs.add(config.getProjectFolder());
-		dirs.add(FilenameUtils.normalize(config.getProjectFolder().concat("/").concat(config.getModelPackageTargetFolder())));
-		dirs.add(FilenameUtils.normalize(config.getProjectFolder().concat("/").concat(config.getDaoTargetFolder())));
-		dirs.add(FilenameUtils.normalize(config.getProjectFolder().concat("/").concat(config.getMappingXMLTargetFolder())));
+		dirs.add(config.getProjectFolder().concat("/").concat(config.getModelPackageTargetFolder()));
+		dirs.add(config.getProjectFolder().concat("/").concat(config.getDaoTargetFolder()));
+		dirs.add(config.getProjectFolder().concat("/").concat(config.getMappingXMLTargetFolder()));
 		boolean haveNotExistFolder = false;
 		for (String dir : dirs) {
 			File file = new File(dir);
