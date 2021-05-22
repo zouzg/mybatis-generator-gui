@@ -9,6 +9,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <!-- Java 11请修改此处为11 -->
+        <java.version>1.8</java.version>
     </properties>
 
     <dependencies>
@@ -51,7 +53,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.7</version>
+            <version>1.2.76</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -73,6 +75,8 @@
             <artifactId>mybatis-generator-lombok-plugin</artifactId>
             <version>1.0</version>
         </dependency>
+        <!-- Java 11请关闭下面注释 -->
+        <!--
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -83,6 +87,7 @@
             <artifactId>javafx-fxml</artifactId>
             <version>11</version>
         </dependency>
+        -->
     </dependencies>
 
     <build>
@@ -91,6 +96,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
+                    <!-- Java 11请修改此处为11 -->
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
