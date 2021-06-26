@@ -9,6 +9,7 @@ public enum FXMLPage {
 
     NEW_CONNECTION("fxml/newConnection.fxml"),
     SELECT_TABLE_COLUMN("fxml/selectTableColumn.fxml"),
+    TABLE_COLUMN_CONFIG("fxml/tableColumnConfigs.fxml"),
     GENERATOR_CONFIG("fxml/generatorConfigs.fxml"),
     ;
 
