@@ -34,16 +34,17 @@ public abstract class BaseFXController implements Initializable {
         Parent loginNode;
         try {
             loginNode = loader.load();
-            BaseFXController controller = loader.getController();
-            dialogStage = new Stage();
-            dialogStage.setTitle(title);
-            dialogStage.initModality(Modality.APPLICATION_MODAL);
-            dialogStage.initOwner(getPrimaryStage());
-            dialogStage.setScene(new Scene(loginNode));
-            dialogStage.setMaximized(false);
-            dialogStage.setResizable(false);
-            dialogStage.show();
-            controller.setDialogStage(dialogStage);
+            BaseFXController controller     = loader.getController();
+            // fix bug: 嵌套弹出时会发生dialogStage被覆盖的情况
+            Stage            tmpDialogStage = new Stage();
+            tmpDialogStage.setTitle(title);
+            tmpDialogStage.initModality(Modality.APPLICATION_MODAL);
+            tmpDialogStage.initOwner(getPrimaryStage());
+            tmpDialogStage.setScene(new Scene(loginNode));
+            tmpDialogStage.setMaximized(false);
+            tmpDialogStage.setResizable(false);
+            tmpDialogStage.show();
+            controller.setDialogStage(tmpDialogStage);
             // put into cache map
             SoftReference<BaseFXController> softReference = new SoftReference<>(controller);
             cacheNodeMap.put(fxmlPage, softReference);
