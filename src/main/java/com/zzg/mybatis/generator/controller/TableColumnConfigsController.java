@@ -28,6 +28,7 @@ public class TableColumnConfigsController extends BaseFXController {
 
 	private static final Logger _LOG                  = LoggerFactory.getLogger(TableColumnConfigsController.class);
 	private static final String COL_NAME_PREFIX_REGEX = "(?<=%s)[^\"]+";   // pattern regex and split prefix: (?<=aggregate_|f_)[^"]+  f_ or d_ prefix
+	private static final String OR_REGEX              = "|";
 
 	@FXML
 	private Label     currentTableNameLabel;
@@ -73,6 +74,10 @@ public class TableColumnConfigsController extends BaseFXController {
 	private void genProertyNameByColumnNamePrefix() {
 		String columnNamePrefix = this.columnNamePrefixTextLabel.getText();
 		if (StringUtils.isNotBlank(columnNamePrefix)) {
+			if (StringUtils.endsWith(columnNamePrefix.trim(), OR_REGEX)) {
+				columnNamePrefix = StringUtils.removeEnd(columnNamePrefix.trim(), OR_REGEX);
+			}
+
 			String regex = String.format(COL_NAME_PREFIX_REGEX, columnNamePrefix);
 			_LOG.info("table:{}, column_name_prefix:{}, regex:{}", this.tableName, columnNamePrefix, regex);
 
