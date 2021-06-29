@@ -34,6 +34,7 @@ public class DbConnectionController extends BaseFXController {
     @FXML
     protected ChoiceBox<String> dbTypeChoice;
     protected MainUIController mainUIController;
+    protected TabPaneController tabPaneController;
     protected boolean isUpdate = false;
     protected Integer primayKey;
 
@@ -48,7 +49,7 @@ public class DbConnectionController extends BaseFXController {
         }
         try {
             ConfigHelper.saveDatabaseConfig(this.isUpdate, primayKey, config);
-            getDialogStage().close();
+            this.tabPaneController.getDialogStage().close();
             mainUIController.loadLeftDBTree();
         } catch (Exception e) {
             _LOG.error(e.getMessage(), e);
@@ -59,6 +60,10 @@ public class DbConnectionController extends BaseFXController {
     void setMainUIController(MainUIController controller) {
         this.mainUIController = controller;
         super.setDialogStage(mainUIController.getDialogStage());
+    }
+
+    public void setTabPaneController(TabPaneController tabPaneController) {
+        this.tabPaneController = tabPaneController;
     }
 
     public DatabaseConfig extractConfigForUI() {

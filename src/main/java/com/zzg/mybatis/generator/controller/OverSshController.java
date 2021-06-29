@@ -202,7 +202,7 @@ public class OverSshController extends DbConnectionController {
         }
         try {
             ConfigHelper.saveDatabaseConfig(this.isUpdate, primayKey, databaseConfig);
-            getDialogStage().close();
+            this.tabPaneController.getDialogStage().close();
             mainUIController.loadLeftDBTree();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

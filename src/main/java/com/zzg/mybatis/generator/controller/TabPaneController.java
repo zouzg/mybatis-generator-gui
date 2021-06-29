@@ -51,7 +51,9 @@ public class TabPaneController extends BaseFXController {
     public void setMainUIController(MainUIController mainUIController) {
         this.mainUIController = mainUIController;
         this.tabControlAController.setMainUIController(mainUIController);
+        this.tabControlAController.setTabPaneController(this);
         this.tabControlBController.setMainUIController(mainUIController);
+        this.tabControlBController.setTabPaneController(this);
     }
 
     public void setConfig(DatabaseConfig selectedConfig) {
