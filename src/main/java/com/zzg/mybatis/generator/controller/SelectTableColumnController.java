@@ -100,6 +100,14 @@ public class SelectTableColumnController extends BaseFXController {
         getDialogStage().close();
     }
 
+    @FXML
+    public void configAction() {
+        TableColumnConfigsController controller = (TableColumnConfigsController) loadFXMLPage("定制列配置", FXMLPage.TABLE_COLUMN_CONFIG,true);
+        controller.setColumnListView(this.columnListView);
+        controller.setTableName(this.tableName);
+        controller.showDialogStage();
+    }
+
     public void setColumnList(ObservableList<UITableColumnVO> columns) {
         columnListView.setItems(columns);
     }
