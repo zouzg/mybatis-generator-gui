@@ -29,7 +29,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label alignment="TOP_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="202.0" text="列名称前缀(多种前缀使用|分割):" textAlignment="RIGHT" GridPane.rowIndex="2">
+                  <Label alignment="TOP_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="202.0" text="去除前缀(多种前缀使用|分割):" textAlignment="RIGHT" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets top="5.0" />
                      </GridPane.margin>
