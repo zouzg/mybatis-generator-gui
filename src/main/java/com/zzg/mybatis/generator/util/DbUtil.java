@@ -10,6 +10,9 @@ import com.zzg.mybatis.generator.model.UITableColumnVO;
 import com.zzg.mybatis.generator.view.AlertUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.JavaTypeResolver;
+import org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl;
 import org.mybatis.generator.internal.util.ClassloaderUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +20,6 @@ import org.slf4j.LoggerFactory;
 import java.sql.*;
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -33,6 +35,8 @@ public class DbUtil {
 	private static ExecutorService executorService = Executors.newSingleThreadExecutor();
 	private static volatile boolean portForwaring = false;
 	private static Map<Integer, Session> portForwardingSession = new ConcurrentHashMap<>();
+
+	private static final JavaTypeResolver JAVA_TYPE_RESOLVER = new JavaTypeResolverDefaultImpl();
 
     public static Session getSSHSession(DatabaseConfig databaseConfig) {
 		if (StringUtils.isBlank(databaseConfig.getSshHost())
@@ -192,9 +196,14 @@ public class DbUtil {
 			List<UITableColumnVO> columns = new ArrayList<>();
 			while (rs.next()) {
 				UITableColumnVO columnVO = new UITableColumnVO();
+				// 获取实际的JdbcType，针对类似于BIGINT UNSIGNED数据类型生成的mapper中jdbcType错误的问题
+				IntrospectedColumn introspectedColumn =  new IntrospectedColumn();
+				introspectedColumn.setJdbcType(rs.getInt("DATA_TYPE"));
+				String jdbcType = JAVA_TYPE_RESOLVER.calculateJdbcTypeName(introspectedColumn);
+
 				String columnName = rs.getString("COLUMN_NAME");
 				columnVO.setColumnName(columnName);
-				columnVO.setJdbcType(rs.getString("TYPE_NAME"));
+				columnVO.setJdbcType(jdbcType);
 				columns.add(columnVO);
 			}
 			return columns;
