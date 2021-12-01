@@ -9,8 +9,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-        <!-- Java 11请修改此处为11 -->
-        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -75,52 +75,104 @@
             <artifactId>mybatis-generator-lombok-plugin</artifactId>
             <version>1.0</version>
         </dependency>
-        <!-- Java 11请关闭下面注释 -->
-        <!--
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>11</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-fxml</artifactId>
-            <version>11</version>
-        </dependency>
-        -->
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>java11</id>
+            <activation>
+                <jdk>[11,)</jdk>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-controls</artifactId>
+                    <version>11</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-fxml</artifactId>
+                    <version>11</version>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-shade-plugin</artifactId>
+                        <version>3.2.1</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>shade</goal>
+                                </goals>
+                                <configuration>
+                                    <transformers>
+                                        <transformer
+                                                implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                            <mainClass>com.zzg.mybatis.generator.MainUI</mainClass>
+                                        </transformer>
+                                    </transformers>
+                                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                                    <shadedArtifactAttached>false</shadedArtifactAttached>
+                                    <finalName>mybatis-generator-gui</finalName>
+                                    <outputDirectory>${project.basedir}</outputDirectory>
+                                    <filters>
+                                        <filter>
+                                            <artifact>*:mybatis-generator-gui</artifact>
+                                            <excludes>
+                                                <exclude>lib/*</exclude>
+                                            </excludes>
+                                        </filter>
+                                    </filters>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>java8</id>
+            <activation>
+                <jdk>1.8</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.zenjava</groupId>
+                        <artifactId>javafx-maven-plugin</artifactId>
+                        <version>8.8.3</version>
+                        <configuration>
+                            <bundleArguments>
+                                <!-- windows打包开启-->
+                                <icon>${project.basedir}/package/windows/mybatis-generator-gui.ico</icon>
+                                <!-- mac打包开启-->
+                                <icon>${project.basedir}/package/macosx/mybatis-generator-gui.icns</icon>
+                            </bundleArguments>
+                            <mainClass>com.zzg.mybatis.generator.MainUI</mainClass>
+                            <vendor>Owen Zou</vendor>
+                            <verbose>false</verbose>
+                            <jfxMainAppJarName>mybatis-generator-gui.jar</jfxMainAppJarName>
+                            <needShortcut>true</needShortcut>
+                            <needMenu>true</needMenu>
+                            <copyAdditionalAppResourcesToJar>true</copyAdditionalAppResourcesToJar>
+                            <additionalAppResources>${project.basedir}/src/main/resources</additionalAppResources>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
+
 
     <build>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
-                <configuration>
-                    <!-- Java 11请修改此处为11 -->
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.zenjava</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>8.8.3</version>
-                <configuration>
-                    <bundleArguments>
-                        <!-- windows打包开启-->
-                        <icon>${project.basedir}/package/windows/mybatis-generator-gui.ico</icon>
-                        <!-- mac打包开启-->
-                        <icon>${project.basedir}/package/macosx/mybatis-generator-gui.icns</icon>
-                    </bundleArguments>
-                    <mainClass>com.zzg.mybatis.generator.MainUI</mainClass>
-                    <vendor>Owen Zou</vendor>
-                    <verbose>false</verbose>
-                    <jfxMainAppJarName>mybatis-generator-gui.jar</jfxMainAppJarName>
-                    <needShortcut>true</needShortcut>
-                    <needMenu>true</needMenu>
-                    <copyAdditionalAppResourcesToJar>true</copyAdditionalAppResourcesToJar>
-                    <additionalAppResources>${project.basedir}/src/main/resources</additionalAppResources>
-                </configuration>
             </plugin>
         </plugins>
     </build>
