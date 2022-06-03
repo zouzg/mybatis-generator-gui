@@ -3,12 +3,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.zzg</groupId>
     <artifactId>mybatis-generator-gui</artifactId>
-    <version>0.8.5</version>
+    <version>0.8.9-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <!-- Java 11请修改此处为11 -->
+        <java.version>1.8</java.version>
     </properties>
 
     <dependencies>
@@ -20,12 +22,12 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.1.2</version>
+            <version>1.2.0</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
-            <version>1.1.2</version>
+            <version>1.2.0</version>
         </dependency>
 
         <dependency>
@@ -36,7 +38,7 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.5</version>
+            <version>[2.7,)</version>
         </dependency>
         <dependency>
             <groupId>org.xerial</groupId>
@@ -51,13 +53,41 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.7</version>
+            <version>1.2.76</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.13.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.54</version>
+        </dependency>
+        <dependency>
+            <groupId>com.softwareloop</groupId>
+            <artifactId>mybatis-generator-lombok-plugin</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <!-- Java 11请关闭下面注释 -->
+        <!--
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>11</version>
+        </dependency>
+        -->
     </dependencies>
 
     <build>
@@ -66,6 +96,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
+                    <!-- Java 11请修改此处为11 -->
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>

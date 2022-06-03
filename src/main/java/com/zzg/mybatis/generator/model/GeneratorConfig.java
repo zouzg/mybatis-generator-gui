@@ -39,39 +39,57 @@ public class GeneratorConfig {
 	private boolean offsetLimit;
 
 	private boolean comment;
-	
+
 	private boolean overrideXML;
 
 	private boolean needToStringHashcodeEquals;
+
+	private boolean useLombokPlugin;
+
+	private boolean needForUpdate;
+
+	private boolean annotationDAO;
 
 	private boolean annotation;
 
 	private boolean useActualColumnNames;
 
-	private boolean useExampe;
+	private boolean useExample;
 
 	private String generateKeys;
 
 	private String encoding;
-	
+
 	private boolean useTableNameAlias;
 
-	private boolean useSchemaPrefix;
+	private boolean useDAOExtendStyle;
 
-	public boolean isUseSchemaPrefix() {
-		return useSchemaPrefix;
+    private boolean useSchemaPrefix;
+
+    private boolean jsr310Support;
+
+    public boolean isJsr310Support() {
+        return jsr310Support;
+    }
+
+    public void setJsr310Support(boolean jsr310Support) {
+        this.jsr310Support = jsr310Support;
+    }
+
+    public boolean isUseSchemaPrefix() {
+        return useSchemaPrefix;
+    }
+
+    public void setUseSchemaPrefix(boolean useSchemaPrefix) {
+        this.useSchemaPrefix = useSchemaPrefix;
+    }
+
+	public boolean isUseExample() {
+		return useExample;
 	}
 
-	public void setUseSchemaPrefix(boolean useSchemaPrefix) {
-		this.useSchemaPrefix = useSchemaPrefix;
-	}
-
-	public boolean isUseExampe() {
-		return useExampe;
-	}
-
-	public void setUseExampe(boolean useExampe) {
-		this.useExampe = useExampe;
+	public void setUseExample(boolean useExample) {
+		this.useExample = useExample;
 	}
 
 	public String getName() {
@@ -186,7 +204,31 @@ public class GeneratorConfig {
         this.needToStringHashcodeEquals = needToStringHashcodeEquals;
     }
 
-    public boolean isAnnotation() {
+	public boolean isUseLombokPlugin() {
+		return useLombokPlugin;
+	}
+
+	public void setUseLombokPlugin(boolean useLombokPlugin) {
+		this.useLombokPlugin = useLombokPlugin;
+	}
+
+	public boolean isNeedForUpdate() {
+		return needForUpdate;
+	}
+
+	public void setNeedForUpdate(boolean needForUpdate) {
+		this.needForUpdate = needForUpdate;
+	}
+
+	public boolean isAnnotationDAO() {
+		return annotationDAO;
+	}
+
+	public void setAnnotationDAO(boolean annotationDAO) {
+		this.annotationDAO = annotationDAO;
+	}
+
+	public boolean isAnnotation() {
 		return annotation;
 	}
 
@@ -200,6 +242,14 @@ public class GeneratorConfig {
 
 	public void setUseActualColumnNames(boolean useActualColumnNames) {
 		this.useActualColumnNames = useActualColumnNames;
+	}
+
+	public String getMapperName() {
+		return mapperName;
+	}
+
+	public void setMapperName(String mapperName) {
+		this.mapperName = mapperName;
 	}
 
 	public String getGenerateKeys() {
@@ -217,7 +267,7 @@ public class GeneratorConfig {
     public void setEncoding(String encoding) {
         this.encoding = encoding;
     }
-	
+
 	public boolean getUseTableNameAlias() {
 		return useTableNameAlias;
 	}
@@ -229,12 +279,20 @@ public class GeneratorConfig {
 	public boolean isUseTableNameAlias() {
 		return useTableNameAlias;
 	}
-	
+
 	public boolean isOverrideXML() {
 		return overrideXML;
 	}
 
 	public void setOverrideXML(boolean overrideXML) {
 		this.overrideXML = overrideXML;
+	}
+
+	public void setUseDAOExtendStyle(boolean useDAOExtendStyle) {
+		this.useDAOExtendStyle = useDAOExtendStyle;
+	}
+
+	public boolean isUseDAOExtendStyle() {
+		return useDAOExtendStyle;
 	}
 }

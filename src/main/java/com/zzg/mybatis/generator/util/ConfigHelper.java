@@ -235,11 +235,11 @@ public class ConfigHelper {
 			} else {
 				file = new File("src/main/resources/lib");
 			}
-			System.out.println(file.getCanonicalPath());
+			_LOG.info("jar lib path: {}", file.getCanonicalPath());
 			File[] jarFiles = file.listFiles();
-			System.out.println("jarFiles:" + jarFiles);
 			if (jarFiles != null && jarFiles.length > 0) {
 				for (File jarFile : jarFiles) {
+					_LOG.info("jar file: {}", jarFile.getAbsolutePath());
 					if (jarFile.isFile() && jarFile.getAbsolutePath().endsWith(".jar")) {
 						jarFilePathList.add(jarFile.getAbsolutePath());
 					}
