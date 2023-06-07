@@ -10,7 +10,8 @@ public enum DbType {
     Oracle("oracle.jdbc.OracleDriver", "jdbc:oracle:thin:@//%s:%s/%s", "ojdbc6.jar"),
     PostgreSQL("org.postgresql.Driver", "jdbc:postgresql://%s:%s/%s", "postgresql-9.4.1209.jar"),
 	SQL_Server("com.microsoft.sqlserver.jdbc.SQLServerDriver", "jdbc:sqlserver://%s:%s;databaseName=%s", "sqljdbc4-4.0.jar"),
-	Sqlite("org.sqlite.JDBC", "jdbc:sqlite:%s", "sqlite-jdbc-3.19.3.jar");
+	Sqlite("org.sqlite.JDBC", "jdbc:sqlite:%s", "sqlite-jdbc-3.19.3.jar"),
+    ClickHouse("ru.yandex.clickhouse.ClickHouseDriver", "jdbc:clickhouse://%s:%s/%s", "clickhouse-jdbc-0.2.4.jar"),;
 
     private final String driverClass;
     private final String connectionUrlPattern;

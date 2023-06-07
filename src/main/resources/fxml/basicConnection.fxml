@@ -35,6 +35,7 @@
             <String fx:value="PostgreSQL" />
             <String fx:value="SQL_Server" />
             <String fx:value="Sqlite" />
+            <String fx:value="ClickHouse" />
           </FXCollections>
         </items>
       </ChoiceBox>
