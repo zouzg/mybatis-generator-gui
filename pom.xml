@@ -75,6 +75,11 @@
             <artifactId>mybatis-generator-lombok-plugin</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>ru.yandex.clickhouse</groupId>
+            <artifactId>clickhouse-jdbc</artifactId>
+            <version>0.2.4</version>
+        </dependency>
         <!-- Java 11请关闭下面注释 -->
         <!--
         <dependency>
