@@ -252,6 +252,13 @@ public class MybatisGeneratorBridge {
             }
         }
 
+        if (generatorConfig.isUseBatchInsert()) {
+            PluginConfiguration pluginConfiguration = new PluginConfiguration();
+            pluginConfiguration.addProperty("type", "com.zzg.mybatis.generator.plugins.BatchPlugin");
+            pluginConfiguration.setConfigurationType("com.zzg.mybatis.generator.plugins.BatchPlugin");
+            context.addPluginConfiguration(pluginConfiguration);
+        }
+
         context.setTargetRuntime("MyBatis3");
 
         List<String> warnings = new ArrayList<>();

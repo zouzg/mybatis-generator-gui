@@ -208,6 +208,7 @@
                                          <children>
                                              <CheckBox fx:id="forUpdateCheckBox" mnemonicParsing="false" selected="false" text="select 增加ForUpdate" />
                                              <CheckBox fx:id="annotationDAOCheckBox" mnemonicParsing="false" selected="true" text="DAO使用 @Repository 注解" />
+                                             <CheckBox fx:id="useBatchInsertCheckBox" mnemonicParsing="false" text="批量插入/更新" />
                                          </children>
                                      </HBox>
                                      <HBox prefHeight="100.0" prefWidth="200.0">

@@ -68,6 +68,8 @@ public class GeneratorConfig {
 
     private boolean jsr310Support;
 
+    private boolean useBatchInsert;
+
     public boolean isJsr310Support() {
         return jsr310Support;
     }
@@ -290,6 +292,14 @@ public class GeneratorConfig {
 
 	public void setUseDAOExtendStyle(boolean useDAOExtendStyle) {
 		this.useDAOExtendStyle = useDAOExtendStyle;
+	}
+
+	public boolean isUseBatchInsert() {
+		return useBatchInsert;
+	}
+
+	public void setUseBatchInsert(boolean useBatchInsert) {
+		this.useBatchInsert = useBatchInsert;
 	}
 
 	public boolean isUseDAOExtendStyle() {

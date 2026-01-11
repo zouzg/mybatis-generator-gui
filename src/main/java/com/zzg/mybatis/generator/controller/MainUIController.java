@@ -102,6 +102,8 @@ public class MainUIController extends BaseFXController {
     @FXML
     private CheckBox jsr310Support;
     @FXML
+    private CheckBox useBatchInsertCheckBox;
+    @FXML
     private TreeView<String> leftDBTree;
     @FXML
     public TextField filterTreeBox;
@@ -203,8 +205,8 @@ public class MainUIController extends BaseFXController {
                         selectedDatabaseConfig = (DatabaseConfig) treeItem.getParent().getGraphic().getUserData();
                         this.tableName = tableName;
                         tableNameField.setText(tableName);
-                        domainObjectNameField.setText(MyStringUtils.dbStringToCamelStyle(tableName));
-                        mapperName.setText(domainObjectNameField.getText().concat("DAO"));
+                        domainObjectNameField.setText(MyStringUtils.dbStringToCamelStyle(tableName).concat("PO"));
+                        mapperName.setText(MyStringUtils.dbStringToCamelStyle(tableName).concat("Mapper"));
                     }
                 }
             });
@@ -440,6 +442,7 @@ public class MainUIController extends BaseFXController {
         generatorConfig.setUseDAOExtendStyle(useDAOExtendStyle.isSelected());
         generatorConfig.setUseSchemaPrefix(useSchemaPrefix.isSelected());
         generatorConfig.setJsr310Support(jsr310Support.isSelected());
+        generatorConfig.setUseBatchInsert(useBatchInsertCheckBox.isSelected());
         return generatorConfig;
     }
 
@@ -472,6 +475,7 @@ public class MainUIController extends BaseFXController {
         useDAOExtendStyle.setSelected(generatorConfig.isUseDAOExtendStyle());
         useSchemaPrefix.setSelected(generatorConfig.isUseSchemaPrefix());
         jsr310Support.setSelected(generatorConfig.isJsr310Support());
+        useBatchInsertCheckBox.setSelected(generatorConfig.isUseBatchInsert());
     }
 
     @FXML
